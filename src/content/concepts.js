@@ -530,12 +530,31 @@ export const concepts = [
           text: 'One of the atomic actions a mission can contain, which is how a mission participates in arbitration.'
         }
       ]),
+      h('VISA — first in, first served'),
+      p(
+        '**[[v-visa|VISA]]** is Ati’s name for first-in-first-out approval. In a VISA-controlled zone the first robot to arrive is granted the visa and proceeds; any other robot waits. When the first robot clears the area it entered, the next one receives its clearance. It is used particularly at intersections, where traffic can arrive from several directions at once.'
+      ),
+      p(
+        'The appeal of a first-in-first-out rule is that it is predictable. An operator watching two robots at a junction can tell which will move, and why.'
+      ),
+      callout(
+        'How VISA relates to gates is not documented',
+        'Gates, exclusion zones and VISA all govern multi-robot access. Whether VISA is the implementation of the gate concept described in the deployment material, or a separate mechanism alongside it, has not been established.',
+        'gap'
+      ),
       h('How it is tested'),
       p(
         'Edge cases are probed deliberately rather than waited for: two robots approaching the same gate simultaneously, a station occupied on arrival, a manual priority escalation mid-cycle. See [[wf-exceptions]].'
       )
     ],
-    related: ['map-annotation', 'fleet', 'wf-exceptions', 'zone']
+    revisions: [
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Added VISA, Ati’s first-in-first-out approval mechanism for shared zones and intersections.'
+      }
+    ],
+    related: ['v-visa', 'map-annotation', 'fleet', 'wf-exceptions', 'zone']
   },
 
   {
@@ -615,9 +634,20 @@ export const concepts = [
       ),
       p(
         'The overview diagram names **ERP / MES signals** as the input to this layer. MES appears only in that diagram; it is not defined anywhere in the source material.'
+      ),
+      h('Which systems get connected'),
+      p(
+        'Ati Flow’s orchestration layer connects to APIs from [[v-erp|ERP]] and [[v-wms|warehouse management]] providers, chosen according to what the client already runs. The connection set is per-deployment rather than fixed.'
       )
     ],
-    related: ['configuration-layers', 'orchestration', 'ui-integrations', 'v-erp']
+    revisions: [
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Recorded that the orchestration layer connects to ERP and warehouse management APIs chosen per client.'
+      }
+    ],
+    related: ['configuration-layers', 'orchestration', 'ui-integrations', 'v-erp', 'v-wms']
   },
 
   {

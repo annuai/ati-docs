@@ -194,6 +194,13 @@ directly, the entry cites them rather than a file, so a reader can always tell w
 | `Route Ops` | That route operations — excluding a station from the map, for example — exist only in Fleet Manager. | Ati team, September 2026 |
 | `Fleet Manager` | That it is a separate system from Ati Flow, that it still holds capabilities Ati Flow lacks, and that Ati Flow is intended to replace it. | Ati team, September 2026 |
 | `Ati Robotics`, `OEM` | That Ati is an OEM, building both the robots and the orchestration software that runs them. This closed the largest gap recorded in section 6 below. | Ati team, September 2026 |
+| `Ati Flow` | That Ati Flow is a combination of Fleet Manager, Deployment Manager and an orchestration layer connected to ERP and warehouse-management APIs chosen per client. | Ati team, September 2026 |
+| `Fleet Manager` (revised) | What it actually does — fleet management, telling robots where to go, booking and managing trips, analytics, surfacing traffic problems — and that it is deliberately not an intelligent system. | Ati team, September 2026 |
+| `Deployment Manager` | That Ati support engineers use it to configure and deploy the robots. | Ati team, September 2026 |
+| `VISA` | First-in-first-out approval for robots entering a controlled zone, used particularly at intersections with traffic from several directions. | Ati team, September 2026 |
+| `WMS` | That warehouse management systems are among the APIs the orchestration layer connects to. Previously excluded from the glossary for having no source. | Ati team, September 2026 |
+| `Users` | That the newly proposed system has three users — Operator, Fleet Supervisor, Supervisor — and that whether Fleet Supervisor is required is unconfirmed. | Ati team, September 2026 |
+| `Users`, `Solutions Architect` (revised) | That the Solutions Architect is the fourth user, not an Ati-internal job: he sets up the maps and everything else required to deploy a fleet at a new site. Also called the Configurator; the wording is not final. | Ati team, September 2026 |
 
 Anything sourced this way should be treated exactly like a file-sourced fact: cited, and corrected in
 place if it turns out to be wrong.
@@ -243,7 +250,9 @@ Not filled in. Pages that touch these say so explicitly.
   but no source describes their layout, fields or actions.
 - **Requester / approver.** No requester or approver role exists in the sources. The only approval
   evidence is "View & approve" for Head of Operations on Workflows and Maps.
-- **WMS.** Requested as a glossary candidate but absent from every source file. Not added.
+- **WMS.** *Closed.* Absent from every file in this folder, so it was initially left out. The team has
+  since confirmed that warehouse management systems are among the APIs the orchestration layer
+  connects to, and the term is now in the glossary.
 - **Dispatcher.** "Dispatch" appears as an activity ("normal dispatch", "manual dispatch"); no
   Dispatcher role or component is documented. Dispatch is included as a term; Dispatcher is not.
 - **Configurator as a product surface.** "Configurator" appears only as the parenthetical name of the

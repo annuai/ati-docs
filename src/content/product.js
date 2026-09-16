@@ -118,12 +118,52 @@ export const product = [
         { term: 'Diagnostics — why is the robot behaving this way?', text: 'Low-level state, calibration and diagnostics belong in [[ui-debug|Debug]].' }
       ]),
       p('See [[d-keep-the-layers-clear]] for why this separation is treated as a decision rather than a habit.'),
+      h('What Ati Flow is made of'),
+      p('Ati Flow is not one new system. It brings three things together:'),
+      defs([
+        {
+          term: '[[v-fleet-manager|Fleet Manager]]',
+          text: 'Ati’s software already running in real warehouses. It controls the fleet — telling robots where to go, booking and managing trips, analytics, and surfacing traffic problems such as [[v-visa|VISA]] contention. It executes; it does not decide.'
+        },
+        {
+          term: '[[v-deployment-manager|Deployment Manager]]',
+          text: 'The tool Ati’s support engineers use to configure and deploy the robots.'
+        },
+        {
+          term: 'An orchestration layer',
+          text: 'Connected to APIs from [[v-erp|ERP]] and [[v-wms|warehouse management]] providers, chosen per client. This is the part that decides what should happen. See [[orchestration]].'
+        }
+      ]),
+      callout(
+        'Where the intelligence sits',
+        'Fleet Manager is explicitly not an intelligent system — it controls robots rather than working out what the factory needs. The orchestration layer is what turns demand into instructions. Ati Flow is the product that puts both under one roof.'
+      ),
+      h('Names that are easy to confuse'),
+      p('Several Ati names sit one word apart and mean different things. This table is the reference:'),
+      table(
+        ['Name', 'What it is', 'Person or software?'],
+        [
+          ['[[v-fleet-manager|Fleet Manager]]', 'Ati software that runs the fleet on site today', 'Software'],
+          ['[[v-deployment-manager|Deployment Manager]]', 'Ati software used internally to configure and deploy robots', 'Software'],
+          ['[[ui-fleet-monitor|Fleet Monitor]]', 'A screen inside Ati Flow showing live robots, tasks and traffic', 'Software — a page'],
+          ['[[v-fleet-supervisor|Fleet Supervisor]]', 'A user who owns one or more zones', 'Person'],
+          ['[[v-head-of-operations|Supervisor]]', 'A user accountable for the whole site', 'Person'],
+          ['[[v-supervisor-mode|Supervisor Mode]]', 'A selector in the prototype sidebar; what it switches is undocumented', 'Software — a control']
+        ]
+      ),
       h('Where to go next'),
       p(
-        'Read [[architecture]] for the layer model, [[information-architecture]] for the list of surfaces, [[roles-and-permissions]] for who uses which one, and the [[concepts|Concepts]] section for the ideas the product is built from.'
+        'Read [[users]] for who uses it, [[architecture]] for the layer model, [[information-architecture]] for the list of surfaces, and the [[concepts|Concepts]] section for the ideas the product is built from.'
       )
     ],
-    related: ['architecture', 'orchestration', 'information-architecture', 'roles-and-permissions', 'ati-robotics']
+    revisions: [
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Added what Ati Flow is made of — Fleet Manager, Deployment Manager and an orchestration layer over ERP and WMS APIs — plus a disambiguation table for the similar names.'
+      }
+    ],
+    related: ['users', 'architecture', 'orchestration', 'information-architecture', 'v-fleet-manager', 'v-deployment-manager', 'ati-robotics']
   },
 
   {
@@ -274,6 +314,95 @@ export const product = [
   },
 
   {
+    id: 'users',
+    title: 'Users',
+    summary: 'The four users the system is designed around — three who operate it, and one who sets it all up.',
+    simple:
+      'Four kinds of person use the system: someone on the floor, someone looking after a group of zones, someone accountable for the whole site, and the person who sets everything up in the first place.',
+    aliases: ['users', 'personas', 'who uses it', 'operator', 'supervisor', 'configurator'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-16',
+    revisions: [
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Solutions Architect added as the fourth user. This corrects the earlier reading that the role had become Ati-internal, and reconciles the user model with the four-role permission table.'
+      }
+    ],
+    sources: [TEAM, S.ia],
+    blocks: [
+      h('The four users'),
+      p('Three of them operate the system. The fourth sets it up.'),
+      defs([
+        {
+          term: '[[v-operator|Operator]] — on the floor',
+          text: 'The person physically present, day to day, working in one zone. They watch what the robots in their zone are doing and can raise a manual priority request, with the trade-off shown before they confirm.'
+        },
+        {
+          term: '[[v-fleet-supervisor|Fleet Supervisor]] — across a few zones',
+          text: 'Owns one or more zones, with reassignment control and the ability to manage the robots inside them. Sees what is configured without editing it. **Whether this user is required at all is not yet settled.**'
+        },
+        {
+          term: '[[v-head-of-operations|Supervisor]] — across the site',
+          text: 'Accountable for every zone, and the escalation point above the others. Manages robots site-wide, approves what has been configured, and manages users and roles.'
+        },
+        {
+          term: '[[v-solutions-architect|Solutions Architect]] — sets everything up',
+          text: 'The person who makes a new site work at all: building the [[map|maps]], and doing every other piece of setup needed to deploy a fleet in a warehouse or factory that has never had one. Also called the **Configurator** — the wording is not final.'
+        }
+      ]),
+      h('Two different axes'),
+      p(
+        'The first three users sit on a ladder of scope. Each sees further than the one below, and acts on less detail:'
+      ),
+      relationship([
+        { label: 'Operator', to: 'v-operator', note: 'one zone — what is happening now' },
+        { label: 'Fleet Supervisor', to: 'v-fleet-supervisor', note: 'several zones — reassign and manage' },
+        { label: 'Supervisor', to: 'v-head-of-operations', note: 'the whole site — approve and escalate' }
+      ]),
+      p(
+        'The Solutions Architect is not further up that ladder — he is on a different one. The other three ask *what is happening, and what should I do about it*. He asks *what should this site do in the first place*. That is the difference between operating a system and configuring one, and it is the same split the product itself is built around. See [[d-keep-the-layers-clear]].'
+      ),
+      callout(
+        'Fleet Supervisor is not confirmed',
+        'The middle user may or may not be needed. If a site is small enough that a Supervisor can cover every zone directly, the layer between them and the Operator may be unnecessary. This needs deciding before the role model is built on — it changes the shape of the permission model and the zone assignment logic.',
+        'gap'
+      ),
+      callout(
+        'Solutions Architect or Configurator? Not yet decided',
+        [
+          'Both names are in use for the same person, and one needs picking.',
+          'Worth noting while deciding: the other three users are named for what they do inside the product — an Operator operates, a Supervisor supervises. By that pattern *Configurator* is the consistent choice, and *Solutions Architect* reads as a job title rather than a role in the system. That is an observation about the naming pattern, not a decision. See [[d-robot-over-amr]] for how the last terminology call of this kind was made and recorded.'
+        ],
+        'gap'
+      ),
+      h('What he sets up'),
+      p('The setup work spans most of the [[configuration-layers|configuration layers]]:'),
+      list([
+        '[[map|Maps]] — building the map of the site and annotating it with positions, zones and traffic rules',
+        '[[missions-and-actions|Missions]] — the actions and transport behaviour robots will run',
+        '[[robot|Robots]] — setup including low-level parameters',
+        '[[integrations|Integrations]] and site configuration',
+        '[[ui-debug|Debug]] — the only role with access'
+      ]),
+      p('In short: everything required to take a warehouse or factory from having no fleet to running one.'),
+      h('The earlier table'),
+      p(
+        'A permission table made earlier lists these same four: Operator, Fleet Supervisor, Supervisor (Head of Operations) and Solutions Architect (Configurator). It is preserved in full on [[roles-and-permissions]], and it remains the most detailed statement of who can do what that exists.'
+      ),
+      callout(
+        'The names are confusing',
+        'Fleet Supervisor, Fleet Manager, Fleet Monitor and Supervisor Mode all sound alike and mean different things — two are people, two are software. The disambiguation table on [[ati-flow]] is the reference to use when the terms collide.',
+        'gap'
+      ),
+      gap(
+        'Two things are still unwritten. What each user needs from the newly proposed system has not been described separately from the earlier permission table. And the relationship between the Solutions Architect and [[v-deployment-manager|Deployment Manager]] — the tool Ati support engineers use to configure and deploy robots — has not been established, although they describe closely related work.'
+      )
+    ],
+    related: ['roles-and-permissions', 'v-operator', 'v-fleet-supervisor', 'v-head-of-operations', 'v-solutions-architect', 'v-deployment-manager', 'configuration-layers', 'open-questions']
+  },
+  {
     id: 'roles-and-permissions',
     title: 'Roles and permissions',
     summary: 'Four roles, and what each of them can see and do on every surface.',
@@ -285,6 +414,11 @@ export const product = [
     added: '2026-09-16',
     sources: [S.ia],
     blocks: [
+      callout(
+        'These four roles are the four users',
+        'The newly proposed system is designed around the same four people described here — see [[users]]. Two questions remain open: whether the Fleet Supervisor layer is needed at all, and whether the fourth should be called Solutions Architect or Configurator.',
+        'gap'
+      ),
       h('The four roles'),
       defs([
         {
@@ -369,6 +503,18 @@ export const product = [
         'The prototype offers a single **Supervisor Mode** selector and no visible role switching. How modes relate to these four roles is unestablished.'
       )
     ],
-    related: ['information-architecture', 'zone', 'ui-debug', 'd-role-based-visibility', 'v-escalation']
+    revisions: [
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Flagged that this four-role table predates the user model now proposed, and linked to the Users page.'
+      },
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Corrected: with Solutions Architect confirmed as the fourth user, this table and the user model agree. The open points are the Fleet Supervisor layer and the Solutions Architect naming.'
+      }
+    ],
+    related: ['users', 'information-architecture', 'zone', 'ui-debug', 'd-role-based-visibility', 'v-escalation']
   }
 ];

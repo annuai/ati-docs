@@ -9,7 +9,7 @@
   status: 'current' | 'draft' | 'needs-confirmation'
 */
 
-import { gap } from './blocks.js';
+import { p, h, list, flow, gap } from './blocks.js';
 
 const G = 'old/ati-flow-glossary.html';
 const D = 'old/amr-deployment-workflow.html';
@@ -49,6 +49,87 @@ export const vocabulary = [
       'Ati is an OEM: the robots and the orchestration software that runs them are both built in-house. The fleet is not third-party software wrapped around third-party machines.',
     usedIn: ['Describing what kind of company Ati is'],
     related: ['ati-robotics', 'robot', 'ati-flow'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-16',
+    sources: [TEAM]
+  },
+  {
+    id: 'v-visa',
+    term: 'VISA',
+    kind: 'jargon',
+    simple:
+      'First come, first served for robots. In a VISA-controlled zone the first robot in gets to go; the next one waits until it is clear.',
+    technical:
+      'A first-in-first-out approval mechanism. When several robots want to enter a zone that is VISA controlled, the first to arrive is granted the visa. The others hold. When the first robot clears the area it entered, the next robot receives its clearance. It is used particularly at intersections where traffic can arrive from more than one direction at once.',
+    aliases: ['visa', 'visa control', 'visa clearance', 'FIFO'],
+    usedIn: ['Traffic control at intersections', 'Fleet Manager, when a traffic problem needs explaining'],
+    note: 'The name is a metaphor, not an acronym — a robot is granted entry the way a traveller is granted a visa.',
+    blocks: [
+      h('How it plays out'),
+      flow([
+        {
+          title: 'Two robots approach a VISA-controlled zone',
+          note: 'Typically an intersection, with oncoming traffic possible from several directions.'
+        },
+        {
+          title: 'Which one arrived first?',
+          kind: 'decision',
+          note: 'Entry is granted in arrival order — first in, first served.'
+        },
+        { title: 'The first robot is granted the visa', note: 'It proceeds through the zone.' },
+        { title: 'The second robot waits', note: 'It holds outside the zone rather than entering behind.' },
+        {
+          title: 'The first robot clears the area',
+          note: 'Clearance is tied to leaving the zone it entered, not to finishing its trip.'
+        },
+        { title: 'The second robot gets its clearance', kind: 'outcome', note: 'The queue advances by one.' }
+      ]),
+      h('Why it exists'),
+      p(
+        'An intersection is where a fleet is most likely to jam. Without an ordering rule, two robots arriving from different directions can each wait for the other — see [[v-deadlock|deadlock]]. First-in-first-out gives a plain answer to who goes, and it is an answer a person can predict and explain.'
+      ),
+      gap(
+        'How VISA relates to the **gates** and **exclusion zones** described in the deployment material is not documented. All three govern multi-robot access, but whether VISA is the implementation of gates, or a separate mechanism alongside them, has not been established. See [[traffic-control]].'
+      )
+    ],
+    related: ['traffic-control', 'v-gate', 'v-exclusion-zone', 'v-deadlock', 'v-fleet-manager', 'zone'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-16',
+    sources: [TEAM]
+  },
+  {
+    id: 'v-deployment-manager',
+    term: 'Deployment Manager',
+    kind: 'term',
+    simple: 'The software Ati’s own support engineers use to configure robots and get them running on a site.',
+    technical:
+      'Used internally by Ati support engineers to configure and deploy the bots. It is one of the three parts [[ati-flow|Ati Flow]] brings together, alongside [[v-fleet-manager|Fleet Manager]] and an orchestration layer.',
+    aliases: ['deployment manager', 'DM'],
+    usedIn: ['Ati support engineers, when configuring and deploying robots'],
+    note: 'An Ati-internal tool, not something a customer operates. Compare [[v-fleet-manager|Fleet Manager]], which runs the fleet on site.',
+    blocks: [
+      gap(
+        'What Deployment Manager contains screen by screen, and how it maps onto the nine stages of the [[wf-deployment|deployment workflow]], is not documented. Nor is its relationship to the [[v-solutions-architect|Solutions Architect]], the [[users|user]] who sets a new site up — the two describe closely related work.'
+      )
+    ],
+    related: ['ati-flow', 'v-fleet-manager', 'wf-deployment', 'v-solutions-architect', 'wf-configuration'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-16',
+    sources: [TEAM]
+  },
+  {
+    id: 'v-wms',
+    term: 'WMS',
+    expansion: 'Warehouse Management System',
+    kind: 'acronym',
+    simple: 'The software a warehouse already uses to track what it holds and what needs moving.',
+    technical:
+      'One of the external system types Ati Flow’s orchestration layer connects to through APIs, alongside [[v-erp|ERP]] providers. Which providers are connected depends on what the client already runs.',
+    usedIn: ['The orchestration layer, as a source of demand'],
+    related: ['integrations', 'v-erp', 'v-mes', 'ati-flow'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
@@ -168,21 +249,42 @@ export const vocabulary = [
     id: 'v-fleet-manager',
     term: 'Fleet Manager',
     kind: 'term',
-    simple: 'The system Ati uses today for fleet operations. Ati Flow is intended to replace it.',
+    simple:
+      'Ati’s software running in real warehouses today. It controls the fleet — where robots go, which trips they run — but it does not decide what ought to happen.',
     technical:
-      'The existing fleet system. It currently holds capabilities Ati Flow does not yet have — [[v-route-ops|Route Ops]] is one — and the intention is for Ati Flow to replace it over time.',
-    aliases: ['fleet manager'],
-    usedIn: ['Fleet operations today', 'Conversations about what Ati Flow still has to absorb'],
-    note: 'Not the same thing as [[v-fleet-monitor|Fleet Monitor]], which is a page inside Ati Flow. The names are one word apart and mean different things: Fleet Manager is a separate system, Fleet Monitor is a screen.',
+      'The software that actually runs the fleet on site. It is deliberately **not an intelligent system**: it executes fleet control rather than deciding what the factory needs. The thinking sits above it, in the orchestration layer that [[ati-flow|Ati Flow]] adds.',
+    aliases: ['fleet manager', 'FM'],
+    usedIn: ['Live sites today', 'Any conversation about what physically commands the robots'],
+    note: 'Three similar names, three different things. See [[ati-flow|the disambiguation table on the Ati Flow page]].',
     blocks: [
+      h('What it does'),
+      list([
+        'Manages the fleet',
+        'Tells robots where to go',
+        'Books a trip for a robot, and manages trips once they are running',
+        'Analytics',
+        'Surfaces traffic problems, including [[v-visa|VISA]] contention',
+        '[[v-route-ops|Route Ops]] — route changes such as excluding a station from the map'
+      ]),
+      h('How it relates to Ati Flow'),
+      p(
+        'Fleet Manager is one of the three parts [[ati-flow|Ati Flow]] brings together, alongside [[v-deployment-manager|Deployment Manager]] and an orchestration layer. Today they are separate tools; Ati Flow is the product that combines them.'
+      ),
       gap(
-        'What else Fleet Manager does, how much of it Ati Flow has already absorbed, and when the replacement is expected are all undocumented.'
+        'How much of Fleet Manager has already been absorbed into Ati Flow, and on what timeline, is not documented. [[v-route-ops|Route Ops]] is one capability known to still live only in Fleet Manager.'
       )
     ],
-    related: ['v-route-ops', 'v-fleet-monitor', 'ati-flow', 'fleet'],
+    related: ['ati-flow', 'v-deployment-manager', 'v-route-ops', 'v-visa', 'v-fleet-monitor', 'fleet'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
+    revisions: [
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Expanded with what Fleet Manager actually does, and corrected: Ati Flow combines it with Deployment Manager and an orchestration layer rather than simply replacing it.'
+      }
+    ],
     sources: [TEAM]
   },
   {
@@ -805,8 +907,9 @@ export const vocabulary = [
     technical:
       'Fleet Monitor across their assigned zones with reassignment control. Manages robots within their zone, including marking for maintenance. View-only on Maps and Workflows. Integrations, Setup & Config and Debug are hidden.',
     usedIn: ['The role and permission model'],
-    related: ['roles-and-permissions', 'v-operator', 'v-head-of-operations'],
-    status: 'current',
+    note: 'Whether this user is required at all has not been settled. See [[users]]. Not to be confused with [[v-fleet-manager|Fleet Manager]], which is software.',
+    related: ['users', 'roles-and-permissions', 'v-operator', 'v-head-of-operations', 'v-fleet-manager'],
+    status: 'needs-confirmation',
     author: 'Annuai',
     added: '2026-09-16',
     sources: [I]
@@ -830,12 +933,22 @@ export const vocabulary = [
     term: 'Solutions Architect',
     expansion: 'also called the Configurator',
     kind: 'term',
-    simple: 'The person who sets the system up — routes, zones, missions and integrations.',
+    simple:
+      'The person who sets everything up — building the maps and doing whatever else it takes to get a fleet running in a warehouse that has never had one.',
     technical:
       'Full edit on Maps and Workflows, full setup on Robots including low-level parameters, full configuration on Integrations and Setup & Config, and the only role with Debug access. View-only on Fleet Monitor, for verifying configuration rather than daily operations.',
     usedIn: ['The role and permission model'],
-    note: '"Configurator" is the name of this role. It is not the name of a screen.',
-    related: ['roles-and-permissions', 'configuration-layers', 'v-debug'],
+    note: 'Two names, one person: **Solutions Architect** and **Configurator** are both in use and the wording has not been finalised. Neither is the name of a screen. See [[users]].',
+    blocks: [
+      h('What setting up involves'),
+      p(
+        'Everything needed to take a site from having no fleet to running one: building and annotating the [[map]], designing [[missions-and-actions|missions]], configuring [[robot|robots]] down to their low-level parameters, wiring up [[integrations]], and site configuration. He is also the only user with [[ui-debug|Debug]] access.'
+      ),
+      gap(
+        'How this user relates to [[v-deployment-manager|Deployment Manager]] — the tool Ati support engineers use to configure and deploy robots — is not established, although the two describe closely related work.'
+      )
+    ],
+    related: ['users', 'roles-and-permissions', 'configuration-layers', 'wf-deployment', 'v-deployment-manager', 'v-debug'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
