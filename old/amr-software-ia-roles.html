@@ -1,0 +1,180 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AMR platform · IA & roles · ATI Flow</title><link rel="stylesheet" href="./styles.css"></head><body><div class="app"><aside class="sidebar"><a class="brand" href="./index.html"><span class="brand-mark"><span class="a">Ati</span> <span class="flow">Flow</span></span><span class="version">v3.0</span></a><div class="mode"><span class="mode-dot"></span>DOCUMENTATION</div><div class="nav-section"><div class="nav-label">ATI Flow</div><nav class="nav"><a href="./index.html" class=""><span class="nav-icon">⌂</span>Overview</a><a href="./ati-flow-architecture.html" class=""><span class="nav-icon">⌘</span>Architecture</a><a href="./amr-deployment-workflow.html" class=""><span class="nav-icon">↳</span>Deployment</a><a href="./amr-software-ia-roles.html" class="active"><span class="nav-icon">◫</span>IA & Roles</a><a href="./ati-flow-glossary.html" class=""><span class="nav-icon">Aa</span>Glossary</a><a href="./ati-flow-screens.html" class=""><span class="nav-icon">▦</span>Product Tour</a><a href="./ati-flow-faq.html" class=""><span class="nav-icon">?</span>FAQ & Questions</a></nav></div><div class="sidebar-bottom"><div class="nav"><a href="./ati-flow-faq.html"><span class="nav-icon">!</span>Open questions</a></div></div></aside><div class="content"><header class="topbar"><div class="search-wrap"><span class="search-icon">⌕</span><input class="search" data-doc-search placeholder="Search documentation, concepts, screens..."></div></header><main class="main"><header class="topbar"><a class="brand" href="./index.html">ATI Flow docs</a><nav class="nav"><a href="index.html">Overview</a><a href="ati-flow-architecture.html">Architecture</a><a href="amr-deployment-workflow.html">Deployment</a><a href="amr-software-ia-roles.html" class="active">IA & roles</a><a href="ati-flow-glossary.html">Glossary</a><a href="ati-flow-screens.html">Product tour</a><a href="ati-flow-faq.html">FAQ</a></nav></header>
+
+<div class="wrap">
+
+  <div class="page-path">ATI Flow / AMR platform — information architecture &amp; roles</div><div class="eyebrow">Reference</div><h1>AMR platform — information architecture &amp; roles</h1><p class="subtitle">Updated page names, a new Robots page, and role-based visibility across four roles: Operator, Fleet Supervisor, Supervisor (Head of Operations), and Solutions Architect (Configurator).</p>
+
+  <section>
+    <h2>Pages</h2>
+    <p>Current naming, reflecting product terminology in use today.</p>
+    <table>
+      <tr><th>Page</th><th>Covers</th></tr>
+      <tr><td class="page-name">Maps</td><td>SLAM mapping, positions, zones, traffic/gate rules</td></tr>
+      <tr><td class="page-name">Workflows</td><td>Mission and action design, mission patterns, priority rules</td></tr>
+      <tr><td class="page-name">Fleet Monitor</td><td>Live, zone-based view of robots, tasks, and traffic (zone = a geographical area)</td></tr>
+      <tr><td class="page-name">Robots</td><td>Robot setup — add, edit, delete, name, assign to zone</td></tr>
+      <tr><td class="page-name">Integrations</td><td>ERP connections, master data mapping, sync logs</td></tr>
+      <tr><td class="page-name">Setup &amp; Config</td><td>Site, network, docks, user &amp; role management</td></tr>
+      <tr><td class="page-name">Debug</td><td>Low-level configuration and diagnostics — Configurator only</td></tr>
+    </table>
+  </section>
+
+  <section>
+    <h2>Permission matrix</h2>
+    <p>What each role can do on each page, at a glance.</p>
+    <table>
+      <tr>
+        <th>Page</th>
+        <th class="role-col">Operator</th>
+        <th class="role-col">Fleet Supervisor</th>
+        <th class="role-col">Head of Operations</th>
+        <th class="role-col">Configurator</th>
+      </tr>
+      <tr>
+        <td class="page-name">Fleet Monitor</td>
+        <td class="role-col"><span class="badge b-manage">Own zone</span></td>
+        <td class="role-col"><span class="badge b-manage">Own zone(s)</span></td>
+        <td class="role-col"><span class="badge b-full">All zones</span></td>
+        <td class="role-col"><span class="badge b-view">View</span></td>
+      </tr>
+      <tr>
+        <td class="page-name">Robots</td>
+        <td class="role-col"><span class="badge b-view">View own zone</span></td>
+        <td class="role-col"><span class="badge b-manage">Manage own zone</span></td>
+        <td class="role-col"><span class="badge b-manage">Manage all</span></td>
+        <td class="role-col"><span class="badge b-full">Full setup</span></td>
+      </tr>
+      <tr>
+        <td class="page-name">Workflows</td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-view">View</span></td>
+        <td class="role-col"><span class="badge b-view">View &amp; approve</span></td>
+        <td class="role-col"><span class="badge b-full">Full edit</span></td>
+      </tr>
+      <tr>
+        <td class="page-name">Maps</td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-view">View</span></td>
+        <td class="role-col"><span class="badge b-view">View</span></td>
+        <td class="role-col"><span class="badge b-full">Full edit</span></td>
+      </tr>
+      <tr>
+        <td class="page-name">Integrations</td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-view">View status</span></td>
+        <td class="role-col"><span class="badge b-full">Full config</span></td>
+      </tr>
+      <tr>
+        <td class="page-name">Setup &amp; Config</td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-manage">Users &amp; roles</span></td>
+        <td class="role-col"><span class="badge b-full">Full config</span></td>
+      </tr>
+      <tr>
+        <td class="page-name">Debug</td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-none">Hidden</span></td>
+        <td class="role-col"><span class="badge b-debug">Exclusive</span></td>
+      </tr>
+    </table>
+    <div class="legend">
+      <span><span class="dot" style="background:var(--gray-text)"></span>Hidden / view only — nothing to configure</span>
+      <span><span class="dot" style="background:var(--teal)"></span>Manage — day-to-day operational control</span>
+      <span><span class="dot" style="background:var(--coral)"></span>Full — configuration authority</span>
+      <span><span class="dot" style="background:var(--amber)"></span>Debug — Configurator only</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Roles</h2>
+    <div class="roles-grid">
+
+      <div class="role-card">
+        <span class="role-tag" style="background:var(--gray-bg); color:var(--gray-text)">Operator</span>
+        <h3>Floor-level, single-zone view</h3>
+        <p>The person physically on the floor, day to day.</p>
+        <ul>
+          <li>Fleet Monitor for their own zone — robot status, task queue</li>
+          <li>Can raise a manual priority request, with the trade-off shown before confirming</li>
+          <li>View-only on Robots in their zone — status and location, nothing to edit</li>
+        </ul>
+        <div class="not-bothered">
+          <p>Not bothered with:</p>
+          <ul>
+            <li>Maps, Workflows, Integrations, Setup, Debug — entirely hidden</li>
+            <li>Other zones' traffic or task queues</li>
+            <li>Any configuration language — zones, missions, master data are invisible here</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="role-card">
+        <span class="role-tag" style="background:var(--teal-bg); color:var(--teal-text)">Fleet Supervisor</span>
+        <h3>Zone-level oversight</h3>
+        <p>Owns one or more zones — the operational layer above a single operator.</p>
+        <ul>
+          <li>Fleet Monitor across their assigned zone(s), with reassignment control</li>
+          <li>Manage Robots within their zone — mark for maintenance, reassign</li>
+          <li>View-only on Maps and Workflows, to understand what's configured without editing it</li>
+        </ul>
+        <div class="not-bothered">
+          <p>Not bothered with:</p>
+          <ul>
+            <li>Integrations, Setup &amp; Config, Debug — entirely hidden</li>
+            <li>Editing missions or map zones — that's a Configurator task</li>
+            <li>Zones outside their own assignment</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="role-card">
+        <span class="role-tag" style="background:var(--coral-bg); color:var(--coral-text)">Supervisor (Head of Operations)</span>
+        <h3>Site-wide operational authority</h3>
+        <p>Sees across every zone — the escalation point above Fleet Supervisors.</p>
+        <ul>
+          <li>Fleet Monitor across all zones</li>
+          <li>Manage Robots site-wide — add, rename, reassign zone</li>
+          <li>View and approve Workflows and Maps, without doing the detailed editing</li>
+          <li>View Integrations status — whether syncs are healthy, without configuring them</li>
+          <li>Manage users and roles in Setup &amp; Config</li>
+        </ul>
+        <div class="not-bothered">
+          <p>Not bothered with:</p>
+          <ul>
+            <li>Debug — entirely hidden</li>
+            <li>Low-level robot parameters (drive tuning, safety calibration) — that's Configurator territory</li>
+            <li>Writing mission logic or drawing map zones from scratch</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="role-card configurator">
+        <span class="role-tag" style="background:var(--amber-bg); color:var(--amber-text)">Solutions Architect (Configurator)</span>
+        <h3>Full configuration authority</h3>
+        <p>Designs the solution — routes, zones, missions, integrations — and is the only role with Debug access.</p>
+        <ul>
+          <li>Full edit on Maps and Workflows</li>
+          <li>Full setup on Robots, including low-level parameters</li>
+          <li>Full configuration on Integrations and Setup &amp; Config</li>
+          <li><strong>Debug</strong> — raw robot state, calibration, overrides, diagnostic logs</li>
+          <li>View-only on Fleet Monitor — for verifying a configuration behaves correctly, not for daily operations</li>
+        </ul>
+        <div class="not-bothered">
+          <p>Not bothered with:</p>
+          <ul>
+            <li>Day-to-day task queues or manual dispatch — that's operational, not configuration</li>
+            <li>Zone-specific operational escalations</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>AMR platform &#183; information architecture &amp; role-based access</footer>
+</div>
+
+<footer class="footer">ATI Flow documentation · working knowledge base</footer><footer class="footer">ATI Flow documentation · working knowledge base</footer></main></div></div><script src="./docs.js"></script></body></html>

@@ -1,0 +1,213 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>AMR deployment workflow · ATI Flow</title><link rel="stylesheet" href="./styles.css"></head><body><div class="app"><aside class="sidebar"><a class="brand" href="./index.html"><span class="brand-mark"><span class="a">Ati</span> <span class="flow">Flow</span></span><span class="version">v3.0</span></a><div class="mode"><span class="mode-dot"></span>DOCUMENTATION</div><div class="nav-section"><div class="nav-label">ATI Flow</div><nav class="nav"><a href="./index.html" class=""><span class="nav-icon">⌂</span>Overview</a><a href="./ati-flow-architecture.html" class=""><span class="nav-icon">⌘</span>Architecture</a><a href="./amr-deployment-workflow.html" class="active"><span class="nav-icon">↳</span>Deployment</a><a href="./amr-software-ia-roles.html" class=""><span class="nav-icon">◫</span>IA & Roles</a><a href="./ati-flow-glossary.html" class=""><span class="nav-icon">Aa</span>Glossary</a><a href="./ati-flow-screens.html" class=""><span class="nav-icon">▦</span>Product Tour</a><a href="./ati-flow-faq.html" class=""><span class="nav-icon">?</span>FAQ & Questions</a></nav></div><div class="sidebar-bottom"><div class="nav"><a href="./ati-flow-faq.html"><span class="nav-icon">!</span>Open questions</a></div></div></aside><div class="content"><header class="topbar"><div class="search-wrap"><span class="search-icon">⌕</span><input class="search" data-doc-search placeholder="Search documentation, concepts, screens..."></div></header><main class="main"><header class="topbar"><a class="brand" href="./index.html">ATI Flow docs</a><nav class="nav"><a href="index.html">Overview</a><a href="ati-flow-architecture.html">Architecture</a><a href="amr-deployment-workflow.html" class="active">Deployment</a><a href="amr-software-ia-roles.html">IA & roles</a><a href="ati-flow-glossary.html">Glossary</a><a href="ati-flow-screens.html">Product tour</a><a href="ati-flow-faq.html">FAQ</a></nav></header>
+
+<div class="wrap">
+  <div class="page-path">ATI Flow / AMR deployment workflow</div><div class="eyebrow">Reference</div><h1>AMR deployment workflow</h1><p class="subtitle">From site assessment to a fleet running in production — nine stages, the order they depend on, and what each one covers in detail.</p>
+
+  <div class="diagram-card">
+    <svg width="100%" viewBox="0 0 680 1060" role="img">
+      <title>AMR deployment workflow diagram</title>
+      <desc>Nine-stage flowchart from site assessment through go-live and iteration, grouped into planning, build, and deploy phases.</desc>
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M2 1L8 5L2 9" fill="none" stroke="var(--border-strong)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+      </defs>
+
+      <line x1="340" y1="86" x2="340" y2="136" stroke="var(--border-strong)" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="340" y1="192" x2="340" y2="242" stroke="var(--border-strong)" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="340" y1="298" x2="340" y2="348" stroke="var(--border-strong)" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="340" y1="404" x2="340" y2="454" stroke="var(--border-strong)" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="340" y1="510" x2="340" y2="560" stroke="var(--border-strong)" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="340" y1="616" x2="340" y2="666" stroke="var(--border-strong)" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="340" y1="722" x2="340" y2="772" stroke="var(--border-strong)" stroke-width="1" marker-end="url(#arrow)"/>
+      <line x1="340" y1="828" x2="340" y2="878" stroke="var(--border-strong)" stroke-width="1" marker-end="url(#arrow)"/>
+
+      <g>
+        <rect x="220" y="30" width="240" height="56" rx="8" fill="var(--gray-bg)" stroke="var(--border-strong)" stroke-width="0.5"/>
+        <text x="340" y="48" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500">1. Site assessment</text>
+        <text x="340" y="66" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--text-secondary)">Traffic, deadlines, layout</text>
+      </g>
+
+      <g>
+        <rect x="220" y="136" width="240" height="56" rx="8" fill="var(--gray-bg)" stroke="var(--border-strong)" stroke-width="0.5"/>
+        <text x="340" y="154" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500">2. Infrastructure setup</text>
+        <text x="340" y="172" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--text-secondary)">WiFi, docks, robot config</text>
+      </g>
+
+      <g>
+        <rect x="220" y="242" width="240" height="56" rx="8" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
+        <text x="340" y="260" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="var(--teal-text)">3. Mapping (SLAM)</text>
+        <text x="340" y="278" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--teal-text)">Point cloud, loop closure</text>
+      </g>
+
+      <g>
+        <rect x="220" y="348" width="240" height="56" rx="8" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
+        <text x="340" y="366" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="var(--teal-text)">4. Map annotation</text>
+        <text x="340" y="384" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--teal-text)">Positions, zones, traffic rules</text>
+      </g>
+
+      <g>
+        <rect x="220" y="454" width="240" height="56" rx="8" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
+        <text x="340" y="472" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="var(--teal-text)">5. Mission design</text>
+        <text x="340" y="490" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--teal-text)">Actions, priority, mission types</text>
+      </g>
+
+      <g>
+        <rect x="220" y="560" width="240" height="56" rx="8" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
+        <text x="340" y="578" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="var(--teal-text)">6. Fleet management</text>
+        <text x="340" y="596" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--teal-text)">Task allocation, traffic, charging</text>
+      </g>
+
+      <g>
+        <rect x="220" y="666" width="240" height="56" rx="8" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
+        <text x="340" y="684" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="var(--coral-text)">7. ERP integration</text>
+        <text x="340" y="702" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--coral-text)">SAP hooks, priority logic</text>
+      </g>
+
+      <g>
+        <rect x="220" y="772" width="240" height="56" rx="8" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
+        <text x="340" y="790" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="var(--coral-text)">8. Testing &amp; validation</text>
+        <text x="340" y="808" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--coral-text)">Floor tests, edge cases</text>
+      </g>
+
+      <g>
+        <rect x="220" y="878" width="240" height="56" rx="8" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
+        <text x="340" y="896" text-anchor="middle" dominant-baseline="central" font-size="14" font-weight="500" fill="var(--coral-text)">9. Go-live &amp; iteration</text>
+        <text x="340" y="914" text-anchor="middle" dominant-baseline="central" font-size="12" fill="var(--coral-text)">Training, monitor, refine</text>
+      </g>
+    </svg>
+    <div class="legend">
+      <span><span class="dot d-plan"></span>Planning</span>
+      <span><span class="dot d-build"></span>Build</span>
+      <span><span class="dot d-deploy"></span>Deploy</span>
+    </div>
+  </div>
+
+  <section class="stage">
+    <p class="stage-index">Stage 1</p>
+    <span class="stage-tag tag-plan">Planning</span>
+    <h2>Site assessment and solutioning</h2>
+    <p>Before any hardware moves, this phase establishes what the deployment actually needs to solve. It's the "Solutioning" work of defining the solution and routes for a specific project before detailed design begins.</p>
+    <ul>
+      <li>What material moves where, how often, and under what deadline pressure — this becomes the basis for mission and priority logic later</li>
+      <li>Floor layout: aisle widths, ramps, doorways, blind corners, areas with heavy pedestrian or forklift traffic</li>
+      <li>Where charging infrastructure and staging areas will physically live</li>
+      <li>Network coverage requirements across the full operating area</li>
+      <li>Payload types and handling method — top-load, tugger/cart, lift, or conveyor interface</li>
+    </ul>
+    <p>Mistakes here don't surface until much later phases, so it's worth treating as its own gate rather than rushing into mapping.</p>
+  </section>
+
+  <section class="stage">
+    <p class="stage-index">Stage 2</p>
+    <span class="stage-tag tag-plan">Planning</span>
+    <h2>Infrastructure setup</h2>
+    <p>Physical, network, and per-robot configuration that has to exist before mapping can start.</p>
+    <ul>
+      <li>Install and verify WiFi coverage across the full route network, including overlap at handoff points between access points</li>
+      <li>Place charging docks — ideally distributed rather than centralized, sized against peak-hour demand versus charge time</li>
+      <li>Prep physical safety infrastructure that zones will later reference (existing floor markings, barriers near machinery)</li>
+      <li>Set up the fleet controller or server, on-prem or cloud, that robots and any orchestration layer will talk to</li>
+      <li>Configure each robot: network credentials, robot ID, safety parameters (max speed, footprint, sensor calibration), payload profile and drive parameters</li>
+    </ul>
+    <p>This is also where AMR configuration is set at the robot level — worth keeping conceptually distinct from map and mission configuration, which come later.</p>
+  </section>
+
+  <section class="stage">
+    <p class="stage-index">Stage 3</p>
+    <span class="stage-tag tag-build">Build</span>
+    <h2>Mapping (SLAM)</h2>
+    <p>The raw spatial substrate everything else gets layered on top of — purely for localization, with no inherent concept of zones or business logic.</p>
+    <ul>
+      <li>Manually drive or walk the robot through the full operating area to build the point cloud map</li>
+      <li>Run pose graph optimization (loop closure) on long corridors or loops where drift could accumulate — judged iteratively rather than automatically flagged</li>
+      <li>Validate map quality by driving it a second time and checking self-localization confidence, not just visual completeness</li>
+    </ul>
+    <p>Multiple bot types — lifters, pallet movers, tuggers — can typically share the same map without duplicate maps per zone.</p>
+  </section>
+
+  <section class="stage">
+    <p class="stage-index">Stage 4</p>
+    <span class="stage-tag tag-build">Build</span>
+    <h2>Map annotation</h2>
+    <p>This is where the raw map becomes operational — positions, behavior, and traffic rules layered on top of pure localization data.</p>
+    <ul>
+      <li><strong>Positions and stations:</strong> exact pickup, drop-off, docking, and charging points, each with entry-point orientation</li>
+      <li><strong>Behavioral zones:</strong> speed-limited zones, ramp zones, docking zones — always active based on location, like a school zone</li>
+      <li><strong>Traffic control (gates and exclusion zones):</strong> separate from behavioral zones, governing multi-bot access at single-lane or alternating-direction sections</li>
+      <li><strong>Forbidden and preferred zones:</strong> areas to avoid entirely versus areas to bias routing toward</li>
+    </ul>
+    <p>If fleets are mixed, this is also where zone access gets differentiated by robot type.</p>
+  </section>
+
+  <section class="stage">
+    <p class="stage-index">Stage 5</p>
+    <span class="stage-tag tag-build">Build</span>
+    <h2>Mission design</h2>
+    <p>Composing the annotated map into actual transport behavior.</p>
+    <ul>
+      <li>Build atomic actions first — go to position, dock, undock, wait, trigger I/O, request access to a resource — then compose missions from them</li>
+      <li>Design reusable sub-missions for common patterns (such as "go to charging station") rather than duplicating logic across missions</li>
+      <li>Choose the mission pattern per use case: <strong>taxi</strong> (on-demand, point-to-point), <strong>milk run</strong> (fixed loop, multiple stops), or <strong>bus</strong> (scheduled repeating route)</li>
+      <li>Bake in priority and interrupt behavior where needed — whether a mission can be preempted, and where in its route that's safe</li>
+    </ul>
+  </section>
+
+  <section class="stage">
+    <p class="stage-index">Stage 6</p>
+    <span class="stage-tag tag-build">Build</span>
+    <h2>Fleet management</h2>
+    <p>The multi-robot coordination layer that turns individual missions into a working fleet.</p>
+    <ul>
+      <li>Task allocation logic: how an incoming request gets assigned to a specific idle or nearby robot</li>
+      <li>Traffic arbitration at shared resources (the gates and exclusion zones from stage 4) — this is where contention and deadlock actually get tested</li>
+      <li>Charging and idle behavior: fleet management typically sends idle robots to charging stations and staging positions automatically, without touching robots locked into a user-defined mission</li>
+      <li>Priority and aging rules, if manual escalation needs to be supported</li>
+    </ul>
+  </section>
+
+  <section class="stage">
+    <p class="stage-index">Stage 7</p>
+    <span class="stage-tag tag-deploy">Deploy</span>
+    <h2>ERP integration</h2>
+    <p>Connecting the fleet to the business systems that actually drive demand.</p>
+    <ul>
+      <li>API hooks so an external system (an ERP such as SAP) can trigger a mission and receive status or completion updates back</li>
+      <li>Implicit priority computed from business data — due dates, line schedules, stock levels — rather than relying purely on manual escalation</li>
+      <li>Master data alignment: explicitly defining what's configured at this layer versus what belongs to map or mission configuration, since this is a common source of cross-team confusion</li>
+    </ul>
+  </section>
+
+  <section class="stage">
+    <p class="stage-index">Stage 8</p>
+    <span class="stage-tag tag-deploy">Deploy</span>
+    <h2>Testing and validation</h2>
+    <p>Proving the system works before it's handed over, and deliberately probing the cases that don't show up in a quick walkthrough.</p>
+    <ul>
+      <li>Test each mission manually on the floor before handing anything to the fleet or orchestration layer — final handover only happens after floor-testing confirms expected behavior</li>
+      <li>Test edge cases deliberately: two robots approaching the same gate simultaneously, a station occupied on arrival, a manual priority escalation mid-cycle</li>
+      <li>A dedicated validation pass, ahead of solutioning teams even touching the feature, is common practice for new capabilities before site release</li>
+    </ul>
+  </section>
+
+  <section class="stage">
+    <p class="stage-index">Stage 9</p>
+    <span class="stage-tag tag-deploy">Deploy</span>
+    <h2>Go-live and iteration</h2>
+    <p>Go-live is a phase, not an event — and it feeds back into the build stages rather than being a true end state.</p>
+    <ul>
+      <li><strong>Phased rollout:</strong> start with one robot on one route, confirm it holds under real conditions, then expand robot count and route complexity in stages</li>
+      <li><strong>On-site presence:</strong> a deployment engineer typically stays on-site for the first two to three weeks post-handover before support shifts fully to remote operations</li>
+      <li><strong>Baseline capture:</strong> record normal cycle times, blocked-robot frequency, and battery consumption early, so later drift can be told apart from normal variance</li>
+      <li><strong>Issue triage:</strong> frequency of issues (often ranging from daily to weekly depending on severity) and automated blocked-robot alerts help pinpoint which routes or zones need correction first</li>
+      <li><strong>Map and zone corrections:</strong> usually the first thing adjusted once real traffic patterns are visible — this loops directly back to stage 4</li>
+      <li><strong>Mission logic refinement:</strong> real request patterns often reveal that a mission built for average conditions doesn't hold at peak load, or that a demand-driven pattern should really be a fixed loop instead</li>
+      <li><strong>Recovery and edge cases:</strong> localization failures, station conflicts, and priority misuse tend to surface here rather than in testing, simply because weeks of real operation can't be fully simulated</li>
+      <li><strong>Operator and supervisor feedback:</strong> the people running the floor daily surface friction points — an override that's too many clicks away, an alert threshold miscalibrated for that line — that dashboards alone won't show</li>
+    </ul>
+  </section>
+
+  <footer>AMR deployment workflow &#183; nine stages, planning through iteration</footer>
+</div>
+
+<footer class="footer">ATI Flow documentation · working knowledge base</footer><footer class="footer">ATI Flow documentation · working knowledge base</footer></main></div></div><script src="./docs.js"></script></body></html>

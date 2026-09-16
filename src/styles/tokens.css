@@ -1,0 +1,86 @@
+/*
+  Ati Documentation System — design tokens.
+
+  Colours are taken from the existing Ati work: the teal in Ati-Flow-Logo.svg (#00A99D / #08B89D),
+  the documentation palette in old/styles.css, and the softer surface tones used by the Ati Flow
+  prototype in old/prototype/styles.css.
+*/
+
+:root {
+  /* Surfaces */
+  --color-background: #fbfbfa;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f5f7f6;
+  --color-surface-sunken: #f0f3f2;
+
+  /* Text */
+  --color-text: #1d2422;
+  --color-text-secondary: #4d5754;
+  --color-muted: #7d8783;
+  --color-faint: #9aa4a0;
+
+  /* Lines */
+  --color-border: #e3e7e5;
+  --color-border-strong: #d2d8d5;
+
+  /* Brand */
+  --color-primary: #0f8f87;
+  --color-primary-strong: #0b6f69;
+  --color-primary-bright: #00a99d;
+  --color-primary-soft: #e6f5f3;
+  --color-primary-pale: #f2faf9;
+  --color-primary-line: #c4e6e2;
+
+  /* Signals */
+  --color-amber: #b3720a;
+  --color-amber-soft: #fdf3e2;
+  --color-amber-line: #f2ddb8;
+  --color-danger: #b4372c;
+  --color-danger-soft: #fdeeec;
+  --color-danger-line: #f3d2cd;
+  --color-neutral-soft: #f0f2f1;
+
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+
+  --text-xs: 0.6875rem;
+  --text-sm: 0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.375rem;
+  --text-2xl: 1.75rem;
+  --text-3xl: 2.125rem;
+
+  --leading-tight: 1.25;
+  --leading-snug: 1.45;
+  --leading-normal: 1.7;
+
+  /* Spacing */
+  --space-2xs: 0.25rem;
+  --space-xs: 0.5rem;
+  --space-sm: 0.75rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.25rem;
+  --space-2xl: 3.25rem;
+  --space-3xl: 4.5rem;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-pill: 999px;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(20, 35, 31, 0.04);
+  --shadow-md: 0 4px 14px rgba(20, 35, 31, 0.06);
+  --shadow-lg: 0 18px 44px rgba(20, 35, 31, 0.12);
+
+  /* Layout */
+  --sidebar-width: 17.5rem;
+  --content-max: 62rem;
+  --prose-max: 46rem;
+  --topbar-height: 3.5rem;
+}
