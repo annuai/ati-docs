@@ -9,7 +9,7 @@
   status: 'current' | 'draft' | 'needs-confirmation'
 */
 
-import { p, h, list, flow, gap } from './blocks.js';
+import { p, h, list, flow, callout, gap } from './blocks.js';
 
 const G = 'old/ati-flow-glossary.html';
 const D = 'old/amr-deployment-workflow.html';
@@ -903,16 +903,47 @@ export const vocabulary = [
     id: 'v-fleet-supervisor',
     term: 'Fleet Supervisor',
     kind: 'term',
-    simple: 'The person responsible for one or more zones.',
+    simple:
+      'Someone who steps in when a robot has a problem — like a support engineer working the floor. Whether the job needs its own person is not settled.',
     technical:
-      'Fleet Monitor across their assigned zones with reassignment control. Manages robots within their zone, including marking for maintenance. View-only on Maps and Workflows. Integrations, Setup & Config and Debug are hidden.',
+      'Limited to managing robots when there are issues. They do not control anything else, and they are not given the data to control or manage anything else either.',
     usedIn: ['The role and permission model'],
-    note: 'Whether this user is required at all has not been settled. See [[users]]. Not to be confused with [[v-fleet-manager|Fleet Manager]], which is software.',
-    related: ['users', 'roles-and-permissions', 'v-operator', 'v-head-of-operations', 'v-fleet-manager'],
+    note: 'Whether this user is required at all has not been settled — see below. Not to be confused with [[v-fleet-manager|Fleet Manager]], which is software.',
+    blocks: [
+      h('What the job is'),
+      p(
+        'Narrow and reactive. A Fleet Supervisor handles robots that have run into trouble, and nothing more. The scope is deliberate: they are not given the data they would need to manage anything beyond that, so the role cannot quietly widen into general operations.'
+      ),
+      p('The closest comparison is a support engineer who works on the floor rather than remotely.'),
+      h('Whether the role is needed'),
+      p(
+        'This is genuinely undecided. The argument against it is straightforward: **[[v-operator|Operators]] already manage the robots when there is an issue.** If that is the whole of the Fleet Supervisor job, and the person already standing on the floor is doing it, a separate persona may not be necessary.'
+      ),
+      callout(
+        'Why it matters before it is decided',
+        'Keeping the role changes the permission model and the zone assignment logic — a Fleet Supervisor owns zones, which means zones need owners. Dropping it makes the [[users|user model]] three people rather than four.',
+        'gap'
+      ),
+      h('The earlier table says more than this'),
+      p(
+        'The permission table on [[roles-and-permissions]] gives the Fleet Supervisor a wider remit: Fleet Monitor across their assigned zones **with reassignment control**, managing robots within their zone including marking for maintenance, and view-only access to Maps and Workflows. That is more than issue handling, and more data than the current understanding describes.'
+      ),
+      gap(
+        'The two descriptions have not been reconciled. Either the earlier table is now too generous, or the role is broader than the current understanding suggests. Both are recorded here rather than one being chosen.'
+      )
+    ],
+    related: ['users', 'roles-and-permissions', 'v-operator', 'v-head-of-operations', 'v-fleet-manager', 'robot-states', 'wf-exceptions'],
     status: 'needs-confirmation',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [I]
+    revisions: [
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Narrowed to what the role actually is — handling robots with issues, and nothing else — and recorded the real argument against needing it: Operators already do that job.'
+      }
+    ],
+    sources: [TEAM, I]
   },
   {
     id: 'v-head-of-operations',

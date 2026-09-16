@@ -328,6 +328,11 @@ export const product = [
         date: '2026-09-16',
         author: 'Annuai',
         note: 'Solutions Architect added as the fourth user. This corrects the earlier reading that the role had become Ati-internal, and reconciles the user model with the four-role permission table.'
+      },
+      {
+        date: '2026-09-16',
+        author: 'Annuai',
+        note: 'Narrowed the Fleet Supervisor description to handling robots with issues, and replaced a speculative reason for questioning the role with the real one: Operators already do that job.'
       }
     ],
     sources: [TEAM, S.ia],
@@ -340,8 +345,8 @@ export const product = [
           text: 'The person physically present, day to day, working in one zone. They watch what the robots in their zone are doing and can raise a manual priority request, with the trade-off shown before they confirm.'
         },
         {
-          term: '[[v-fleet-supervisor|Fleet Supervisor]] — across a few zones',
-          text: 'Owns one or more zones, with reassignment control and the ability to manage the robots inside them. Sees what is configured without editing it. **Whether this user is required at all is not yet settled.**'
+          term: '[[v-fleet-supervisor|Fleet Supervisor]] — robots that need help',
+          text: 'Steps in when a robot has a problem, and does nothing else: they are not given the data to control or manage anything beyond that. Closest to a support engineer working the floor. **Whether this user is required at all is not yet settled.**'
         },
         {
           term: '[[v-head-of-operations|Supervisor]] — across the site',
@@ -358,7 +363,7 @@ export const product = [
       ),
       relationship([
         { label: 'Operator', to: 'v-operator', note: 'one zone — what is happening now' },
-        { label: 'Fleet Supervisor', to: 'v-fleet-supervisor', note: 'several zones — reassign and manage' },
+        { label: 'Fleet Supervisor', to: 'v-fleet-supervisor', note: 'robots in trouble — if the role is kept at all' },
         { label: 'Supervisor', to: 'v-head-of-operations', note: 'the whole site — approve and escalate' }
       ]),
       p(
@@ -366,7 +371,10 @@ export const product = [
       ),
       callout(
         'Fleet Supervisor is not confirmed',
-        'The middle user may or may not be needed. If a site is small enough that a Supervisor can cover every zone directly, the layer between them and the Operator may be unnecessary. This needs deciding before the role model is built on — it changes the shape of the permission model and the zone assignment logic.',
+        [
+          'The argument against the role is direct: **[[v-operator|Operators]] already manage the robots when there is an issue.** If handling robots in trouble is the whole of the Fleet Supervisor job, and the person already on the floor is doing it, a separate persona may not be needed.',
+          'It is worth settling early. Keeping the role means zones need owners, which shapes the permission model and the zone assignment logic. Dropping it makes this a three-user system.'
+        ],
         'gap'
       ),
       callout(
@@ -416,7 +424,10 @@ export const product = [
     blocks: [
       callout(
         'These four roles are the four users',
-        'The newly proposed system is designed around the same four people described here — see [[users]]. Two questions remain open: whether the Fleet Supervisor layer is needed at all, and whether the fourth should be called Solutions Architect or Configurator.',
+        [
+          'The newly proposed system is designed around the same four people described here — see [[users]]. Two questions remain open: whether the Fleet Supervisor layer is needed at all, and whether the fourth should be called Solutions Architect or Configurator.',
+          'One row is also under question. The current understanding of the [[v-fleet-supervisor|Fleet Supervisor]] is narrower than the table below: handling robots with issues, with no data to manage anything else. The table gives them reassignment control and view access to Maps and Workflows. The two have not been reconciled.'
+        ],
         'gap'
       ),
       h('The four roles'),

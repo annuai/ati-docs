@@ -27,7 +27,8 @@ export const openQuestions = [
       ),
       h('Questions the team has raised'),
       list([
-        '**Is a Fleet Supervisor required at all?** The newly proposed system has three [[users]], but whether the middle one is needed has not been settled. It changes the permission model and the zone assignment logic. See [[users]].',
+        '**Is a Fleet Supervisor required at all?** The role is limited to handling robots with issues — but [[v-operator|Operators]] already do that. If there is nothing else to the job, the persona may be unnecessary. See [[v-fleet-supervisor]].',
+        'Is the [[v-fleet-supervisor|Fleet Supervisor]] row in the permission table too generous? It grants reassignment control and view access to Maps and Workflows, which is more than the current understanding of the role describes.',
         '**Solutions Architect or Configurator?** Both names are in use for the fourth user and the wording needs finalising. See [[users]].',
         'How does the Solutions Architect relate to [[v-deployment-manager|Deployment Manager]], the tool Ati support engineers use to configure and deploy robots? The two describe closely related work.',
         'How does [[v-visa|VISA]] relate to the **gates** and **exclusion zones** in the deployment material — is it their implementation, or a separate mechanism?',

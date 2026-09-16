@@ -29,8 +29,19 @@ function renderToken(token, key) {
       </Link>
     );
   }
-  if (token.startsWith('**')) return <strong key={key}>{token.slice(2, -2)}</strong>;
-  if (token.startsWith('*')) return <em key={key}>{token.slice(1, -1)}</em>;
+  // Emphasis re-parses its contents, so a link inside bold or italic still resolves.
+  if (token.startsWith('**'))
+    return (
+      <strong key={key}>
+        <InlineText text={token.slice(2, -2)} />
+      </strong>
+    );
+  if (token.startsWith('*'))
+    return (
+      <em key={key}>
+        <InlineText text={token.slice(1, -1)} />
+      </em>
+    );
   if (token.startsWith('`')) return <code key={key}>{token.slice(1, -1)}</code>;
   return <Fragment key={key}>{token}</Fragment>;
 }
