@@ -61,9 +61,12 @@ export const product = [
       gap(
         'The company itself is still largely undocumented here: no founding, market, customer base, hardware line-up, product family or roadmap. The robot line is known only by the name printed on one render.'
       ),
+      p(
+        'Building both halves also means two documentation traditions in one company — requirement documents on the software side, a build list and a design risk analysis on the hardware side. See [[engineering-documents]].'
+      ),
       p('For the software half in detail, read [[ati-flow]].')
     ],
-    related: ['ati-flow', 'robot', 'orchestration', 'v-oem', 'v-sherpa']
+    related: ['ati-flow', 'robot', 'orchestration', 'v-oem', 'v-sherpa', 'engineering-documents']
   },
 
   {

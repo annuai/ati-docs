@@ -12,6 +12,8 @@ const S = {
   overview: 'old/index.html',
   faq: 'old/ati-flow-faq.html',
   prototype: 'old/prototype/',
+  prdV2: 'AtiFLOW v2.0.docx',
+  prdV3: 'PRD_AtiFLOW_v3.0.docx',
   robotImage: 'public/assets/ati-sherpa.png'
 };
 
@@ -158,35 +160,47 @@ export const concepts = [
   {
     id: 'processing-zone',
     title: 'Processing Zone',
-    summary: 'A configured area associated with a material-processing or operational context.',
+    summary: 'A prototype label whose relationship to Processing Area, Station and Staging Area is not yet settled.',
     simple:
-      'A processing zone is an area tied to what happens there — a part of the factory where a specific process is carried out — rather than simply a patch of floor.',
-    aliases: ['processing area'],
+      'Processing Zone is a label in the existing prototype. The source documents define Processing Area and Station, but do not define Processing Zone, so it should not be used as a catch-all name for either.',
+    aliases: ['zone selector'],
     status: 'needs-confirmation',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.glossary, S.prototype, S.faq],
+    revisions: [
+      {
+        date: '2026-09-17',
+        author: 'Annuai',
+        note: 'Separated the prototype-only Processing Zone label from the PRD-defined Processing Area and Station / Staging Area terms.'
+      }
+    ],
+    sources: [S.glossary, S.prototype, S.faq, S.prdV2, S.prdV3],
     blocks: [
       callout(
         'This definition is not settled',
-        'The glossary defines a processing zone as a configured area associated with a material-processing or operational context, and says explicitly that the Ati data model should be confirmed before treating it as identical to a geographical [[zone]].',
+        'The prototype uses **Processing Zone** above a selector. The supplied [[v-prd|PRDs]] use **Processing Area** for a plant-level configuration boundary, and **Station** as the canonical shared entity for material flow. Neither PRD defines Processing Zone.',
         'gap'
       ),
       h('What the sources actually show'),
       p(
-        'The Ati Flow prototype puts a **Processing Zone** label directly above a selector whose value is *Zone 24*. Read literally, that presents processing zone and zone as the same thing. The glossary says they may not be. Both readings are preserved here rather than resolved.'
+        'The Ati Flow prototype puts a **Processing Zone** label directly above a selector whose value is *Zone 24*. The v2 PRD defines a [[v-processing-area|Processing Area]] as the place where materials, containers, workflows, devices, machines and inventory are configured together. The v3 PRD defines [[v-station|Station]] as the shared entity that connects machines, workflows and staging material. These are not descriptions of the same thing.'
       ),
       p(
-        'The relationship between [[fleet|Fleet]], Processing Zone and geographical [[zone]] in the real data model is listed as an [[open-questions|open question]] in the source material itself.'
+        'A [[v-staging-area|Staging Area]] is also a station in the v3 material-flow model, but older material uses *staging area* for a place idle robots wait. That ambiguity needs its own decision rather than being hidden inside the word “zone”.'
       ),
       h('How to talk about it until it is confirmed'),
       list([
-        'Use *zone* when you mean an area of floor and who is responsible for it.',
-        'Use *processing zone* only when the material process happening in the area is the point.',
-        'Do not assume the two are interchangeable in the data model.'
-      ])
+        'Use [[v-processing-area|Processing Area]] for the v2 plant configuration boundary.',
+        'Use [[v-station|Station]] for the v3 canonical pickup, drop-off, workflow and machine entity.',
+        'Use [[v-staging-area|Staging Area]] only with its intended meaning made clear: material holding or idle-robot waiting.',
+        'Avoid using *Processing Zone* in new documentation until the product terminology is finalised.'
+      ]),
+      gap(
+        'Decide whether the prototype label should become **Processing Area**, remain **Processing Zone** with a distinct definition, or be removed. Also decide whether material-holding and idle-robot staging need separate names.',
+        'Terminology decision required'
+      )
     ],
-    related: ['zone', 'material-flow', 'open-questions']
+    related: ['zone', 'material-flow', 'open-questions', 'v-processing-area', 'v-station', 'v-staging-area']
   },
 
   {
@@ -726,5 +740,56 @@ export const concepts = [
       )
     ],
     related: ['wf-deployment', 'roles-and-permissions', 'integrations', 'map-annotation', 'd-keep-the-layers-clear']
+  },
+
+  {
+    id: 'engineering-documents',
+    title: 'Engineering documents',
+    summary: 'The documents a product is specified, built and risk-checked against — PRD, FRD, BOM and DFMEA.',
+    simple:
+      'Before a thing gets built, four questions get written down: what it should do, how it must behave, what it is made of, and how it could fail. Each question has its own document.',
+    aliases: ['PRD', 'FRD', 'BOM', 'DFMEA', 'requirements documents', 'product documentation'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [S.prdV2, S.prdV3, TEAM_C],
+    blocks: [
+      h('Why it matters'),
+      p(
+        'Ati is an [[v-oem|OEM]]: it builds both the robots and the software that runs them. That means two engineering traditions meet in the same company. The software side specifies in [[v-prd|PRDs]] and [[v-frd|FRDs]]; the hardware side builds against a [[v-bom|BOM]] and risk-checks the design with a [[v-dfmea|DFMEA]]. A new joiner is likely to be handed one of these and expected to know which question it answers.'
+      ),
+      p(
+        'This system is not a replacement for any of them. A PRD is a decision record written before the work; this documentation describes what exists afterwards. Where the two disagree, the PRD is the source and this page is the thing that needs correcting.'
+      ),
+      h('The four documents'),
+      table(
+        ['Document', 'The question it answers', 'Written', 'Side'],
+        [
+          ['[[v-prd|PRD]] — Product Requirements Document', 'What should this product do, and why?', 'Before design', 'Software and hardware'],
+          ['[[v-frd|FRD]] — Functional Requirements Document', 'How must the system behave, function by function?', 'After the PRD, before build', 'Software'],
+          ['[[v-bom|BOM]] — Bill of Materials', 'What is it made of, and how many of each?', 'During and after design', 'Hardware'],
+          ['[[v-dfmea|DFMEA]] — Design Failure Mode and Effects Analysis', 'How could this design fail, and what are we doing about it?', 'During design, revisited as it changes', 'Hardware']
+        ]
+      ),
+      p(
+        'They are not a sequence so much as four views of the same product. A PRD that no BOM can be costed from is incomplete; a DFMEA finding routinely sends a requirement back to the PRD.'
+      ),
+      h('What is established here'),
+      p(
+        'Two Ati PRDs are cited throughout this documentation — **AtiFLOW v2.0** and **PRD_AtiFLOW_v3.0**. They are the only Ati engineering documents this system has been traced to. Where they conflict, both readings are recorded and the conflict is listed in [[open-questions]] rather than resolved — see [[processing-zone]] and [[v-staging-area|staging area]] for two live examples.'
+      ),
+      callout(
+        'A BOM here is not always a parts list',
+        'The v3 PRD uses **BOM** inside the Structured [[v-requester-mode|requester mode]] flow — Machine → Station → Workflow → BOM — where it means the material a machine needs delivered, not the parts a robot is assembled from. Same acronym, two lists. See [[v-bom]].'
+      ),
+      h('What is not'),
+      gap(
+        'No FRD, BOM or DFMEA is present in this repository, and no source here records Ati’s own practice: whether functional detail is written separately from the PRDs or folded into them, who owns the hardware BOM, whether DFMEAs are run on the robot line, and where any of these documents live. The four definitions above are the general industry ones. Ati’s use of them is unconfirmed.'
+      ),
+      p(
+        'Until that is written down, treat this page as a map of the vocabulary rather than a description of how Ati works.'
+      )
+    ],
+    related: ['v-prd', 'v-frd', 'v-bom', 'v-dfmea', 'ati-robotics', 'robot', 'd-documentation-mirrors-the-product']
   }
 ];

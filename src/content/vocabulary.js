@@ -31,6 +31,8 @@ const F = 'old/ati-flow-faq.html';
 const P = 'old/prototype/';
 // Knowledge contributed directly by the Ati team rather than found in this folder.
 const TEAM = 'Ati team — noted September 2026';
+const V2 = 'AtiFLOW v2.0.docx';
+const V3 = 'PRD_AtiFLOW_v3.0.docx';
 
 export const vocabulary = [
   // ─────────────────────────────────────────────────────────────────────────
@@ -396,15 +398,194 @@ export const vocabulary = [
     id: 'v-staging-area',
     term: 'Staging area',
     kind: 'term',
-    simple: 'Somewhere robots wait when they have nothing to do.',
+    simple:
+      'A station used to hold material between production and consumption. Older material also uses this phrase for a place where idle robots wait.',
     technical:
-      'Staging areas are placed during infrastructure setup, and fleet management sends idle robots to staging positions automatically.',
-    usedIn: ['Deployment stages 2 and 6', 'The prototype navigation item "Staging Area"'],
-    related: ['wf-charging', 'fleet', 'v-wip', 'v-idle'],
-    status: 'draft',
+      'The v3 PRD calls Station the canonical entity and treats a staging area as a Station in the material-flow model. It can contain a grid of material cells and be chosen by priority for pickup or drop-off. Earlier deployment material uses “staging positions” for idle robots, so the two meanings must not be silently merged.',
+    usedIn: ['Material flow: Production Unit → Staging Area (Station) → Consumption Unit', 'Deployment Manager fill and empty configuration', 'The prototype navigation item "Staging Area"'],
+    note: 'This term has two source-backed meanings. Confirm whether idle-robot staging should be renamed `idle position` or `parking position` in product language.',
+    related: ['v-station', 'v-processing-area', 'v-multi-station-priority', 'v-fill-sequence', 'v-retrieval-order', 'wf-charging', 'fleet', 'v-wip', 'v-idle'],
+    status: 'needs-confirmation',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [D, P]
+    revisions: [
+      {
+        date: '2026-09-17',
+        author: 'Annuai',
+        note: 'Recorded the v3 material-holding meaning alongside the older idle-robot meaning, rather than presenting them as one concept.'
+      }
+    ],
+    sources: [D, P, V2, V3]
+  },
+  {
+    id: 'v-processing-area',
+    term: 'Processing area',
+    kind: 'term',
+    simple:
+      'A configured part of a plant where the material, containers, workflows, devices and inventory for that operation are set up together.',
+    technical:
+      'In AtiFLOW v2.0, a Processing Area is a plant-level configuration boundary. It contains machine details, linked stations, material and container configuration, workflows, device configuration and Processing Area inventory. This is different from the prototype’s unexplained Processing Zone selector.',
+    usedIn: ['AtiFLOW v2.0 — Central Configurations and Processing Areas Detailing'],
+    note: 'The v2 document uses `Processing Area`; the existing product prototype uses `Processing Zone`. Their relationship is not yet decided.',
+    related: ['v-processing-zone', 'processing-zone', 'v-station', 'v-staging-area', 'workflow', 'material-flow'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V2]
+  },
+  {
+    id: 'v-execution-source',
+    term: 'Execution source',
+    kind: 'term',
+    simple: 'The place or system that starts a workflow.',
+    technical:
+      'AtiFLOW v2.0 separates execution sources from workflow logic. A Requester Device, MES event, Dispatcher Device or Supervisor Device can be configured as an execution source, with its own visibility and workflow bindings.',
+    usedIn: ['AtiFLOW v2.0 — Execution Source Configuration'],
+    related: ['workflow', 'v-requester-mode', 'v-assignment-strategy', 'v-pickup-confirmation-mode'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V2]
+  },
+  {
+    id: 'v-requester-mode',
+    term: 'Requester mode',
+    kind: 'term',
+    simple: 'The version of the request screen a requester uses: Legacy or Structured.',
+    technical:
+      'The v3 PRD says an administrator selects the mode when creating a requester user. Legacy allows a requester to choose pickup station, material and drop station. Structured follows Machine → Station → Workflow → [[v-bom|BOM]], using configured station mapping. Both modes can run in the same deployment.',
+    usedIn: ['AtiFLOW v3.0 — Requester Operating Mode'],
+    related: ['v-execution-source', 'v-station', 'workflow', 'v-assignment-strategy', 'v-bom'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V3]
+  },
+  {
+    id: 'v-assignment-strategy',
+    term: 'Assignment strategy',
+    kind: 'term',
+    simple: 'The rule that decides when a trip is created and how its pickup, drop-off and material are known.',
+    technical:
+      'AtiFLOW v2.0 defines two choices: Request-based assignment, where the pickup, drop-off and material are already defined; and On-route Assignment, where they are determined from the execution trigger. The strategy is separate from the workflow itself.',
+    usedIn: ['AtiFLOW v2.0 — Workflow Configuration'],
+    related: ['trip', 'workflow', 'v-execution-source', 'v-request-based-assignment', 'v-on-route-assignment'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V2]
+  },
+  {
+    id: 'v-request-based-assignment',
+    term: 'Request-based assignment',
+    kind: 'term',
+    simple: 'A trip can be created as soon as someone makes the request because its key details are already known.',
+    technical:
+      'The pickup station, drop-off station and material are predefined in the request. AtiFLOW v2.0 describes the resulting behaviour as request created, then trip created immediately.',
+    usedIn: ['AtiFLOW v2.0 — Workflow Configuration and Requester Flow'],
+    related: ['v-assignment-strategy', 'trip', 'v-on-route-assignment'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V2]
+  },
+  {
+    id: 'v-on-route-assignment',
+    term: 'On-route assignment',
+    kind: 'term',
+    simple: 'The request exists first; the exact trip is decided when the robot reaches the relevant point in the process.',
+    technical:
+      'AtiFLOW v2.0 describes Dispatch Button and QR code scan as execution triggers for this strategy. For QR-based flows, the robot arrives, scans the code, reads trolley details and matches an active request before it executes the trip.',
+    usedIn: ['AtiFLOW v2.0 — Workflow Configuration and Requester Flow'],
+    related: ['v-assignment-strategy', 'trip', 'v-request-based-assignment', 'v-execution-source'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V2]
+  },
+  {
+    id: 'v-pickup-confirmation-mode',
+    term: 'Pickup confirmation mode',
+    kind: 'term',
+    simple: 'The setting that decides whether a pickup needs a person to confirm it.',
+    technical:
+      'At a Point Station or Staging Area, the v2 PRD provides Auto Confirmation or Manual Confirmation. Dispatcher involvement depends only on this setting: manual confirmation requires a dispatcher; automatic confirmation does not.',
+    usedIn: ['AtiFLOW v2.0 — Pickup Configuration'],
+    related: ['v-point-station', 'v-staging-area', 'v-execution-source', 'workflow'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V2]
+  },
+  {
+    id: 'v-point-station',
+    term: 'Point station',
+    kind: 'term',
+    simple: 'A station that represents one pickup or drop-off point, rather than a multi-cell staging area.',
+    technical:
+      'In the v3 PRD, handling granularity does not apply to a Point Station because it has no cells to enumerate. In v2, Point Station is one of the locations that can use auto or manual pickup confirmation.',
+    usedIn: ['AtiFLOW v2.0 — Pickup Confirmation Mode', 'AtiFLOW v3.0 — Workflow Handling Granularity'],
+    related: ['v-station', 'v-staging-area', 'v-pickup-confirmation-mode', 'v-handling-granularity'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V2, V3]
+  },
+  {
+    id: 'v-multi-station-priority',
+    term: 'Multi-station priority',
+    kind: 'term',
+    simple: 'An ordered list of stations the system tries one after another for the same material.',
+    technical:
+      'The v3 PRD changes material-to-staging mapping from one station to a priority-ordered list. For a drop, the system tries the first station with a free cell; for a pickup, the first station with an occupied cell. It falls through when a station is full or empty respectively.',
+    usedIn: ['AtiFLOW v3.0 — Multiple Station Mapping with Priority'],
+    related: ['v-station', 'v-staging-area', 'v-fill-sequence', 'v-retrieval-order', 'workflow'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V3]
+  },
+  {
+    id: 'v-fill-sequence',
+    term: 'Fill sequence',
+    kind: 'term',
+    simple: 'The order used to place material into the cells of a staging area.',
+    technical:
+      'The v3 PRD replaces a single FIFO/LIFO setting with Fill Sequence and Retrieval Order. Fill Sequence can follow rows, columns or any available cell, with separate line and cell order settings.',
+    usedIn: ['AtiFLOW v3.0 — Deployment Manager staging area configuration'],
+    related: ['v-staging-area', 'v-retrieval-order', 'v-handling-granularity', 'v-multi-station-priority'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V3]
+  },
+  {
+    id: 'v-retrieval-order',
+    term: 'Retrieval order',
+    kind: 'term',
+    simple: 'The order used to take material out of the cells of a staging area.',
+    technical:
+      'The v3 PRD defines Retrieval Order independently from Fill Sequence. It can follow arrival order (FIFO or LIFO), position by row or column, or any available cell.',
+    usedIn: ['AtiFLOW v3.0 — Deployment Manager staging area configuration'],
+    related: ['v-staging-area', 'v-fill-sequence', 'v-handling-granularity', 'v-multi-station-priority'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V3]
+  },
+  {
+    id: 'v-handling-granularity',
+    term: 'Handling granularity',
+    kind: 'term',
+    simple: 'Whether one workflow step handles one staging-area cell or every eligible cell in that area.',
+    technical:
+      'The v3 PRD defines this per pickup and drop leg: Single Cell creates one trip for the next eligible cell; Whole Area creates one trip per eligible cell in the selected staging area. It is meaningful only for a multi-cell staging area, not a Point Station.',
+    usedIn: ['AtiFLOW v3.0 — Workflow Handling Granularity'],
+    related: ['workflow', 'v-staging-area', 'v-point-station', 'v-fill-sequence', 'v-retrieval-order'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V3]
   },
   {
     id: 'v-orchestration',
@@ -557,14 +738,23 @@ export const vocabulary = [
     id: 'v-station',
     term: 'Station',
     kind: 'term',
-    simple: 'A named place where a robot picks something up, drops something off, or docks.',
-    usedIn: ['Map annotation', 'The prototype, as station identifiers S100 to S105 and a "Next Station" field'],
-    note: 'Station and position are used for overlapping ideas. No source distinguishes them precisely.',
-    related: ['v-position', 'map-annotation', 'trip', 'v-waypoint'],
-    status: 'draft',
+    simple: 'A named place in the system where work happens — such as a pickup, drop-off or staging point.',
+    technical:
+      'AtiFLOW v3.0 establishes Station as the canonical shared entity. A station can be selected by a requester, attached to a machine, mapped to a workflow and used as the staging area where material is held. The prototype also shows stations as map identifiers such as S100 to S105. Its relation to the older `position` term still needs confirmation.',
+    usedIn: ['AtiFLOW v3.0 — Machine → Station → Workflow', 'Map annotation', 'The prototype, as station identifiers S100 to S105 and a "Next Station" field'],
+    note: 'Station is now a defined product entity in the v3 PRD. Its exact relationship to `position` and the idle-robot meaning of `staging area` remains unresolved.',
+    related: ['v-position', 'map-annotation', 'trip', 'v-waypoint', 'v-staging-area', 'v-point-station', 'v-processing-area', 'v-requester-mode'],
+    status: 'needs-confirmation',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [D, P]
+    revisions: [
+      {
+        date: '2026-09-17',
+        author: 'Annuai',
+        note: 'Added the v3 PRD decision that Station is the canonical shared entity across requester, machine, workflow and material staging.'
+      }
+    ],
+    sources: [D, P, V3]
   },
   {
     id: 'v-dock',
@@ -869,16 +1059,23 @@ export const vocabulary = [
     id: 'v-processing-zone',
     term: 'Processing zone',
     kind: 'term',
-    simple: 'An area tied to a particular process rather than simply a patch of floor.',
+    simple: 'A label in the existing prototype for an area selector; its product meaning has not yet been defined.',
     technical:
-      'A configured area associated with a material-processing or operational context. The exact Ati data model should be confirmed before treating it as identical to a generic geographical zone.',
+      'The prototype sidebar labels a selector “Processing Zone” and shows “Zone 24”. The two supplied PRDs define Processing Area and Station / Staging Area, but do not define Processing Zone. It must not be treated as a synonym for either until the terminology decision is made.',
     usedIn: ['The prototype sidebar selector, above a value of "Zone 24"'],
-    note: 'The glossary flags this term as unconfirmed. Do not assume it is the same as a geographical zone.',
-    related: ['processing-zone', 'v-zone'],
+    note: 'Processing Zone is not defined by either supplied PRD. Confirm whether it should be retired, renamed Processing Area, or retained for a distinct concept.',
+    related: ['processing-zone', 'v-zone', 'v-processing-area', 'v-station', 'v-staging-area'],
     status: 'needs-confirmation',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [G, P, F]
+    revisions: [
+      {
+        date: '2026-09-17',
+        author: 'Annuai',
+        note: 'Separated the prototype-only Processing Zone label from the source-defined Processing Area and Station terms.'
+      }
+    ],
+    sources: [G, P, F, V2, V3]
   },
   {
     id: 'v-behavioural-zone',
@@ -1988,6 +2185,83 @@ export const vocabulary = [
     author: 'Annuai',
     added: '2026-09-16',
     sources: [P]
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // ENGINEERING DOCUMENTS
+  // ─────────────────────────────────────────────────────────────────────────
+
+  {
+    id: 'v-prd',
+    term: 'PRD',
+    expansion: 'Product Requirements Document',
+    kind: 'acronym',
+    simple: 'The document that says what a product should do, and why, before anyone builds it.',
+    technical:
+      'A statement of intent for a product or a release: the problem, the users, the behaviour expected of the system and the boundaries of scope. It describes the product from the outside — what it must do — rather than the implementation.',
+    usedIn: [
+      'AtiFLOW v2.0 and AtiFLOW v3.0 — the two supplied Ati Flow requirement documents this system is partly traced to'
+    ],
+    note: 'The two supplied PRDs are the only Ati requirement documents in evidence here, and they disagree in places — v3 renames and restructures parts of v2 rather than extending it. The documentation records both readings rather than treating the newer one as automatically correct.',
+    aliases: ['product requirements document', 'product spec', 'requirements document'],
+    related: ['engineering-documents', 'v-frd', 'v-bom', 'v-dfmea', 'ati-flow'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V2, V3, TEAM]
+  },
+  {
+    id: 'v-frd',
+    term: 'FRD',
+    expansion: 'Functional Requirements Document',
+    kind: 'acronym',
+    simple:
+      'The document that says how the system has to behave, function by function, so that the product does what the PRD asked for.',
+    technical:
+      'Where a [[v-prd|PRD]] states the intent, an FRD states the required behaviour: inputs, outputs, rules, states and conditions for each function, written so that an implementation can be checked against it. It is the layer between a product decision and a testable requirement.',
+    note: 'No Ati FRD is present in this repository, and no source here says whether Ati writes FRDs separately from its PRDs or folds functional detail into them. The definition above is the general one.',
+    aliases: ['functional requirements document', 'functional spec', 'functional specification'],
+    related: ['engineering-documents', 'v-prd', 'v-bom', 'v-dfmea'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [TEAM]
+  },
+  {
+    id: 'v-bom',
+    term: 'BOM',
+    expansion: 'Bill of Materials',
+    kind: 'acronym',
+    simple: 'The list of every part needed to build one thing, with how many of each.',
+    technical:
+      'A structured parts list for an assembly: components, quantities, part numbers and the sub-assemblies they roll up into. On the hardware side it is what a robot is built from; in a plant it is also what a machine consumes to produce one unit of output.',
+    usedIn: [
+      'AtiFLOW v3.0 — the Structured [[v-requester-mode|requester mode]] flow, Machine → Station → Workflow → BOM'
+    ],
+    note: 'The acronym carries two meanings in Ati material and they are not the same list. In the v3 PRD, BOM is a material-demand input to a request — what a machine needs delivered. In hardware engineering, a BOM is the build list for a product. Which of the two the Structured requester flow resolves against, and whether it comes from an [[v-erp|ERP]], is not documented.',
+    aliases: ['bill of materials', 'parts list'],
+    related: ['engineering-documents', 'v-requester-mode', 'v-sku', 'material-flow', 'v-prd', 'v-dfmea'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [V3, TEAM]
+  },
+  {
+    id: 'v-dfmea',
+    term: 'DFMEA',
+    expansion: 'Design Failure Mode and Effects Analysis',
+    kind: 'acronym',
+    simple:
+      'A structured way of asking, before anything is built, how a design could fail — and deciding what to change about the worst answers.',
+    technical:
+      'A design-stage analysis that enumerates the ways each function of a design can fail, the effect and cause of each failure, and the controls already in place. Severity, occurrence and detection are rated and combined into a risk priority, which drives the actions taken back into the design. It is a living document, revisited as the design changes.',
+    note: 'No DFMEA is present in this repository. Whether Ati runs DFMEAs on its robot hardware, who owns them and how they relate to the [[v-safety-zone|safety]] parameters configured per robot is not documented here.',
+    aliases: ['design failure mode and effects analysis', 'FMEA', 'design FMEA', 'failure mode and effects analysis'],
+    related: ['engineering-documents', 'v-prd', 'v-bom', 'v-safe-stop', 'robot'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [TEAM]
   },
 
   // ─────────────────────────────────────────────────────────────────────────
