@@ -166,9 +166,21 @@ export const ui = [
     states: ['Not documented.'],
     blocks: [
       p('For what annotation actually involves, see [[map-annotation]]. For how a map is produced, see [[map]] and [[wf-deployment]].'),
+      callout(
+        'The map shown here is not the map an autonomy engineer means',
+        'What a [[v-solutions-architect|Solutions Architect]] works with on this surface is the floor plan with the drawn routes on it. What an autonomy engineer calls a map is the localisation substrate underneath. Both are called “map” on purpose, for simplicity. See [[map]].',
+        'gap'
+      ),
       gap('No editor layout, tool palette or interaction model is documented.')
     ],
-    related: ['map', 'map-annotation', 'traffic-control', 'ui-workflows']
+    revisions: [
+      {
+        date: '2026-09-17',
+        author: 'Annuai',
+        note: 'Noted that the map on this surface — floor plan plus drawn routes — is not the same artefact an autonomy engineer calls a map.'
+      }
+    ],
+    related: ['map', 'map-annotation', 'v-solutions-architect', 'traffic-control', 'ui-workflows']
   },
 
   {

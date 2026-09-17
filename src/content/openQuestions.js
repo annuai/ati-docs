@@ -30,6 +30,7 @@ export const openQuestions = [
         '**Is a Fleet Supervisor required at all?** The role is limited to handling robots with issues — but [[v-operator|Operators]] already do that. If there is nothing else to the job, the persona may be unnecessary. See [[v-fleet-supervisor]].',
         'Is the [[v-fleet-supervisor|Fleet Supervisor]] row in the permission table too generous? It grants reassignment control and view access to Maps and Workflows, which is more than the current understanding of the role describes.',
         '**Solutions Architect or Configurator?** Both names are in use for the fourth user and the wording needs finalising. See [[users]].',
+        '**Should a “map” stay one word?** Autonomy engineers and Solutions Architects mean different things by it. The shared name is deliberate — one word is simpler to learn — but whether the simplicity is worth the ambiguity has not been decided. See [[map]].',
         'How does the Solutions Architect relate to [[v-deployment-manager|Deployment Manager]], the tool Ati support engineers use to configure and deploy robots? The two describe closely related work.',
         'How does [[v-visa|VISA]] relate to the **gates** and **exclusion zones** in the deployment material — is it their implementation, or a separate mechanism?',
         'How much of [[v-fleet-manager|Fleet Manager]] has Ati Flow already absorbed, and on what timeline?'
@@ -51,6 +52,10 @@ export const openQuestions = [
           [
             'Information architecture',
             'The documentation lists Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config and Debug. The prototype navigation shows Dashboard, Live Status, Analytics, AMR Trips, Staging Area and WIP Inventory. Neither acknowledges the other. See [[information-architecture]].'
+          ],
+          [
+            'One word, two artefacts: "map"',
+            'To an autonomy engineer a [[map]] is the localisation substrate. To a [[v-solutions-architect|Solutions Architect]] it is the floor plan with the drawn routes on it, as [[ui-maps|Ati Flow]] presents it. Unlike the other entries in this table, this one is a deliberate choice rather than an accident — but it is still unresolved.'
           ],
           [
             'Names one word apart',
@@ -106,6 +111,11 @@ export const openQuestions = [
         date: '2026-09-16',
         author: 'Annuai',
         note: 'Closed the question of whether the Solutions Architect is still a user — he is. Replaced it with the naming question: Solutions Architect or Configurator.'
+      },
+      {
+        date: '2026-09-17',
+        author: 'Annuai',
+        note: 'Added the unresolved question of whether “map” should keep covering two different artefacts.'
       }
     ],
     related: ['users', 'robot-states', 'processing-zone', 'trip', 'task', 'information-architecture']

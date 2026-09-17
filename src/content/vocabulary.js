@@ -439,11 +439,19 @@ export const vocabulary = [
     technical:
       'The spatial substrate used for localization and operational behaviour. Purely for localization, with no inherent concept of zones or business logic.',
     usedIn: ['The Maps surface', 'Deployment stage 3'],
-    related: ['map', 'v-map-annotation', 'v-slam'],
+    note: 'Two different things are called a map. To an autonomy engineer it is the localisation substrate; to a [[v-solutions-architect|Solutions Architect]] it is the floor plan with the drawn routes on it, as Ati Flow shows it. The shared name is deliberate; whether to keep it is unresolved. See [[map]].',
+    related: ['map', 'v-map-annotation', 'v-map-creation', 'v-slam', 'ui-maps'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [G, D]
+    revisions: [
+      {
+        date: '2026-09-17',
+        author: 'Annuai',
+        note: 'Flagged the two meanings of “map” — the autonomy sense and the Solutions Architect sense.'
+      }
+    ],
+    sources: [TEAM, G, D]
   },
   {
     id: 'v-map-annotation',

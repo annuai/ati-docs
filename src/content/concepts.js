@@ -1,5 +1,8 @@
 import { p, h, list, table, callout, gap, chain, flow, relationship, figure, defs } from './blocks.js';
 
+// Knowledge contributed directly by the Ati team rather than found in this folder.
+const TEAM_C = 'Ati team — noted September 2026';
+
 const S = {
   glossary: 'old/ati-flow-glossary.html',
   architecture: 'old/ati-flow-architecture.html',
@@ -196,13 +199,40 @@ export const concepts = [
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.glossary, S.deployment, S.architecture],
+    revisions: [
+      {
+        date: '2026-09-17',
+        author: 'Annuai',
+        note: 'Recorded that autonomy engineers and Solutions Architects mean different things by “map”, that the shared name is deliberate, and that whether to keep it is unresolved.'
+      }
+    ],
+    sources: [TEAM_C, S.glossary, S.deployment, S.architecture],
     blocks: [
       h('Why it matters'),
       p(
         'The map is the layer everything else is stacked on. It is built purely for localization and has no inherent concept of zones or business logic — those are added afterwards during [[map-annotation|map annotation]].'
       ),
       p('Of the four product primitives, the map answers: *where can the robot move, and what rules apply there?*'),
+      h('Two different things are called a map'),
+      p('The word does double duty, and the two meanings are not the same thing:'),
+      defs([
+        {
+          term: 'A map, to an autonomy engineer',
+          text: 'The localisation substrate. A point cloud the robot uses to work out where it is standing, with no routes, no rules and no business meaning attached. This is the sense the rest of this page describes.'
+        },
+        {
+          term: 'A map, to a [[v-solutions-architect|Solutions Architect]]',
+          text: 'What Ati Flow shows them: the floor plan with the drawn routes on it — the thing they look at and work with when setting a site up. See [[ui-maps|the Maps surface]].'
+        }
+      ]),
+      p(
+        'They carry the same name on purpose, on the grounds that one word is simpler to learn than two. The cost is that an autonomy engineer and a Solutions Architect can talk about “the map” for a while before either notices they mean different things.'
+      ),
+      callout(
+        'Whether to keep one word is unresolved',
+        'Using one name keeps the product easy to explain. Splitting them would make the two layers explicit, at the cost of vocabulary most users do not need. This has not been decided. See [[open-questions]].',
+        'gap'
+      ),
       h('How it is built'),
       flow([
         {

@@ -202,6 +202,7 @@ directly, the entry cites them rather than a file, so a reader can always tell w
 | `Users` | That the newly proposed system has three users — Operator, Fleet Supervisor, Supervisor — and that whether Fleet Supervisor is required is unconfirmed. | Ati team, September 2026 |
 | `Users`, `Solutions Architect` (revised) | That the Solutions Architect is the fourth user, not an Ati-internal job: he sets up the maps and everything else required to deploy a fleet at a new site. Also called the Configurator; the wording is not final. | Ati team, September 2026 |
 | `Fleet Supervisor` (revised) | That the role is limited to handling robots with issues, with no data to manage anything else — closest to a floor-based support engineer — and that the case against needing it is that Operators already do that job. | Ati team, September 2026 |
+| `Map` (revised) | That “map” covers two different artefacts — the autonomy localisation substrate, and the floor plan with drawn routes that Ati Flow shows a Solutions Architect — that the shared name is a deliberate simplification, and that whether to keep it is unresolved. | Ati team, September 2026 |
 
 Anything sourced this way should be treated exactly like a file-sourced fact: cited, and corrected in
 place if it turns out to be wrong.
