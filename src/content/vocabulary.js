@@ -38,6 +38,37 @@ export const vocabulary = [
   // ─────────────────────────────────────────────────────────────────────────
 
   {
+    id: 'v-aiot',
+    term: 'AIoT',
+    expansion: 'Artificial Intelligence of Things',
+    kind: 'acronym',
+    simple: 'The combination of AI and IoT, used here to connect a robot workflow to physical devices and signals.',
+    technical:
+      'A Workflow Builder node group for physical-device interactions: Bluetooth connection, output control, input/output reset and waiting for an input signal.',
+    usedIn: ['[[ui-workflow-builder|Workflow Builder]]'],
+    related: ['ui-workflow-builder', 'v-rfid'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [TEAM]
+  },
+  {
+    id: 'v-rfid',
+    term: 'RFID',
+    expansion: 'Radio-Frequency Identification',
+    kind: 'acronym',
+    simple: 'A way for the system to recognise something using a radio tag, without a person pressing a button.',
+    technical:
+      'One automatic confirmation option in Workflow Builder. It can be selected on a Confirm node instead of manual confirmation through a Dispatch Button.',
+    usedIn: ['[[ui-workflow-builder|Workflow Builder]] — Confirm node'],
+    related: ['ui-workflow-builder', 'v-aiot'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [TEAM]
+  },
+
+  {
     id: 'v-amr',
     term: 'AMR',
     expansion: 'Autonomous Mobile Robot',
@@ -600,7 +631,7 @@ export const vocabulary = [
     technical:
       'A spatial sequence connecting a start position to a destination. A path describes where the robot should travel but does not necessarily specify the exact timing or velocity at every point.',
     usedIn: ['Navigation', 'Route planning', 'VDA 5050'],
-    related: ['v-path-planning', 'v-trajectory', 'v-waypoint', 'v-route'],
+    related: ['v-path-planning', 'v-trajectory', 'v-waypoint'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-17',
@@ -1570,7 +1601,7 @@ export const vocabulary = [
     technical:
       'A documented interface that specifies how software systems can request data, send commands, or exchange information.',
     usedIn: ['Integrations', 'ERP/WMS/MES connectivity', 'Software architecture'],
-    related: ['v-webhook', 'v-event', 'v-message', 'v-protocol'],
+    related: ['v-webhook', 'v-event', 'v-message', 'v-vda-5050'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-17',
@@ -1599,7 +1630,7 @@ export const vocabulary = [
     technical:
       'A publish-subscribe messaging protocol commonly used for IoT and machine-to-machine communication where devices publish messages to topics and subscribers receive relevant messages.',
     usedIn: ['IoT', 'Robot telemetry', 'Connected systems'],
-    related: ['v-message', 'v-event', 'v-protocol'],
+    related: ['v-message', 'v-event', 'v-vda-5050'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-17',
@@ -1627,7 +1658,7 @@ export const vocabulary = [
     technical:
       'A structured unit of information exchanged between software components, devices, or services through a communication mechanism.',
     usedIn: ['Robot communication', 'Integrations', 'VDA 5050'],
-    related: ['v-event', 'v-api', 'v-protocol', 'v-vda-5050'],
+    related: ['v-event', 'v-api', 'v-vda-5050'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-17',
@@ -1660,7 +1691,7 @@ export const vocabulary = [
     technical:
       'A VDA 5050 message containing the robot’s current state and execution information for the central control system.',
     usedIn: ['VDA 5050', 'Robot monitoring'],
-    related: ['v-vda-5050', 'v-vda-5050-order', 'v-robot-state'],
+    related: ['v-vda-5050', 'v-vda-5050-order', 'robot-states'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-17',
@@ -1674,7 +1705,7 @@ export const vocabulary = [
     technical:
       'A VDA 5050 mechanism for requesting an immediate action independently of the normal order execution flow.',
     usedIn: ['VDA 5050', 'Robot control'],
-    related: ['v-vda-5050', 'v-vda-5050-order', 'v-pause'],
+    related: ['v-vda-5050', 'v-vda-5050-order'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-17',
