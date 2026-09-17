@@ -309,6 +309,19 @@ Settings, if Vercel asks:
 `vercel.json` rewrites every path to `/index.html` so that deep links such as
 `/concepts/fleet` resolve on a full page load rather than 404ing.
 
+## Icons
+
+[Iconoir](https://iconoir.com), through `iconoir-react`. Every icon is registered under a semantic
+name in [`src/components/content/Icon.jsx`](src/components/content/Icon.jsx), which is the only file
+that imports from the icon library:
+
+```jsx
+<Icon name="search" size={16} />
+```
+
+Icons are decorative by default — hidden from assistive technology, because each use site already
+carries a visible or screen-reader label.
+
 ## Accessibility
 
 Semantic landmarks, a skip link, visible focus rings, keyboard-navigable search, labelled form

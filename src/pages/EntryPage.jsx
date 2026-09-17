@@ -6,6 +6,7 @@ import { UIScreenPage } from '../templates/UIScreenPage.jsx';
 import { DecisionPage } from '../templates/DecisionPage.jsx';
 import { NotFoundPage } from './NotFoundPage.jsx';
 import { getSectionEntry, isVocabulary, learningPath } from '../content/index.js';
+import { Icon } from '../components/content/Icon.jsx';
 
 /*
   One route for every documentation entry.
@@ -30,13 +31,17 @@ function PathNav({ entry }) {
     <nav className="page-nav" aria-label="Learning path">
       {previous ? (
         <Link className="page-nav__link" to={previous.path}>
-          <span>Previous</span>
+          <span>
+            <Icon name="arrow-left" size={13} /> Previous
+          </span>
           <b>{previous.title}</b>
         </Link>
       ) : null}
       {next ? (
         <Link className="page-nav__link page-nav__link--next" to={next.path}>
-          <span>Next</span>
+          <span>
+            Next <Icon name="arrow-right" size={13} />
+          </span>
           <b>{next.title}</b>
         </Link>
       ) : null}

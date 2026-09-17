@@ -214,9 +214,10 @@
 }
 
 .search__icon {
+  display: inline-flex;
+  align-items: center;
+  flex: 0 0 auto;
   color: var(--color-faint);
-  font-size: var(--text-md);
-  line-height: 1;
 }
 
 .search__input {
@@ -674,6 +675,10 @@
   color: var(--color-amber);
 }
 
+.workflow__step--decision .workflow__marker > * {
+  transform: rotate(-45deg);
+}
+
 .workflow__step--outcome .workflow__marker {
   border-color: var(--color-primary-line);
   background: var(--color-primary-soft);
@@ -849,13 +854,13 @@
   display: none;
 }
 
-.accordion > summary::before {
-  content: '›';
+.accordion__caret {
+  flex: 0 0 auto;
   color: var(--color-muted);
   transition: transform 0.15s ease;
 }
 
-.accordion[open] > summary::before {
+.accordion[open] .accordion__caret {
   transform: rotate(90deg);
 }
 
@@ -1008,7 +1013,9 @@ a.card:hover {
 }
 
 .page-nav__link span {
-  display: block;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
   font-family: var(--font-mono);
   font-size: var(--text-xs);
   text-transform: uppercase;
@@ -1018,6 +1025,10 @@ a.card:hover {
 
 .page-nav__link--next {
   text-align: right;
+}
+
+.page-nav__link--next span {
+  justify-content: flex-end;
 }
 
 .page-nav__link b {
@@ -1208,6 +1219,8 @@ a.card:hover {
 }
 
 .start-list__chevron {
+  display: inline-flex;
+  align-items: center;
   color: var(--color-faint);
 }
 

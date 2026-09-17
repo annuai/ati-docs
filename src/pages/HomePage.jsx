@@ -3,6 +3,7 @@ import { SectionHeader } from '../components/content/SectionHeader.jsx';
 import { ContentCard } from '../components/content/ContentCard.jsx';
 import { Relationship } from '../components/content/DiagramBlock.jsx';
 import { sections, entriesBySection, learningPath, getEntry } from '../content/index.js';
+import { Icon } from '../components/content/Icon.jsx';
 
 const startHere = [
   { id: 'gs-what-are-we-building', label: 'What is Ati?' },
@@ -47,8 +48,8 @@ export function HomePage() {
                 <span className="start-list__title">{entry.title}</span>
                 <span className="start-list__summary">{entry.summary}</span>
               </span>
-              <span className="start-list__chevron" aria-hidden="true">
-                &rsaquo;
+              <span className="start-list__chevron">
+                <Icon name="chevron-right" size={16} />
               </span>
             </Link>
           </li>

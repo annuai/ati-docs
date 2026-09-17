@@ -2,6 +2,7 @@ import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { search } from '../../data/searchIndex.js';
 import { Tag } from '../content/Tag.jsx';
+import { Icon } from '../content/Icon.jsx';
 
 /*
   Global search.
@@ -82,8 +83,8 @@ export function Search({ placeholder = 'Search documentation', autoFocusKey = tr
   return (
     <div className="search" ref={containerRef}>
       <div className="search__field">
-        <span className="search__icon" aria-hidden="true">
-          &#9906;
+        <span className="search__icon">
+          <Icon name="search" size={16} />
         </span>
         <label className="visually-hidden" htmlFor={listId}>
           Search the Ati Documentation System

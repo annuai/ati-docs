@@ -4,6 +4,7 @@ import { PageHeader } from '../components/content/PageHeader.jsx';
 import { ConceptCard } from '../components/content/ConceptCard.jsx';
 import { NotFoundPage } from './NotFoundPage.jsx';
 import { entriesBySection, sectionsById } from '../content/index.js';
+import { Icon } from '../components/content/Icon.jsx';
 
 /** The index for one documentation section. Built entirely from the content registry. */
 export function SectionPage() {
@@ -31,8 +32,8 @@ export function SectionPage() {
                   <span className="start-list__title">{entry.title}</span>
                   <span className="start-list__summary">{entry.summary}</span>
                 </span>
-                <span className="start-list__chevron" aria-hidden="true">
-                  &rsaquo;
+                <span className="start-list__chevron">
+                  <Icon name="chevron-right" size={16} />
                 </span>
               </Link>
             </li>

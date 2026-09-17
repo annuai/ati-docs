@@ -1,10 +1,18 @@
 import { InlineText } from '../content/InlineText.jsx';
 import { Tag } from '../content/Tag.jsx';
+import { Icon } from '../content/Icon.jsx';
 
 /** One step of a workflow. `kind` is 'step' (default), 'decision' or 'outcome'. */
 export function WorkflowStep({ step, index, isLast }) {
   const kind = step.kind || 'step';
-  const marker = kind === 'decision' ? '?' : kind === 'outcome' ? '✓' : index + 1;
+  const marker =
+    kind === 'decision' ? (
+      <Icon name="question" size={14} />
+    ) : kind === 'outcome' ? (
+      <Icon name="check" size={14} />
+    ) : (
+      index + 1
+    );
 
   return (
     <li className={`workflow__step workflow__step--${kind}`}>

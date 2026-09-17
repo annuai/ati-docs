@@ -125,6 +125,22 @@ Inline markup inside any string: `**bold**`, `*italic*`, `` `code` ``, `[[entry-
 `id` must be unique across the whole system — the inline link syntax resolves against a single
 global registry.
 
+## Icons
+
+Icons come from [Iconoir](https://iconoir.com) via `iconoir-react`, and every one is registered in
+`src/components/content/Icon.jsx` under a semantic name:
+
+```jsx
+<Icon name="chevron-right" size={16} />
+```
+
+Never import from `iconoir-react` anywhere else, and never use a Unicode glyph as an icon. Adding a
+new one means adding a line to the `glyphs` map in `Icon.jsx` — that file is the whole icon set, so
+swapping libraries later is a single-file change.
+
+Icons are decorative by default and hidden from assistive technology. Pass `label` only when an
+icon carries meaning nothing else on screen conveys.
+
 ## Cross-linking
 
 A new entry should not be an island. When adding one:

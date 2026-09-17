@@ -4,6 +4,7 @@ import { Breadcrumbs } from '../components/navigation/Breadcrumbs.jsx';
 import { PageHeader } from '../components/content/PageHeader.jsx';
 import { GlossaryList } from '../components/glossary/GlossaryList.jsx';
 import { entriesBySection } from '../content/index.js';
+import { Icon } from '../components/content/Icon.jsx';
 
 const filters = [
   { id: 'all', label: 'All' },
@@ -42,8 +43,8 @@ export function VocabularyPage() {
       <div className="glossary-controls">
         <div className="search">
           <div className="search__field">
-            <span className="search__icon" aria-hidden="true">
-              &#9906;
+            <span className="search__icon">
+              <Icon name="search" size={16} />
             </span>
             <label className="visually-hidden" htmlFor="vocabulary-filter">
               Filter vocabulary
