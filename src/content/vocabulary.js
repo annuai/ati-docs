@@ -99,6 +99,55 @@ export const vocabulary = [
     added: '2026-09-16',
     sources: [TEAM]
   },
+    {
+    id: 'v-vda-5050',
+    term: 'VDA 5050',
+    kind: 'jargon',
+    simple:
+      'A standard way for a fleet control system and mobile robots to communicate with each other.',
+    technical:
+      'An interface for exchanging job and status data between a central fleet control system and mobile robots. It is designed to allow heterogeneous fleets from different manufacturers to operate with a shared control system. VDA 5050 version 3.0.0, released in March 2026, also supports higher-autonomy mobile robots through concepts such as zones and path sharing.',
+    aliases: ['VDA5050', 'VDA 5050 interface', 'VDA 5050 standard'],
+    usedIn: [
+      'Robot-to-fleet-controller communication',
+      'Multi-vendor mobile robot deployments',
+      'Discussions about interoperability and fleet control'
+    ],
+    note:
+      'VDA 5050 is a communication interface, not a safety standard and not the traffic-management logic itself. The current version is 3.0.0.',
+    related: ['v-amr', 'v-fleet-controller', 'v-fleet-manager', 'v-orchestration', 'v-massrobotics'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [TEAM]
+  },
+  {
+    id: 'v-massrobotics',
+    term: 'MassRobotics AMR Interoperability Standard',
+    kind: 'jargon',
+    simple:
+      'A common format that lets robots from different manufacturers share basic information about themselves and what they are doing.',
+    technical:
+      'An interoperability standard for autonomous mobile robots and other automated vehicles that defines a common way to share information such as robot identity, manufacturer and model, location, destination, speed, direction, operational state, and availability. It is primarily intended for interoperability and situational awareness rather than fleet management, navigation, or safety.',
+    aliases: [
+      'MassRobotics standard',
+      'MassRobotics AMR Standard',
+      'AMR Interoperability Standard',
+      'MassRobotics Interoperability Standard'
+    ],
+    usedIn: [
+      'Multi-vendor AMR interoperability',
+      'Sharing robot status and location information',
+      'Discussions about common robot data formats'
+    ],
+    note:
+      'The MassRobotics AMR Interoperability Standard is different from VDA 5050. MassRobotics focuses on sharing basic operational information, while VDA 5050 defines a communication interface between mobile robots and a central fleet control system. The MassRobotics working group has been turned over to ISO and its working-group meetings are currently suspended.',
+    related: ['v-amr', 'v-vda-5050', 'v-fleet-manager', 'v-fleet-controller'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-17',
+    sources: [TEAM]
+  },
   {
     id: 'v-deployment-manager',
     term: 'Deployment Manager',
