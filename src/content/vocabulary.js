@@ -33,6 +33,9 @@ const P = 'old/prototype/';
 const TEAM = 'Ati team — noted September 2026';
 const V2 = 'AtiFLOW v2.0.docx';
 const V3 = 'PRD_AtiFLOW_v3.0.docx';
+// Knowledge supplied directly in conversation rather than found in this folder.
+const MOM = 'Suryajit (Product Manager) — Ati Flow system-understanding meeting, 18 September 2026';
+const ID1 = 'Operations Excellence lead — Industrial Design 1:1, September 2026';
 
 export const vocabulary = [
   // ─────────────────────────────────────────────────────────────────────────
@@ -237,17 +240,27 @@ export const vocabulary = [
       'Used internally by Ati support engineers to configure and deploy the bots. It is one of the three parts [[ati-flow|Ati Flow]] brings together, alongside [[v-fleet-manager|Fleet Manager]] and an orchestration layer.',
     aliases: ['deployment manager', 'DM'],
     usedIn: ['Ati support engineers, when configuring and deploying robots'],
-    note: 'An Ati-internal tool, not something a customer operates. Compare [[v-fleet-manager|Fleet Manager]], which runs the fleet on site.',
+    note: 'An Ati-internal tool, not something a customer operates. Compare [[v-fleet-manager|Fleet Manager]], which runs the fleet on site. Version 5.4 was found to increase the number of steps needed for tasks the previous version did in fewer — see the gap below.',
     blocks: [
       gap(
         'What Deployment Manager contains screen by screen, and how it maps onto the nine stages of the [[wf-deployment|deployment workflow]], is not documented. Nor is its relationship to the [[v-solutions-architect|Solutions Architect]], the [[users|user]] who sets a new site up — the two describe closely related work.'
+      ),
+      gap(
+        'Testing found that version 5.4 unexpectedly increased the number of steps required to perform tasks that an earlier version did in fewer. No screen-by-screen information architecture exists yet to show why — mapping one out for both Deployment Manager and Fleet Manager is a stated next step.'
       )
     ],
     related: ['ati-flow', 'v-fleet-manager', 'wf-deployment', 'v-solutions-architect', 'wf-configuration'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [TEAM]
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added the Industrial Design 1:1 finding that version 5.4 increased the number of steps needed for tasks compared to the previous version, and flagged the planned information-architecture mapping exercise as the way to pin down why.'
+      }
+    ],
+    sources: [TEAM, ID1]
   },
   {
     id: 'v-wms',
@@ -424,14 +437,88 @@ export const vocabulary = [
     simple:
       'A configured part of a plant where the material, containers, workflows, devices and inventory for that operation are set up together.',
     technical:
-      'In AtiFLOW v2.0, a Processing Area is a plant-level configuration boundary. It contains machine details, linked stations, material and container configuration, workflows, device configuration and Processing Area inventory. This is different from the prototype’s unexplained Processing Zone selector.',
-    usedIn: ['AtiFLOW v2.0 — Central Configurations and Processing Areas Detailing'],
-    note: 'The v2 document uses `Processing Area`; the existing product prototype uses `Processing Zone`. Their relationship is not yet decided.',
-    related: ['v-processing-zone', 'processing-zone', 'v-station', 'v-staging-area', 'workflow', 'material-flow'],
-    status: 'needs-confirmation',
+      'In AtiFLOW v2.0, a Processing Area is a plant-level configuration boundary. It contains machine details, linked stations, material and container configuration, workflows, device configuration and Processing Area inventory. Its system function is to segregate a relevant subset of Plant Master Data into a local material list for that operation.',
+    usedIn: ['AtiFLOW v2.0 — Central Configurations and Processing Areas Detailing', 'The prototype sidebar selector (legacy label "Processing Zone")'],
+    note: 'Processing Zone, Process Area and Process Zone are the same entity as Processing Area — confirmed by Suryajit (Product Manager), 18 September 2026. Processing Area is now the standard term. See [[d-processing-area-terminology]].',
+    aliases: ['Processing Zone', 'Process Area', 'Process Zone'],
+    related: ['v-processing-zone', 'processing-zone', 'v-station', 'v-staging-area', 'workflow', 'material-flow', 'd-processing-area-terminology'],
+    status: 'current',
     author: 'Annuai',
     added: '2026-09-17',
-    sources: [V2]
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Resolved the relationship to Processing Zone: they are the same entity. Processing Area is the standard term going forward.'
+      }
+    ],
+    sources: [V2, MOM]
+  },
+  {
+    id: 'v-machine',
+    term: 'Machine',
+    kind: 'term',
+    simple: 'A physical unit on the floor that can represent one or several stations, and is tagged by the role it plays in material movement.',
+    technical:
+      'A Machine can represent or contain one or multiple [[v-station|Stations]]. Users/operators are currently assigned to machines rather than directly to stations — the chain runs User → Machine(s) → Station(s). Machines are also tagged [[v-production-unit|Production Unit]] or [[v-consumption-unit|Consumption Unit]] depending on their role in material movement. Whether this Machine dependency needs to be exposed directly during workflow configuration is under review.',
+    usedIn: ['User-to-machine assignment', 'Workflow configuration (currently)'],
+    note: 'Whether Machine dependency is technically required in workflow creation, or can be removed from user-facing configuration, is an open question. Separately, some software surfaces use the jargon "consumption point" where this documentation uses "Machine" — see [[open-questions]] for whether the two name the same thing.',
+    related: ['v-station', 'v-production-unit', 'v-consumption-unit', 'workflow', 'open-questions', 'information-vs-execution-layer'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-18',
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Noted a plain-language concern raised in the Industrial Design 1:1: some software surfaces say "consumption point" where this documentation says "Machine", and jargon like this creates a steep learning curve for non-technical users. Logged as an open question rather than assumed to be the same concept as Consumption Unit.'
+      }
+    ],
+    sources: [MOM, ID1]
+  },
+  {
+    id: 'v-production-unit',
+    term: 'Production unit',
+    kind: 'term',
+    simple: 'A machine tag meaning the machine produces or pushes material into the workflow.',
+    technical:
+      'One of two machine-role tags used to classify a [[v-machine|Machine]] by its function in material movement, alongside [[v-consumption-unit|Consumption Unit]]. Whether this needs to remain an explicit, user-facing configuration or could instead be derived from the workflow itself is unresolved.',
+    usedIn: ['Machine classification'],
+    related: ['v-machine', 'v-consumption-unit', 'workflow', 'open-questions'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-18',
+    sources: [MOM]
+  },
+  {
+    id: 'v-consumption-unit',
+    term: 'Consumption unit',
+    kind: 'term',
+    simple: 'A machine tag meaning the machine receives or consumes material from the workflow.',
+    technical:
+      'One of two machine-role tags used to classify a [[v-machine|Machine]] by its function in material movement, alongside [[v-production-unit|Production Unit]]. Whether this needs to remain an explicit, user-facing configuration or could instead be derived from the workflow itself is unresolved.',
+    usedIn: ['Machine classification'],
+    note: 'Not confirmed to be the same thing as the "consumption point" jargon flagged in the Industrial Design 1:1 as confusing for end users — see [[v-machine]] and [[open-questions]].',
+    related: ['v-machine', 'v-production-unit', 'workflow', 'open-questions'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-18',
+    sources: [MOM]
+  },
+  {
+    id: 'v-material-station-mapping',
+    term: 'Material station mapping',
+    kind: 'term',
+    simple: 'Which materials are available at which station, and whether that station is a pickup or a drop-off point.',
+    technical:
+      'Once a local material list exists for a [[v-processing-area|Processing Area]], materials or material groups are mapped to [[v-station|Stations]] to define availability and role — pickup/start point or drop/end point. These mappings are then used when creating [[workflow|workflows]]. Whether the same material or material group can be mapped to multiple stations, and how the system should choose between them during workflow creation, has not been confirmed.',
+    usedIn: ['Ati Flow Configurator — Zonal Configuration, Station Mapping'],
+    note: 'Needs validation: can the same material/material group map to multiple stations, and if so how should pickup/drop selection work during workflow creation?',
+    related: ['v-processing-area', 'v-station', 'workflow', 'open-questions'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-18',
+    sources: [MOM]
   },
   {
     id: 'v-execution-source',
@@ -743,7 +830,7 @@ export const vocabulary = [
       'AtiFLOW v3.0 establishes Station as the canonical shared entity. A station can be selected by a requester, attached to a machine, mapped to a workflow and used as the staging area where material is held. The prototype also shows stations as map identifiers such as S100 to S105. Its relation to the older `position` term still needs confirmation.',
     usedIn: ['AtiFLOW v3.0 — Machine → Station → Workflow', 'Map annotation', 'The prototype, as station identifiers S100 to S105 and a "Next Station" field'],
     note: 'Station is now a defined product entity in the v3 PRD. Its exact relationship to `position` and the idle-robot meaning of `staging area` remains unresolved.',
-    related: ['v-position', 'map-annotation', 'trip', 'v-waypoint', 'v-staging-area', 'v-point-station', 'v-processing-area', 'v-requester-mode'],
+    related: ['v-position', 'map-annotation', 'trip', 'v-waypoint', 'v-staging-area', 'v-point-station', 'v-processing-area', 'v-requester-mode', 'v-machine', 'v-material-station-mapping'],
     status: 'needs-confirmation',
     author: 'Annuai',
     added: '2026-09-16',
@@ -1059,13 +1146,13 @@ export const vocabulary = [
     id: 'v-processing-zone',
     term: 'Processing zone',
     kind: 'term',
-    simple: 'A label in the existing prototype for an area selector; its product meaning has not yet been defined.',
+    simple: 'The prototype’s legacy label for what is now called Processing Area.',
     technical:
-      'The prototype sidebar labels a selector “Processing Zone” and shows “Zone 24”. The two supplied PRDs define Processing Area and Station / Staging Area, but do not define Processing Zone. It must not be treated as a synonym for either until the terminology decision is made.',
-    usedIn: ['The prototype sidebar selector, above a value of "Zone 24"'],
-    note: 'Processing Zone is not defined by either supplied PRD. Confirm whether it should be retired, renamed Processing Area, or retained for a distinct concept.',
-    related: ['processing-zone', 'v-zone', 'v-processing-area', 'v-station', 'v-staging-area'],
-    status: 'needs-confirmation',
+      'The prototype sidebar labels a selector “Processing Zone” and shows “Zone 24”. Confirmed by the Product Manager to be the same entity as [[v-processing-area|Processing Area]], not a distinct concept — see [[d-processing-area-terminology]]. The label survives on the existing prototype screen as a historical name; new work uses Processing Area.',
+    usedIn: ['The prototype sidebar selector, above a value of "Zone 24" — legacy label only'],
+    note: 'Retired in favour of Processing Area. Kept as an entry so the legacy prototype label resolves to the current term rather than reading as an unexplained gap.',
+    related: ['processing-zone', 'v-zone', 'v-processing-area', 'v-station', 'v-staging-area', 'd-processing-area-terminology'],
+    status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
     revisions: [
@@ -1073,9 +1160,14 @@ export const vocabulary = [
         date: '2026-09-17',
         author: 'Annuai',
         note: 'Separated the prototype-only Processing Zone label from the source-defined Processing Area and Station terms.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Resolved: Processing Zone is the same entity as Processing Area, confirmed by the Product Manager. Retired as a distinct term.'
       }
     ],
-    sources: [G, P, F, V2, V3]
+    sources: [G, P, F, V2, V3, MOM]
   },
   {
     id: 'v-behavioural-zone',

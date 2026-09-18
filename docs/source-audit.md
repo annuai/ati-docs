@@ -206,6 +206,14 @@ directly, the entry cites them rather than a file, so a reader can always tell w
 | `Map` (revised) | That “map” covers two different artefacts — the autonomy localisation substrate, and the floor plan with drawn routes that Ati Flow shows a Solutions Architect — that the shared name is a deliberate simplification, and that whether to keep it is unresolved. | Ati team, September 2026 |
 | `Engineering documents`, `PRD`, `FRD`, `BOM`, `DFMEA` | The four document types a product is specified, built and risk-checked against, added as vocabulary plus one concept page. Only the PRD is evidenced in this repository (AtiFLOW v2.0 and v3.0); the FRD, BOM and DFMEA definitions are the general industry ones and Ati's own practice is recorded as a gap. | Ati team, September 2026 |
 | `Workflow Builder`, `AIoT`, `RFID` | The complete Workflow Builder node library: movement, logic, errors, sound and light, email, AIoT, boundary nodes, station, container and confirmation options. The supplied UI establishes the node-based canvas, map preview and field examples. | Ati team + user-supplied Workflow Builder UI reference, September 2026 |
+| `Processing Area` (revised), `Processing Zone` (revised), decision `d-processing-area-terminology` | Confirmed that Processing Area, Processing Zone, Process Area and Process Zone are the same entity — a segregated, local subset of Plant Master Data grouped for material configuration, station mapping and workflow creation. Processing Area adopted as the standard term, closing a terminology gap flagged since 2026-09-17. | Suryajit (Product Manager), Ati Flow system-understanding meeting, 18 September 2026 |
+| `Machine`, `Production unit`, `Consumption unit` | New terms: a Machine can represent one or more Stations, users are assigned to machines rather than stations directly, and machines are tagged Production Unit or Consumption Unit by their role in material movement. Whether this dependency belongs in user-facing workflow configuration is recorded as open. | Suryajit (Product Manager), Ati Flow system-understanding meeting, 18 September 2026 |
+| `Material station mapping` | New term: materials/material groups are mapped to stations to define pickup/drop availability, used when creating workflows. Whether one material can map to multiple stations is recorded as open. | Suryajit (Product Manager), Ati Flow system-understanding meeting, 18 September 2026 |
+| `Material flow` (revised) | Containers support basic point-to-point movement identified by a Container ID for pick/drop matching, without necessarily tracking detailed contents — partially closing the material-model gap. | Suryajit (Product Manager), Ati Flow system-understanding meeting, 18 September 2026 |
+| `Fleet` (revised), `Workflow` (revised), new concept `Information layer vs execution layer` | Fleet configuration reframed as a Robot → Map assignment, with Fleet's frontend prominence now an open question. A workflow's minimum requirement restated as material + pick station + drop station + movement rules. Configuration and execution split into two named layers. | Suryajit (Product Manager), Ati Flow system-understanding meeting, 18 September 2026 |
+| `Deployment Manager` (revised) | Version 5.4 was found to increase the number of steps required for tasks the previous version did in fewer, with no screen-by-screen information architecture yet to explain why. | Operations Excellence lead, Industrial Design 1:1, September 2026 |
+| `Machine` (revised), `Consumption unit` (revised) | Flagged that some software surfaces use the jargon "consumption point" where this documentation uses Machine — not confirmed to be the same thing, and logged as a naming clash. | Operations Excellence lead, Industrial Design 1:1, September 2026 |
+| `AMR deployment` workflow (revised) | Mapping and environmental fine-tuning (e.g. temperature gradients near ovens) identified as the largest source of deployment delay and cost; leadership's target is reducing the ~90-day baseline; an undocumented onboard depth-camera streaming tool is used for calibration. | Operations Excellence lead, Industrial Design 1:1, September 2026 |
 
 Anything sourced this way should be treated exactly like a file-sourced fact: cited, and corrected in
 place if it turns out to be wrong.
@@ -223,10 +231,11 @@ These are preserved in the application rather than resolved.
    page. None of the three sources acknowledges either of the others.
 2. **Fleet Monitor vs Live Fleet Status.** The IA page calls the live view "Fleet Monitor"; the
    prototype titles the same kind of view "Live Fleet Status" and navigates to it as "Live Status".
-3. **Zone vs Processing Zone.** The glossary defines Zone as geographical and flags Processing Zone
-   as needing confirmation. The prototype puts "Processing Zone" above a selector whose value is
-   "Zone 24", which reads as though the two are the same thing. The FAQ lists this exact question as
-   open.
+3. **Zone vs Processing Zone.** *Resolved 2026-09-18.* The glossary defined Zone as geographical and
+   flagged Processing Zone as needing confirmation; the prototype puts "Processing Zone" above a
+   selector whose value is "Zone 24". Suryajit (Product Manager) confirmed Processing Zone, Process
+   Area and Process Zone are the same entity as Processing Area, closing the question the FAQ had
+   listed as open. See section 4b and `d-processing-area-terminology`.
 4. **Trip vs Task.** Both appear. Neither is defined. Whether a trip is one task, several tasks, or
    the execution record of a mission is unestablished.
 5. **"Workflow" carries two meanings.** A configured product object (the Workflows page), and a

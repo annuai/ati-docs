@@ -7,6 +7,10 @@ import { p, h, list, callout, table } from './blocks.js';
   contradictions found while auditing the folder. Neither is resolved. See docs/source-audit.md.
 */
 
+// Knowledge supplied directly in conversation rather than found in this folder.
+const MOM = 'Suryajit (Product Manager) — Ati Flow system-understanding meeting, 18 September 2026';
+const ID1 = 'Operations Excellence lead — Industrial Design 1:1, September 2026';
+
 export const openQuestions = [
   {
     id: 'open-questions',
@@ -19,7 +23,7 @@ export const openQuestions = [
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: ['old/ati-flow-faq.html', 'docs/source-audit.md'],
+    sources: ['old/ati-flow-faq.html', 'docs/source-audit.md', MOM, ID1],
     blocks: [
       callout(
         'Why this page exists',
@@ -34,7 +38,23 @@ export const openQuestions = [
         'How does the Solutions Architect relate to [[v-deployment-manager|Deployment Manager]], the tool Ati support engineers use to configure and deploy robots? The two describe closely related work.',
         'How does [[v-visa|VISA]] relate to the **gates** and **exclusion zones** in the deployment material — is it their implementation, or a separate mechanism?',
         'How much of [[v-fleet-manager|Fleet Manager]] has Ati Flow already absorbed, and on what timeline?',
-        'How does the earlier screen-based [[ui|UI]] section (Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug) map onto the current, team-supplied [[information-architecture|role-based architecture]] (Ati Flow Configurator, Supervisor, Request Operator, Dispatch Operator)? No entry has reconciled the two yet.'
+        'How does the earlier screen-based [[ui|UI]] section (Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug) map onto the current, team-supplied [[information-architecture|role-based architecture]] (Ati Flow Configurator, Supervisor, Operator)? No entry has reconciled the two yet.',
+        'Does [[v-fleet-supervisor|Fleet Supervisor]] belong in the new, role-based [[information-architecture|information architecture]] at all? The team’s two architecture diagrams do not include this persona — the branch now shown for it is reconstructed from the earlier [[users|Users]] and [[roles-and-permissions|Roles and permissions]] pages, which already disagree with each other about how narrow the role is.',
+        'Is the **Operator** in the new [[information-architecture|information architecture]] (merged Request Operator and Dispatch Operator) the same person as the **Operator** in the earlier four-user model ([[users]]) — floor-level, scoped to one zone? Nothing has confirmed or ruled out the two names describing different roles.'
+      ]),
+      h('Questions raised in the 18 September 2026 system-understanding meeting'),
+      list([
+        'Can the same material or material group be mapped to multiple [[v-station|Stations]], and if so, how should pickup/drop selection work during workflow creation? See [[v-material-station-mapping]].',
+        'What [[v-machine|Machine]] dependency is technically required while creating a [[workflow|Workflow]], and can it be removed from the user-facing configuration? See [[information-vs-execution-layer]].',
+        'Do [[v-production-unit|Production Unit]] and [[v-consumption-unit|Consumption Unit]] need to remain explicit, user-facing machine tags, or can some of that behaviour be derived from the workflow itself?',
+        'What frontend functionality actually depends on [[fleet|Fleet]]? Is it primarily a backend/execution concept, and could a Robot → Map assignment represent the same outcome more directly?',
+        'What information should Operators see, versus Deployment/Configuration users, in the redesigned configuration experience?',
+        'Which existing client-specific configurations should become universal Ati Flow behaviour rather than one-off customisation?'
+      ]),
+      h('Questions raised in the Industrial Design 1:1'),
+      list([
+        'Is a "consumption point", the term some software surfaces use, the same entity as [[v-machine|Machine]] or [[v-consumption-unit|Consumption Unit]] as documented here? See [[v-machine]].',
+        'Why did Deployment Manager 5.4 increase the number of steps required for tasks the previous version did in fewer? A screen-by-screen information architecture, planned but not yet built, is intended to answer this. See [[v-deployment-manager]].'
       ]),
       h('Questions the source material raises'),
       list([
@@ -43,7 +63,7 @@ export const openQuestions = [
         'What exactly does "taxi mode" enable or disable? See [[v-taxi-mode]].',
         'Which safety mechanisms remain active during manual or teleoperated movement?',
         'What is the authoritative source for robot availability?',
-        'What is the relationship between [[fleet|Fleet]], [[processing-zone|Processing Zone]] and geographical [[zone|Zone]] in the actual data model?',
+        'What is the relationship between [[fleet|Fleet]], [[processing-zone|Processing Area]] and geographical [[zone|Zone]] in the actual data model?',
         'Which actions can an Operator and a Fleet Supervisor perform directly on a robot?'
       ]),
       h('Contradictions found in this folder'),
@@ -52,7 +72,15 @@ export const openQuestions = [
         [
           [
             'Information architecture',
-            'Three models now exist. The earlier documentation lists Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config and Debug. The prototype navigation shows Dashboard, Live Status, Analytics, AMR Trips, Staging Area and WIP Inventory. A team-supplied architecture diagram describes the product by role instead — Ati Flow Configurator, Supervisor, Request Operator, Dispatch Operator, Fleet Manager and the robot’s HMI — and is now the current model. None of the three acknowledges either of the others. See [[information-architecture]].'
+            'Three models now exist. The earlier documentation lists Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config and Debug. The prototype navigation shows Dashboard, Live Status, Analytics, AMR Trips, Staging Area and WIP Inventory. A team-supplied architecture diagram describes the product by role instead — Ati Flow Configurator, Supervisor, Operator, Fleet Manager and the robot’s HMI — and is now the current model. None of the three acknowledges either of the others. See [[information-architecture]].'
+          ],
+          [
+            'Fleet Supervisor, twice over',
+            'The role documentation itself already disagreed — [[users|Users]] narrows Fleet Supervisor to handling robots with issues only; [[roles-and-permissions|Roles and permissions]] gives it zone-wide Fleet Monitor and robot-management access. Neither has been checked against the new, role-based [[information-architecture|information architecture]], where the role appears only as a reconstructed, unconfirmed branch.'
+          ],
+          [
+            'One name, two Operators',
+            'The new [[information-architecture|information architecture]]’s **Operator** (merged Request Operator and Dispatch Operator) and the **Operator** in the earlier four-user model ([[users]]) are not confirmed to be the same role.'
           ],
           [
             'One word, two artefacts: "map"',
@@ -71,12 +99,12 @@ export const openQuestions = [
             'Called **Fleet Monitor** in the documentation and **Live Fleet Status** in the prototype. See [[ui-fleet-monitor]] and [[ui-live-fleet-status]].'
           ],
           [
-            'Zone and Processing Zone',
-            'The glossary keeps them distinct and unconfirmed; the prototype UI presents them as the same selector. See [[processing-zone]].'
-          ],
-          [
             'Trip and Task',
             'Both name a unit of robot work. Neither is defined. See [[trip]] and [[task]].'
+          ],
+          [
+            'Machine vs "consumption point"',
+            'This documentation uses [[v-machine|Machine]], the PRD-backed term. The Industrial Design 1:1 flagged that some software surfaces instead say "consumption point" — jargon that creates a steep learning curve for non-technical users. Whether the two name the same thing has not been confirmed.'
           ],
           [
             'Roles and modes',
@@ -92,10 +120,14 @@ export const openQuestions = [
       list([
         '**Ati Robotics as a company** — nothing beyond one sentence of product positioning.',
         '**Robot hardware** — no specifications, variants or capacities. See [[ati-robotics]].',
-        '**The material model** — no definition of a material, a load or a container. See [[material-flow]].',
+        '**The material model** — no definition of a material or a load, and no detailed model of a container’s contents. See [[material-flow]].',
         '**The data model** — how fleets, zones, trips, tasks and missions relate as records.',
         '**Interface states** — loading, empty, error and offline are undesigned. See [[ui-states]].',
         '**Six of seven screens** — scoped in one line each, with no layout or field detail.'
+      ]),
+      h('Resolved'),
+      list([
+        '**Processing Area, Processing Zone, Process Area, Process Zone** — confirmed to be the same entity by Suryajit (Product Manager), 18 September 2026. Processing Area is now the standard term. See [[d-processing-area-terminology]] and [[processing-zone|Processing Area]].'
       ]),
       h('How to close one'),
       p(
@@ -122,8 +154,23 @@ export const openQuestions = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Added the team-supplied, role-based architecture as a third unreconciled information architecture, and logged the open question of how it maps onto the earlier screen-based UI section.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added two questions raised by merging Request Operator and Dispatch Operator into one Operator, and by adding an unconfirmed Fleet Supervisor branch to the new information architecture: whether that Operator is the same role as the earlier Users-model Operator, and whether Fleet Supervisor belongs in the new architecture at all given the two existing, disagreeing descriptions of it.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Closed the Zone vs Processing Zone contradiction: Processing Area, Processing Zone, Process Area and Process Zone are confirmed to be the same entity, and Processing Area is now the standard term — see [[d-processing-area-terminology]]. Added the new questions raised in the Ati Flow system-understanding meeting: multi-station material mapping, Machine dependency in workflow creation, Production/Consumption Unit tagging, whether Fleet needs frontend prominence, per-role information needs, and product standardisation.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added two questions from the Industrial Design 1:1: whether "consumption point", used in some software surfaces, names the same thing as Machine or Consumption Unit; and why Deployment Manager 5.4 increased the steps required for tasks compared to the previous version. Logged the Machine vs "consumption point" naming clash as a contradiction alongside the others.'
       }
     ],
-    related: ['users', 'robot-states', 'processing-zone', 'trip', 'task', 'information-architecture']
+    related: ['users', 'robot-states', 'processing-zone', 'trip', 'task', 'information-architecture', 'v-material-station-mapping', 'v-machine', 'fleet', 'information-vs-execution-layer', 'd-processing-area-terminology', 'v-deployment-manager', 'wf-deployment']
   }
 ];

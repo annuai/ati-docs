@@ -10,6 +10,9 @@ const S = {
   prototype: 'old/prototype/'
 };
 
+// Knowledge supplied directly in conversation rather than found in this folder.
+const ID1 = 'Operations Excellence lead — Industrial Design 1:1, September 2026';
+
 export const workflows = [
   {
     id: 'wf-material-movement',
@@ -240,7 +243,7 @@ export const workflows = [
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.deployment],
+    sources: [S.deployment, ID1],
     blocks: [
       callout(
         'This is a human process, not a product object',
@@ -404,7 +407,25 @@ export const workflows = [
       defs([
         { term: 'Stage 9 → stage 4', text: 'Map and zone corrections, once real traffic patterns are visible.' },
         { term: 'Stage 9 → stage 5', text: 'Mission logic refinement, once real request patterns are visible.' }
-      ])
+      ]),
+      h('Where the time and money actually go'),
+      p(
+        'An operational review of real deployments found that stage 3 (mapping) and the process of fine-tuning robots to a site’s specific environmental conditions — such as extreme temperature gradients near factory ovens — cause the longest delays and the largest financial losses of any part of this workflow. Leadership’s stated target is bringing deployment timelines down from a current baseline of around 90 days.'
+      ),
+      list([
+        'Fine-tuning a robot to a site combines hardware calibration (sensor checks, physical measurement) with configuring software instances — deployment engineers doing this work also often need to write Linux-level code, which is a significant skill hurdle on its own.',
+        'A structured, fixed sequence for mapping and pick/drop configuration — rather than letting each project manager improvise their own order — is the direction identified to prevent this stage fragmenting and causing further delay.'
+      ]),
+      gap(
+        'An onboard depth-camera streaming tool exists to help field engineers see what a robot’s sensors see during calibration, reducing reliance on measuring tapes and manual sensor checks. Its functionality is not yet documented here — sharing and documenting it was raised as a next step.'
+      )
+    ],
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added findings from an Industrial Design 1:1 operational review: mapping and environmental fine-tuning are the largest source of delay and cost, leadership’s target is reducing the ~90-day deployment timeline, and an undocumented onboard depth-camera streaming tool is used for calibration.'
+      }
     ],
     related: ['wf-configuration', 'configuration-layers', 'map', 'map-annotation', 'missions-and-actions', 'wf-exceptions']
   }

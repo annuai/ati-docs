@@ -248,9 +248,9 @@ export const atiFlow = [
   {
     id: 'information-architecture',
     title: 'Information architecture',
-    summary: 'One configuration app for the person setting up a site, three role-based apps for daily use, and the robot’s own on-device interface.',
+    summary: 'One configuration app for the person setting up a site, role-based apps for daily use, and the robot’s own on-device interface.',
     simple:
-      'Ati Flow is not one screen split seven ways. It is a setup app for the person configuring a site, separate apps for the people using it day to day — a supervisor, someone requesting material, someone dispatching it — and a small interface on the robot itself.',
+      'Ati Flow is not one screen split seven ways. It is a setup app for the person configuring a site, separate apps for the people using it day to day — a supervisor and an operator, plus a fleet supervisor whose surface still needs confirming — and a small interface on the robot itself.',
     aliases: ['IA', 'pages', 'navigation'],
     status: 'current',
     author: 'Annuai',
@@ -259,7 +259,7 @@ export const atiFlow = [
     blocks: [
       h('Every surface, every feature, at a glance'),
       p(
-        'This diagram replaces the earlier surface list below with the architecture the Ati team supplied directly: two architecture diagrams showing how the product actually divides by *who is using it*, not by screen name. Read it left to right — [[ati-flow|Ati Flow]] splits into one configuration app and three client-facing apps; underneath, [[v-fleet-manager|Fleet Manager]] coordinates the fleet before work reaches a physical [[robot|robot]], which exposes its own small interface.'
+        'This diagram replaces the earlier surface list below with the architecture the Ati team supplied directly: two architecture diagrams showing how the product actually divides by *who is using it*, not by screen name. Read it left to right — [[ati-flow|Ati Flow]] splits into one configuration app and a set of client-facing apps; underneath, [[v-fleet-manager|Fleet Manager]] coordinates the fleet before work reaches a physical [[robot|robot]], which exposes its own small interface. Request Operator and Dispatch Operator are drawn here as one broader **Operator**, and a **Fleet Supervisor** branch has been added from the earlier role documentation — see the two callouts below the diagram before treating either as settled.'
       ),
       mermaid(
         `flowchart LR
@@ -289,25 +289,27 @@ export const atiFlow = [
         SUP8["Settings"]
     end
 
-    subgraph REQ["Request Operator — client"]
+    subgraph OP["Operator — client"]
         direction TB
-        REQ1["Request Material"]
-        REQ2["Request Activity"]
-        REQ3["Staging Area"]
-        REQ4["Alerts"]
-        REQ5["Settings"]
+        OP1["Request Material"]
+        OP2["Request Activity"]
+        OP3["Staging Area"]
+        OP4["Alerts"]
+        OP5["Settings"]
     end
 
-    subgraph DIS["Dispatch Operator — client"]
+    subgraph FSUP["Fleet Supervisor — client, needs confirmation"]
         direction TB
-        DIS1["Request Management"]
-        DIS2["Staging Area"]
+        FSUP1["Live Monitoring, own zones"]
+        FSUP2["Robot management, own zones"]
+        FSUP3["View only, Maps and Workflows"]
+        FSUP4["Alerts, own zones"]
     end
 
     AF --> CFG
     AF --> SUP
-    AF --> REQ
-    AF --> DIS
+    AF --> OP
+    AF -.-> FSUP
 
     FM(("Fleet Manager")):::hub
     AF --> FM
@@ -325,18 +327,18 @@ export const atiFlow = [
 
     class CFG cfgGroup
     class SUP supGroup
-    class REQ reqGroup
-    class DIS disGroup
+    class OP opGroup
+    class FSUP fsupGroup
     class HMI hmiGroup
 
     classDef hub fill:#cfeae3,stroke:#7fc2b6,color:#173c34,font-weight:700,stroke-width:2px;
     classDef cfgGroup fill:#e2eefb,stroke:#b7d1ef,color:#1f3a5f;
     classDef supGroup fill:#e5f4e1,stroke:#bfe2b5,color:#22492a;
-    classDef reqGroup fill:#fdf0dc,stroke:#f2d8a7,color:#5c4114;
-    classDef disGroup fill:#f4e2f6,stroke:#ddbfe3,color:#4a2350;
+    classDef opGroup fill:#fdf0dc,stroke:#f2d8a7,color:#5c4114;
+    classDef fsupGroup fill:#f4e2f6,stroke:#ddbfe3,color:#4a2350,stroke-dasharray: 4 3;
     classDef hmiGroup fill:#fbe1e5,stroke:#efc1ca,color:#5c2530;
     classDef default fill:#ffffff,stroke:#d8dee5,color:#33403c;`,
-        'The current, team-supplied information architecture. Ati Flow Configurator is the one admin app; Supervisor, Request Operator and Dispatch Operator are the client-facing apps built for daily use. Fleet Manager now exposes its configuration through the Configurator and its monitoring through Supervisor, rather than as a separate app — the change that removed most of the overlap in the earlier version of this diagram.'
+        'The current, team-supplied information architecture. Ati Flow Configurator is the one admin app; Supervisor and Operator are the confirmed client-facing apps. Fleet Supervisor (dashed) is not in the team’s original diagrams — it is carried over from the earlier role documentation and needs confirming against this architecture. Fleet Manager now exposes its configuration through the Configurator and its monitoring through Supervisor, rather than as a separate app — the change that removed most of the overlap in the earlier version of this diagram.'
       ),
       h('Every group, in full'),
       p('The diagram above stops at feature-group level so it stays readable. Every item inside each group:'),
@@ -392,12 +394,13 @@ export const atiFlow = [
           ]
         },
         {
-          title: 'Request Operator — client',
+          title: 'Operator — client',
           tag: '5 groups',
           body: [
+            p('Request Operator and Dispatch Operator, merged. Their feature groups overlapped almost entirely — see the callout below.'),
             defs([
               { term: 'Request Material', text: 'Material request, container request.' },
-              { term: 'Request Activity', text: 'Request status, request history, cancel a request.' },
+              { term: 'Request Activity', text: 'Request status, request history, cancel a request. This is the merged Request Operator "Request Activity" and Dispatch Operator "Request Management" — the two were the same two items plus one extra.' },
               { term: 'Staging Area', text: 'View and manage staging area cells.' },
               { term: 'Alerts', text: 'Action items, alert history.' },
               { term: 'Settings', text: 'Not further documented.' }
@@ -405,13 +408,33 @@ export const atiFlow = [
           ]
         },
         {
-          title: 'Dispatch Operator — client',
-          tag: '2 groups',
+          title: 'Fleet Supervisor — client, needs confirmation',
+          tag: 'needs confirmation',
           body: [
+            p(
+              'This branch does not appear in the team’s two architecture diagrams at all. It is reconstructed from the existing [[users|Users]] and [[roles-and-permissions|Roles and permissions]] pages, translated into this architecture’s app names, because the team asked for it to be represented here while it is confirmed.'
+            ),
             defs([
-              { term: 'Request Management', text: 'Request status, request history.' },
-              { term: 'Staging Area', text: 'View and manage staging area cells.' }
-            ])
+              {
+                term: 'Live Monitoring, own zones',
+                text: 'The zone-based view of robots, tasks and traffic that [[roles-and-permissions|the earlier permission table]] gives a Fleet Supervisor across their assigned zones, with reassignment control.'
+              },
+              {
+                term: 'Robot management, own zones',
+                text: 'Manage robots within the zones this Fleet Supervisor owns — narrower than a Configurator’s full AMR Configuration.'
+              },
+              {
+                term: 'View only, Maps and Workflows',
+                text: 'View access to what a Configurator has set up — Map Configuration and Zonal Configuration in this architecture’s terms — without the ability to edit it.'
+              },
+              {
+                term: 'Alerts, own zones',
+                text: 'Action items and alert history, scoped to the zones this Fleet Supervisor owns.'
+              }
+            ]),
+            gap(
+              'Two different descriptions of this role already disagreed before this diagram existed: [[users|Users]] narrows Fleet Supervisor to “robots that need help, and nothing else,” while [[roles-and-permissions|Roles and permissions]] gives the broader zone-oversight picture used above. Neither has been checked against the team’s new, role-based architecture. Treat every item in this branch as a starting point for that conversation, not a confirmed spec.'
+            )
           ]
         },
         {
@@ -433,9 +456,14 @@ export const atiFlow = [
         'One item under Supervisor → Trip Booking and one under Supervisor → Settings were only partly legible in the source image. Both are rendered above as the closest confident reading rather than a guess at the missing word — worth confirming with whoever drew the diagrams.',
         'gap'
       ),
+      callout(
+        'One name, two possibly different roles',
+        'This page’s merged **Operator** and the **Operator** in the earlier four-user model ([[users]]) are not confirmed to be the same person. The earlier Operator is floor-level and scoped to one zone; this Operator is a request/dispatch app with no zone scoping described. They may turn out to be the same role read from two different documents, or two different roles that happen to share a name — see [[open-questions]].',
+        'gap'
+      ),
       h('Corrected terms'),
       p(
-        'The previous version of this page used screen names from the earlier documentation — **Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug** — and two prototype role names, **Requester** and **Dispatcher**. None of those are the terms the team’s own architecture diagrams use. The current terms are **Ati Flow Configurator**, **Supervisor**, **Request Operator** and **Dispatch Operator**.'
+        'The previous version of this page used screen names from the earlier documentation — **Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug** — and two prototype role names, **Requester** and **Dispatcher**. None of those are the terms the team’s own architecture diagrams use. The current terms are **Ati Flow Configurator**, **Supervisor** and **Operator** (Request Operator and Dispatch Operator, merged — their groups overlapped almost entirely, down to sharing the same two Request Activity / Request Management items).'
       ),
       h('The earlier, screen-based model'),
       callout(
@@ -474,10 +502,18 @@ export const atiFlow = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Replaced the screen-based diagram with the architecture the Ati team supplied directly — Ati Flow Configurator, Supervisor, Request Operator, Dispatch Operator and the robot’s own HMI — and corrected terminology that did not match current usage (Requester → Request Operator, Dispatcher → Dispatch Operator). The earlier screen-based model is kept below as superseded, and the mismatch between the two is logged as an open question.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Merged Request Operator and Dispatch Operator into one broader Operator — their feature groups overlapped almost entirely. Added a Fleet Supervisor branch, reconstructed from the earlier Users and Roles and permissions pages rather than the team’s diagrams, and flagged it as needing confirmation. Flagged that this Operator and the Operator in the earlier four-user model are not confirmed to be the same role.'
       }
     ],
     related: [
       'roles-and-permissions',
+      'users',
+      'v-fleet-supervisor',
+      'v-operator',
       'ati-flow',
       'v-fleet-manager',
       'ui-live-fleet-status',

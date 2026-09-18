@@ -17,6 +17,9 @@ const S = {
   robotImage: 'public/assets/ati-sherpa.png'
 };
 
+// Knowledge supplied directly in conversation rather than found in this folder.
+const MOM = 'Suryajit (Product Manager) — Ati Flow system-understanding meeting, 18 September 2026';
+
 export const concepts = [
   {
     id: 'robot',
@@ -103,11 +106,27 @@ export const concepts = [
       p(
         'Fleet coordination is configured during deployment and observed afterwards in [[ui-fleet-monitor|Fleet Monitor]], which presents robots, tasks and traffic organised around [[zone|zones]].'
       ),
+      h('Fleet configuration, in the simplest terms'),
+      p(
+        'At its core, configuring a fleet is a group-of-robots-to-map assignment: a group of [[robot|AMRs]] gets assigned to a [[map|Map]]. Multiple fleets typically exist because of different robot types, different maps, or different operational requirements.'
+      ),
+      callout(
+        'Is Fleet a frontend concept at all?',
+        'After the robot-to-map assignment is made, Fleet appears to carry more weight in the backend/execution architecture than in the configuration experience a user sees. Whether Fleet needs to be exposed as a major frontend concept at all, or whether the same outcome is better represented directly as a Robot → Map assignment, is unresolved. See [[open-questions]].',
+        'gap'
+      ),
       gap(
-        'How a fleet relates as a record to a [[zone]], a [[processing-zone|processing zone]] or a site is not defined in the source material. Whether one site has one fleet or several is an open question.'
+        'How a fleet relates as a record to a [[zone]], a [[processing-zone|Processing Area]] or a site is not defined in the source material. Whether one site has one fleet or several is an open question.'
       )
     ],
-    related: ['robot', 'orchestration', 'traffic-control', 'zone', 'ui-fleet-monitor']
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added the simplest framing of fleet configuration — group of robots assigned to a map — and flagged the open question of whether Fleet needs frontend prominence at all, from the Ati Flow system-understanding meeting.'
+      }
+    ],
+    related: ['robot', 'orchestration', 'traffic-control', 'zone', 'ui-fleet-monitor', 'map', 'open-questions']
   },
 
   {
@@ -152,19 +171,19 @@ export const concepts = [
         'Mixed fleets',
         'Where a deployment runs more than one robot type, map annotation is also where zone access is differentiated by robot type.'
       ),
-      p('See also [[processing-zone]], which the sources treat as a separate and less settled idea.')
+      p('See also [[processing-zone|Processing Area]] — a material-grouping concept, now confirmed distinct from this geographical meaning of zone. See [[d-processing-area-terminology]].')
     ],
     related: ['processing-zone', 'map-annotation', 'traffic-control', 'roles-and-permissions']
   },
 
   {
     id: 'processing-zone',
-    title: 'Processing Zone',
-    summary: 'A prototype label whose relationship to Processing Area, Station and Staging Area is not yet settled.',
+    title: 'Processing Area',
+    summary: 'A segregated, local subset of Plant Master Data, grouped for material configuration, station mapping and workflow creation.',
     simple:
-      'Processing Zone is a label in the existing prototype. The source documents define Processing Area and Station, but do not define Processing Zone, so it should not be used as a catch-all name for either.',
-    aliases: ['zone selector'],
-    status: 'needs-confirmation',
+      'A Processing Area takes the full list of materials in a plant and cuts it down to the ones relevant to one operation, so the person configuring stations and workflows works against a small local list instead of the whole plant’s data.',
+    aliases: ['Processing Zone', 'Process Area', 'Process Zone', 'zone selector'],
+    status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
     revisions: [
@@ -172,35 +191,58 @@ export const concepts = [
         date: '2026-09-17',
         author: 'Annuai',
         note: 'Separated the prototype-only Processing Zone label from the PRD-defined Processing Area and Station / Staging Area terms.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Resolved: Processing Zone, Process Area and Process Zone are the same entity as Processing Area, confirmed by Suryajit (Product Manager) in the Ati Flow system-understanding meeting. Rewrote this page around what a Processing Area actually does — segregating a local material list out of Plant Master Data — instead of leaving it as an open naming gap. See [[d-processing-area-terminology]].'
       }
     ],
-    sources: [S.glossary, S.prototype, S.faq, S.prdV2, S.prdV3],
+    sources: [S.glossary, S.prototype, S.faq, S.prdV2, S.prdV3, MOM],
     blocks: [
       callout(
-        'This definition is not settled',
-        'The prototype uses **Processing Zone** above a selector. The supplied [[v-prd|PRDs]] use **Processing Area** for a plant-level configuration boundary, and **Station** as the canonical shared entity for material flow. Neither PRD defines Processing Zone.',
-        'gap'
+        'Resolved — one name now',
+        'Processing Area, Processing Zone, Process Area and Process Zone all refer to the same entity. **Processing Area** is the standard term going forward. See [[d-processing-area-terminology]] for the decision.'
       ),
-      h('What the sources actually show'),
+      h('What a Processing Area actually does'),
       p(
-        'The Ati Flow prototype puts a **Processing Zone** label directly above a selector whose value is *Zone 24*. The v2 PRD defines a [[v-processing-area|Processing Area]] as the place where materials, containers, workflows, devices, machines and inventory are configured together. The v3 PRD defines [[v-station|Station]] as the shared entity that connects machines, workflows and staging material. These are not descriptions of the same thing.'
+        'Although the name suggests a physical area within the plant, its system function is largely about segregating information, not geography. A Processing Area:'
       ),
-      p(
-        'A [[v-staging-area|Staging Area]] is also a station in the v3 material-flow model, but older material uses *staging area* for a place idle robots wait. That ambiguity needs its own decision rather than being hidden inside the word “zone”.'
-      ),
-      h('How to talk about it until it is confirmed'),
       list([
-        'Use [[v-processing-area|Processing Area]] for the v2 plant configuration boundary.',
-        'Use [[v-station|Station]] for the v3 canonical pickup, drop-off, workflow and machine entity.',
-        'Use [[v-staging-area|Staging Area]] only with its intended meaning made clear: material holding or idle-robot waiting.',
-        'Avoid using *Processing Zone* in new documentation until the product terminology is finalised.'
+        'Segregates relevant materials out of the full Plant Master Data',
+        'Creates a smaller, local material list from that subset',
+        'Makes those materials available for station mapping and workflow creation',
+        'Prevents users from having to work against irrelevant plant-wide data'
       ]),
+      chain(
+        [
+          { title: 'Plant Master Data', note: 'Every material/item in the plant, from SAP or another plant system' },
+          { title: 'Processing Area', note: 'Segregates the relevant subset' },
+          { title: 'Local material list', note: 'What this operation actually works with' }
+        ],
+        'A Processing Area may correspond to an operational or manufacturing section of the floor, but its software function is primarily material grouping, not a geographical boundary.'
+      ),
+      h('Where it sits in the wider configuration flow'),
+      p('The full flow, as it exists today, runs from master data to execution:'),
+      chain(
+        [
+          { title: 'Master Data', note: 'Plant/SAP source of materials' },
+          { title: 'Processing Area', note: 'Local material list' },
+          { title: 'Station mapping', note: 'Which stations carry which materials' },
+          { title: 'Workflow', note: 'What should move, from where, to where' },
+          { title: 'Execution', note: 'Material movement / Fleet Manager' }
+        ],
+        'The underlying business logic here is being retained; the existing UI interaction for it is not being replicated one-for-one.'
+      ),
+      h('How the local material list gets built'),
+      p(
+        'Today, materials are pulled from Master Data into a Processing Area using prefixes — a prefix can match a single material, several related materials, or a whole material group. A redesigned configuration experience does not need to expose that prefix logic directly to a user; simpler interactions such as search, filter, multi-select, grouping, and including or excluding individual materials from a group can sit on top of the same underlying grouping capability.'
+      ),
       gap(
-        'Decide whether the prototype label should become **Processing Area**, remain **Processing Zone** with a distinct definition, or be removed. Also decide whether material-holding and idle-robot staging need separate names.',
-        'Terminology decision required'
+        'Whether a Processing Area always corresponds one-to-one with a physical operational section, or is purely a configuration-side grouping with no fixed physical counterpart, has not been confirmed.'
       )
     ],
-    related: ['zone', 'material-flow', 'open-questions', 'v-processing-area', 'v-station', 'v-staging-area']
+    related: ['zone', 'material-flow', 'open-questions', 'v-processing-area', 'v-station', 'v-staging-area', 'd-processing-area-terminology', 'v-material-station-mapping']
   },
 
   {
@@ -398,9 +440,59 @@ export const concepts = [
       h('Who touches it'),
       p(
         'Editing workflows is Configurator work. A Head of Operations can view and approve them, a Fleet Supervisor can view them to understand what is configured, and an Operator does not see them at all. See [[roles-and-permissions]].'
+      ),
+      h('The minimum a workflow needs'),
+      p(
+        'At its simplest, a workflow is: **material + a start/pick station + an end/drop station + movement rules**. That minimum is then used by the execution side — the [[v-fleet-manager|Fleet Manager]]/fleet layer — to coordinate robot movement. See [[information-vs-execution-layer]].'
+      ),
+      callout(
+        'Machine dependency under review',
+        'Workflow creation currently depends on [[v-machine|Machine]] — a physical unit tagged Production Unit or Consumption Unit. Whether that dependency is technically required, or can be removed from the user-facing workflow configuration entirely, is unresolved. See [[open-questions]].',
+        'gap'
       )
     ],
-    related: ['missions-and-actions', 'map', 'ui-workflows', 'roles-and-permissions']
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added the workflow’s minimum requirement (material, pick station, drop station, movement rules) and flagged the open question of whether the current Machine dependency in workflow creation is required, from the Ati Flow system-understanding meeting.'
+      }
+    ],
+    related: ['missions-and-actions', 'map', 'ui-workflows', 'roles-and-permissions', 'v-machine', 'information-vs-execution-layer', 'open-questions']
+  },
+
+  {
+    id: 'information-vs-execution-layer',
+    title: 'Information layer vs execution layer',
+    summary: 'Two layers inside Ati Flow: one defines what needs to move and where; the other defines how the physical movement actually happens.',
+    simple:
+      'One half of Ati Flow decides what should move, from where, to where. The other half makes a robot actually go and do it. Keeping the two separate stops workflow configuration from getting mixed up with fleet and map detail a user should not need to know about.',
+    aliases: ['configuration layer', 'execution layer'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-18',
+    sources: [MOM],
+    blocks: [
+      h('The two layers'),
+      table(
+        ['Layer', 'What it contains', 'Purpose'],
+        [
+          ['Information / Configuration', 'Master Data, [[processing-zone|Processing Area]], material grouping, [[v-material-station-mapping|material station mapping]], [[workflow|workflow]] definition', 'Defines what needs to move, from where, and to where'],
+          ['Execution', '[[map|Map]], [[fleet|Fleet]], [[robot|Robot]]/AMR, actual movement execution', 'Defines how the physical movement is carried out']
+        ]
+      ),
+      p(
+        'This maps onto the five-layer [[architecture]] already documented: the information/configuration layer corresponds to the configuration side of the orchestration layer, and the execution layer corresponds to the fleet and robot/autonomy layers.'
+      ),
+      callout(
+        'Design direction',
+        'The redesigned configuration experience should avoid unnecessarily mixing these two layers — for example, a user configuring a workflow should not need to understand Machine dependency or Fleet assignment to do it. See [[d-keep-the-layers-clear]] for the related, earlier decision to keep operations, configuration and diagnostics apart.'
+      ),
+      gap(
+        'The exact technical boundary between the two layers is not settled — how much of the current Machine, Station and Fleet dependency is technically required versus only historically exposed in the UI. See [[open-questions]].'
+      )
+    ],
+    related: ['architecture', 'processing-zone', 'fleet', 'workflow', 'open-questions', 'd-keep-the-layers-clear']
   },
 
   {
@@ -523,7 +615,7 @@ export const concepts = [
     status: 'draft',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.overview, S.deployment, S.architecture, S.screens, S.prototype],
+    sources: [S.overview, S.deployment, S.architecture, S.screens, S.prototype, MOM],
     blocks: [
       h('Why it matters'),
       p(
@@ -536,9 +628,20 @@ export const concepts = [
         'Demand can come from business data: due dates, line schedules and stock levels can compute priority implicitly rather than relying on manual escalation.',
         'The prototype navigation includes **Staging Area** and **WIP Inventory**, and its content head offers a *Search Material* control.'
       ]),
+      h('Containers, so far'),
+      p(
+        'Containers currently support basic point-to-point material movement, identified by a Container ID used for operational pick-and-drop matching. The system does not necessarily track a container’s exact contents in detail — a Container ID resolves *how a container is moved and matched*, not *what it is a record of*.'
+      ),
       gap(
-        'There is no model of material itself in any source: no definition of a material, a material type, a container, a load or a unit. `WIP Inventory` and `Staging Area` are navigation labels with no documented content behind them.'
+        'There is still no model of material itself in any source: no definition of a material, a material type, a load or a unit, and no detailed inventory model of what is inside a container. `WIP Inventory` and `Staging Area` remain navigation labels with no documented content behind them.'
       )
+    ],
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added what the Ati team confirmed about containers — point-to-point movement identified by a Container ID, without necessarily tracking detailed contents — partially closing this page’s material-model gap. Source: Ati Flow system-understanding meeting.'
+      }
     ],
     related: ['orchestration', 'wf-material-movement', 'v-wip', 'processing-zone']
   },
