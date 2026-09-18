@@ -23,18 +23,26 @@ repository is an OAuth-style grant, and that has to come from you, not from an a
    gh api -X PATCH repos/annuai/ati-docs -f has_discussions=true
    ```
 
-2. **Use the existing "Announcements" category** — no need to create one. GitHub repos come
-   with a fixed set of categories (Announcements, General, Ideas, Polls, Q&A, Show and tell) and
-   don't offer a way to add a custom-named one. `Announcements` already has the access shape
-   giscus needs: only maintainers can start a new top-level discussion, but anyone with read
-   access can reply — which matters because giscus creates one discussion per page automatically,
-   and visitors shouldn't be able to create arbitrary unrelated discussions.
+2. **Use the "Comments" category** (originally named "Announcements" — it was renamed on GitHub
+   after initial setup, but keeps the same category ID, so nothing else needs to change). GitHub
+   repos come with a fixed set of categories and don't offer a way to add a custom-named one, but
+   any existing category can be renamed. This one has the access shape giscus needs: only
+   maintainers can start a new top-level discussion, but anyone with read access can reply —
+   which matters because giscus creates one discussion per page automatically, and visitors
+   shouldn't be able to create arbitrary unrelated discussions.
+
+   **If you rename the category again, update `VITE_GISCUS_CATEGORY` everywhere (`.env.local` and
+   the Vercel project) to match.** giscus uses the category *name* — not just the ID — when
+   searching for a page's existing discussion; a stale name here makes it fail to find the
+   discussion that already exists and silently create a duplicate instead, so old comments look
+   like they've vanished from the site even though they're still on GitHub. That's exactly what
+   happened on `/concepts/zone`, which is how this got caught.
 
 3. **Connect giscus.** Go to [giscus.app](https://giscus.app), enter `annuai/ati-docs`, follow
    its prompt to install the giscus app on the repo (this is the GitHub OAuth grant — you do this
    step, in your own browser). Once connected, giscus.app shows a config panel — set:
    - **Page ↔ Discussions Mapping**: `pathname`
-   - **Discussion Category**: `Announcements`
+   - **Discussion Category**: `Comments`
 
    The panel then shows the exact `data-repo-id` and `data-category-id` values (for this repo,
    these are `R_kgDOUdUUiQ` and `DIC_kwDOUdUUic4DF2v3` — already written into `.env.local`).
@@ -45,7 +53,7 @@ repository is an OAuth-style grant, and that has to come from you, not from an a
    ```
    VITE_GISCUS_REPO=annuai/ati-docs
    VITE_GISCUS_REPO_ID=R_kgDOUdUUiQ
-   VITE_GISCUS_CATEGORY=Announcements
+   VITE_GISCUS_CATEGORY=Comments
    VITE_GISCUS_CATEGORY_ID=DIC_kwDOUdUUic4DF2v3
    ```
 
