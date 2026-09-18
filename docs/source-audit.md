@@ -228,6 +228,7 @@ directly, the entry cites them rather than a file, so a reader can always tell w
 | `Architecture` (merged), `Users and permissions` (merged) | Two pairs of pages merged at the user's request, with no content removed: "Information architecture" folded into "Architecture" (both described the system's structure, one conceptually and one as concrete apps/screens), and "Roles and permissions" folded into "Users" (retitled "Users and permissions" — both described the same four people, one narratively and one as a permission matrix, and kept cross-referencing each other). Also fixed a set of card links on the Ati Flow overview page still pointing at the retired `/ui/*` routes from the earlier UI-into-Ati-Flow merge. | — (restructuring, not new knowledge) |
 | `Trip` (merged), `Fleet Monitor` (merged), `d-workflow-over-mission` (new decision) | Three terminology contradictions closed by direct instruction: Task and Trip name the same thing (Task pages merged into Trip; Ati uses Trip); Fleet Monitor and Live Fleet Status are the same screen under two names (merged into Fleet Monitor, the standard name); Mission and Workflow are the same concept (Mission is the industry-standard term, Ati Flow currently says Workflow because it is an orchestration product — logged as a decision alongside "Say Robot, not AMR", since it may be revisited later). | Ati team, terminology directive, supplied in conversation, September 2026 |
 | `System Integrator` (revised), `Solutions Architect` (revised) | Resolved: System Integrator and Solutions Architect (Configurator) are the same person and the same permission role, not a fifth user. System Integrator names who they typically work for — a third-party company delivering deployment services to a client — while Solutions Architect / Configurator names what they do inside the product. The pre-existing Solutions-Architect-vs-Configurator naming question is unaffected and remains open. | Ati team, terminology directive, supplied in conversation, September 2026 |
+| `Ati Robotics` (revised) | Founding (2017, Bengaluru), the 2018/2022/2026 company timeline, named Fortune 500 customer examples (Airbus, Valeo, Brose), global office locations, company-reported scale figures (250 team members, 15 Fortune 500 customers, 70+ factories, 4 regions, 2M missions), and the "full-stack robotics partner" positioning. Flagged as company-reported, not independently verified, and noted a discrepancy between two different Michigan locations the site gives for the US operation. | atirobotics.ai/company, September 2026 |
 
 Anything sourced this way should be treated exactly like a file-sourced fact: cited, and corrected in
 place if it turns out to be wrong.
@@ -266,10 +267,12 @@ These are preserved in the application rather than resolved.
 
 Not filled in. Pages that touch these say so explicitly.
 
-- **Ati Robotics as a company.** *Partly closed.* The team has since confirmed that Ati is an OEM
-  building both the robots and the orchestration software — see the table in section 4b. Still
-  undocumented: founding, market, customer base, hardware line-up and product family.
-  `Sherpa XT Lite` is known only because it is printed on the robot in the product render.
+- **Ati Robotics as a company.** *Largely closed.* The team confirmed Ati is an OEM building both
+  the robots and the orchestration software — see the table in section 4b. The company website
+  (atirobotics.ai/company) later added founding (2017, Bengaluru), the 2018/2022/2026 timeline,
+  global offices, and company-reported scale figures — see section 4b. Still undocumented:
+  hardware line-up beyond the `Sherpa XT Lite` name (known only from the product render) and
+  product roadmap.
 - **Robot hardware.** No specifications, payload figures, battery capacity, footprint or variants —
   although stages 1 and 2 establish that payload type, footprint, max speed and drive parameters are
   configured per robot.
