@@ -57,7 +57,7 @@ export const atiRobotics = [
       p(
         'Building both halves also means two documentation traditions in one company — requirement documents on the software side, a build list and a design risk analysis on the hardware side. See [[engineering-documents]].'
       ),
-      p('For the software half in detail, read [[ati-flow]].')
+      p('For the software half in detail, read [[ati-flow|the Ati Flow overview]].')
     ],
     related: ['ati-flow', 'robot', 'orchestration', 'v-oem', 'v-sherpa', 'engineering-documents']
   }

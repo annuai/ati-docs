@@ -89,7 +89,7 @@ export const gettingStarted = [
       p(
         'If you remember one thing from this documentation, make it this chain. Almost every concept sits somewhere along it.'
       ),
-      p('Next: [[gs-what-is-a-robot|what a robot is]]. Or read the full [[ati-flow]] page now.')
+      p('Next: [[gs-what-is-a-robot|what a robot is]]. Or read the full [[ati-flow|Ati Flow overview]] page now.')
     ],
     related: ['ati-flow', 'architecture', 'orchestration']
   },
@@ -172,9 +172,8 @@ export const gettingStarted = [
       relationship([
         { label: 'Demand', note: 'a line needs material, or work is finished and needs clearing' },
         { label: 'Request', note: 'raised by a business system through an integration, or by a person' },
-        { label: 'Task', to: 'task', note: 'allocated to' },
-        { label: 'Robot', to: 'robot', note: 'which makes a' },
-        { label: 'Trip', to: 'trip', note: 'and so material moves' }
+        { label: 'Trip', to: 'trip', note: 'allocated to' },
+        { label: 'Robot', to: 'robot', note: 'which executes it, and so material moves' }
       ]),
       p('The fuller version, with what decides each step, is on [[wf-material-movement]].'),
       gap(
@@ -209,7 +208,7 @@ export const gettingStarted = [
       list([
         '[[vocabulary|Explore the vocabulary]] — the words you will hear in every conversation',
         '[[workflows|Understand the workflows]] — how deployment and dispatch actually run',
-        '[[ui|Browse the UI]] — what each screen is for',
+        '[[ati-flow|Browse the UI]] — what each screen is for',
         '[[concepts|Read the concepts]] — the full set of ideas, with their relationships'
       ])
     ],
@@ -278,7 +277,7 @@ export const gettingStarted = [
               '[[architecture|Architecture]]',
               '[[vocabulary|Glossary]]',
               '[[ui-maps|Maps]] vs [[ui-workflows|Workflows]] vs [[ui-fleet-monitor|Fleet Monitor]]',
-              '[[roles-and-permissions|Roles & permissions]]',
+              '[[users|Roles & permissions]]',
               '[[wf-deployment|Deployment workflow]]'
             ])
           ]
@@ -286,6 +285,6 @@ export const gettingStarted = [
       ]),
       p('Questions the source material raises and does not answer are collected on [[open-questions]].')
     ],
-    related: ['open-questions', 'architecture', 'roles-and-permissions', 'robot-states']
+    related: ['open-questions', 'architecture', 'users', 'robot-states']
   }
 ];

@@ -1,4 +1,4 @@
-import { p, h, list, table, callout, gap, flow, defs, accordions } from './blocks.js';
+import { p, h, list, table, callout, gap, flow, defs, accordions, mermaid } from './blocks.js';
 
 const S = {
   glossary: 'old/ati-flow-glossary.html',
@@ -12,6 +12,7 @@ const S = {
 
 // Knowledge supplied directly in conversation rather than found in this folder.
 const ID1 = 'Operations Excellence lead — Industrial Design 1:1, September 2026';
+const CUR = 'Ati team — the current, on-the-ground deployment sequence, supplied in conversation, September 2026';
 
 export const workflows = [
   {
@@ -110,7 +111,7 @@ export const workflows = [
       ),
       gap('Whether an operator can dispatch a robot directly, and which robot actions each role may take, is listed as an open question in the source material.')
     ],
-    related: ['task', 'fleet', 'trip', 'v-dispatch', 'roles-and-permissions']
+    related: ['fleet', 'trip', 'v-dispatch', 'users']
   },
 
   {
@@ -199,51 +200,17 @@ export const workflows = [
   },
 
   {
-    id: 'wf-configuration',
-    slug: 'configuration',
-    title: 'Configuration',
-    summary: 'The order configuration is done in, and which layer owns each setting.',
-    simple:
-      'Set up the robots, then the map, then what the map means, then the jobs, then how robots share the space, then the connection to the business system. Each step depends on the one before it.',
-    aliases: ['setup', 'configure'],
-    status: 'current',
-    author: 'Annuai',
-    added: '2026-09-16',
-    sources: [S.deployment, S.architecture, S.ia],
-    blocks: [
-      h('The order'),
-      flow([
-        { title: 'Configure each robot', note: 'Network credentials, robot ID, safety parameters, payload profile, drive parameters.', tag: 'Robot layer' },
-        { title: 'Build the map', note: 'Drive the full area to produce the point cloud, then validate it.', tag: 'Map' },
-        { title: 'Annotate the map', note: 'Positions and stations, behavioural zones, gates and exclusion zones, forbidden and preferred areas.', tag: 'Map annotation' },
-        { title: 'Design missions', note: 'Atomic actions first, then sub-missions, then missions, then pattern and priority.', tag: 'Mission' },
-        { title: 'Configure the fleet', note: 'Task allocation, traffic arbitration, charging and idle behaviour, priority and aging.', tag: 'Fleet' },
-        { title: 'Connect the business system', kind: 'outcome', note: 'API hooks, implicit priority, master data alignment.', tag: 'Integration' }
-      ]),
-      callout(
-        'The question worth asking first',
-        'Almost every confusing configuration question is really "which layer owns this setting?". [[configuration-layers]] answers that in one table.'
-      ),
-      h('Who does it'),
-      p(
-        'Configuration authority sits with the Solutions Architect (Configurator): full edit on Maps and Workflows, full setup on Robots including low-level parameters, and full configuration on Integrations and Setup & Config. A Head of Operations can view and approve maps and workflows without doing the detailed editing.'
-      )
-    ],
-    related: ['configuration-layers', 'wf-deployment', 'roles-and-permissions', 'map-annotation']
-  },
-
-  {
     id: 'wf-deployment',
     slug: 'deployment',
-    title: 'AMR deployment',
+    title: 'Site deployment',
     summary: 'Nine stages from site assessment to a fleet running in production, and what each one covers.',
     simple:
       'Deploying robots at a site follows a fixed order: understand the site, prepare it, map it, give the map meaning, design the jobs, coordinate the fleet, connect the business systems, test, and go live.',
-    aliases: ['deployment workflow', 'rollout', 'nine stages'],
+    aliases: ['AMR deployment', 'deployment workflow', 'rollout', 'nine stages', 'configuration', 'setup', 'configure'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.deployment, ID1],
+    sources: [S.deployment, S.architecture, S.ia, ID1, CUR],
     blocks: [
       callout(
         'This is a human process, not a product object',
@@ -263,6 +230,14 @@ export const workflows = [
           { title: '9. Go-live & iteration', note: 'Training, monitor, refine', tag: 'Deploy', kind: 'outcome' }
         ],
         'Grouped into three phases: planning, build and deploy. Stage 9 feeds back into stages 4 and 5 rather than ending.'
+      ),
+      h('Who has configuration authority'),
+      callout(
+        'The question worth asking first',
+        'Almost every confusing configuration question is really "which layer owns this setting?". [[configuration-layers]] answers that in one table.'
+      ),
+      p(
+        'Configuration authority sits with the Solutions Architect (Configurator): full edit on Maps and Workflows, full setup on Robots including low-level parameters, and full configuration on Integrations and Setup & Config. A Head of Operations can view and approve maps and workflows without doing the detailed editing.'
       ),
       h('Stage detail'),
       accordions([
@@ -408,6 +383,57 @@ export const workflows = [
         { term: 'Stage 9 → stage 4', text: 'Map and zone corrections, once real traffic patterns are visible.' },
         { term: 'Stage 9 → stage 5', text: 'Mission logic refinement, once real request patterns are visible.' }
       ]),
+      h('How this actually happens today'),
+      callout(
+        'A more concrete, tool-level view',
+        'The nine stages above describe deployment in general terms. This is the same process at the level of what a deployment engineer actually does, gathered directly from the team. It has not been formally reconciled against the nine-stage model — see the gap below — but the rough correspondence is: step 2 sits inside stage 3, step 3 sits inside stage 4, and steps 4 and 5 have not been placed yet.'
+      ),
+      mermaid(
+        `flowchart TD
+    START(("Site ready for deployment")):::hub
+    S1["1. Add the Robot to Deployment Manager"]
+    S2["2. Scan the environment (SLAM)"]
+    S2NOTE["Done manually today —\ndriving the robot with a\nPlayStation controller.\nWhether/how to automate\nthis is unclear."]
+    S3["Point cloud map"]
+    S4["3. Create routes on the map"]
+    S4NOTE["Add waypoints, stations,\ngates, speed zones and other\nroute information"]
+    S5["4. Add materials to Ati Flow"]
+    S5NOTE["Needs more clarity"]
+    S6["5. Design workflows"]
+    S6NOTE["Needs confirmation —\nnot yet verified as the\nactual next step"]
+    S7["Map workflows to the\nright stations"]
+    S7NOTE["Machine name and\nProcessing Area used\nfor logical grouping"]
+
+    START --> S1 --> S2
+    S2 -.-> S2NOTE
+    S2 --> S3 --> S4
+    S4 -.-> S4NOTE
+    S4 --> S5
+    S5 -.-> S5NOTE
+    S5 -.-> S6
+    S6 -.-> S6NOTE
+    S6 --> S7
+    S7 -.-> S7NOTE
+
+    classDef hub fill:#cfeae3,stroke:#7fc2b6,color:#173c34,font-weight:700,stroke-width:2px;
+    classDef note fill:#fdf0dc,stroke:#f2d8a7,color:#5c4114,stroke-dasharray: 3 2;
+    classDef tentative fill:#f4e2f6,stroke:#ddbfe3,color:#4a2350,stroke-dasharray: 4 3;
+    classDef default fill:#ffffff,stroke:#d8dee5,color:#33403c;
+
+    class S2NOTE,S4NOTE,S5NOTE,S7NOTE note;
+    class S6,S6NOTE tentative;`,
+        'The deployment sequence as it happens on the ground today. Dashed boxes are open points, not steps; the dashed purple step is tentative rather than confirmed.'
+      ),
+      list([
+        '**1. Add the Robot to [[v-deployment-manager|Deployment Manager]]** — registering the robot in the tool Ati’s own engineers use to configure and deploy it.',
+        '**2. Scan the environment to build a point cloud map** — the [[v-map-creation|mapping]] work in stage 3 above. Done manually today by driving the robot with a PlayStation controller; see [[v-map-creation]] for the open question on automating it.',
+        '**3. Create routes on the map** — the [[map-annotation|map annotation]] work in stage 4 above: adding waypoints, stations, gates, speed zones and other route information on top of the point cloud map. This is a different artefact from the point cloud map itself, though both are commonly called “the map” — see [[map]] for why that overlap is kept deliberately.',
+        '**4. Add materials to Ati Flow** — likely connects to the [[processing-zone|Processing Area]] / material-list work already documented, but exactly how has not been confirmed.',
+        '**5. Design workflows** — not confirmed as the actual next step, but the best current guess. [[workflow|Workflows]] are then mapped to the right stations, using **Machine name** and [[processing-zone|Processing Area]] for logical grouping — see [[v-machine]] and [[v-material-station-mapping]].'
+      ]),
+      gap(
+        'Step 5 onward is the least confirmed part of this sequence: whether "design workflows" is genuinely the next step, and exactly how mission/workflow creation, fleet configuration and go-live follow it, is not yet documented at this level of detail. Nor is it confirmed how step 4 here relates to the already-documented Processing Area / material configuration flow.'
+      ),
       h('Where the time and money actually go'),
       p(
         'An operational review of real deployments found that stage 3 (mapping) and the process of fine-tuning robots to a site’s specific environmental conditions — such as extreme temperature gradients near factory ovens — cause the longest delays and the largest financial losses of any part of this workflow. Leadership’s stated target is bringing deployment timelines down from a current baseline of around 90 days.'
@@ -425,8 +451,23 @@ export const workflows = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Added findings from an Industrial Design 1:1 operational review: mapping and environmental fine-tuning are the largest source of delay and cost, leadership’s target is reducing the ~90-day deployment timeline, and an undocumented onboard depth-camera streaming tool is used for calibration.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added a concrete, tool-level view of how deployment actually happens today — adding the robot to Deployment Manager, manual SLAM mapping, route creation on the map, and adding materials to Ati Flow — with a diagram, and flagged that reconciling it against the nine-stage model above, and what happens after materials are added, are both open.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added a tentative step 5, "Design workflows" (needs confirmation), plus that workflows are then mapped to the right stations using Machine name and Processing Area for logical grouping. Also switched "AMR" to "Robot" throughout this section, per the existing decision to say Robot rather than AMR.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Renamed from "AMR deployment" to "Site deployment" and merged in the separate "Configuration" page, which had become a confusing, near-duplicate condensed version of the same nine-stage order. Its only unique content — the "who has configuration authority" paragraph and its pointer to Configuration layers — is now a section here, and the standalone Configuration page has been retired. Former titles kept as aliases.'
       }
     ],
-    related: ['wf-configuration', 'configuration-layers', 'map', 'map-annotation', 'missions-and-actions', 'wf-exceptions']
+    related: ['configuration-layers', 'map', 'map-annotation', 'missions-and-actions', 'wf-exceptions', 'v-deployment-manager', 'v-map-creation', 'processing-zone', 'v-machine', 'v-material-station-mapping', 'workflow', 'users']
   }
 ];

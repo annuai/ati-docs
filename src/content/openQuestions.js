@@ -10,6 +10,9 @@ import { p, h, list, callout, table } from './blocks.js';
 // Knowledge supplied directly in conversation rather than found in this folder.
 const MOM = 'Suryajit (Product Manager) — Ati Flow system-understanding meeting, 18 September 2026';
 const ID1 = 'Operations Excellence lead — Industrial Design 1:1, September 2026';
+const CUR = 'Ati team — the current, on-the-ground deployment sequence, supplied in conversation, September 2026';
+const TRANSCRIPT = 'Internal design/architecture review meeting, transcript supplied in conversation, September 2026';
+const DIRECTIVE = 'Ati team — terminology directive, supplied in conversation, September 2026';
 
 export const openQuestions = [
   {
@@ -23,7 +26,7 @@ export const openQuestions = [
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: ['old/ati-flow-faq.html', 'docs/source-audit.md', MOM, ID1],
+    sources: ['old/ati-flow-faq.html', 'docs/source-audit.md', MOM, ID1, CUR, TRANSCRIPT, DIRECTIVE],
     blocks: [
       callout(
         'Why this page exists',
@@ -38,9 +41,9 @@ export const openQuestions = [
         'How does the Solutions Architect relate to [[v-deployment-manager|Deployment Manager]], the tool Ati support engineers use to configure and deploy robots? The two describe closely related work.',
         'How does [[v-visa|VISA]] relate to the **gates** and **exclusion zones** in the deployment material — is it their implementation, or a separate mechanism?',
         'How much of [[v-fleet-manager|Fleet Manager]] has Ati Flow already absorbed, and on what timeline?',
-        'How does the earlier screen-based [[ui|UI]] section (Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug) map onto the current, team-supplied [[information-architecture|role-based architecture]] (Ati Flow Configurator, Supervisor, Operator)? No entry has reconciled the two yet.',
-        'Does [[v-fleet-supervisor|Fleet Supervisor]] belong in the new, role-based [[information-architecture|information architecture]] at all? The team’s two architecture diagrams do not include this persona — the branch now shown for it is reconstructed from the earlier [[users|Users]] and [[roles-and-permissions|Roles and permissions]] pages, which already disagree with each other about how narrow the role is.',
-        'Is the **Operator** in the new [[information-architecture|information architecture]] (merged Request Operator and Dispatch Operator) the same person as the **Operator** in the earlier four-user model ([[users]]) — floor-level, scoped to one zone? Nothing has confirmed or ruled out the two names describing different roles.'
+        'How does the earlier screen-based [[ati-flow|UI]] section (Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug) map onto the current, team-supplied [[architecture|role-based architecture]] (Ati Flow Configurator, Supervisor, Operator)? No entry has reconciled the two yet.',
+        'Does [[v-fleet-supervisor|Fleet Supervisor]] belong in the new, role-based [[architecture|information architecture]] at all? The team’s two architecture diagrams do not include this persona — the branch now shown for it is reconstructed from the earlier [[users|Users and permissions]] page, whose narrative description and permission matrix already disagree with each other about how narrow the role is.',
+        'Is the **Operator** in the new [[architecture|information architecture]] (merged Request Operator and Dispatch Operator) the same person as the **Operator** in the earlier four-user model ([[users]]) — floor-level, scoped to one zone? Nothing has confirmed or ruled out the two names describing different roles.'
       ]),
       h('Questions raised in the 18 September 2026 system-understanding meeting'),
       list([
@@ -55,6 +58,17 @@ export const openQuestions = [
       list([
         'Is a "consumption point", the term some software surfaces use, the same entity as [[v-machine|Machine]] or [[v-consumption-unit|Consumption Unit]] as documented here? See [[v-machine]].',
         'Why did Deployment Manager 5.4 increase the number of steps required for tasks the previous version did in fewer? A screen-by-screen information architecture, planned but not yet built, is intended to answer this. See [[v-deployment-manager]].'
+      ]),
+      h('Questions raised by the current, on-the-ground deployment sequence'),
+      list([
+        '[[v-map-creation|Mapping]] is currently done by manually driving the robot with a PlayStation controller. Could this be automated, and if so, how?',
+        'What exactly is involved in adding materials to Ati Flow, and how does that step relate to the already-documented [[processing-zone|Processing Area]] / material configuration flow?',
+        'What happens after materials are added to Ati Flow — at minimum, mission and workflow creation, fleet configuration and go-live still have to happen somewhere — is not yet documented at this level of detail. See [[wf-deployment]].',
+        'How does this concrete, tool-level sequence (Deployment Manager → mapping → route creation → materials) map onto the documented nine-stage deployment workflow? The two have not been formally reconciled.'
+      ]),
+      h('Questions raised by an internal design/architecture review'),
+      list([
+        '"IT and production planners do the configuration" was named alongside System Integrator. Now that System Integrator is confirmed as the same person as the [[v-solutions-architect|Solutions Architect / Configurator]], is "IT / production planner" a third job title for that same role, or a genuinely different one that has not been documented yet?'
       ]),
       h('Questions the source material raises'),
       list([
@@ -72,15 +86,15 @@ export const openQuestions = [
         [
           [
             'Information architecture',
-            'Three models now exist. The earlier documentation lists Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config and Debug. The prototype navigation shows Dashboard, Live Status, Analytics, AMR Trips, Staging Area and WIP Inventory. A team-supplied architecture diagram describes the product by role instead — Ati Flow Configurator, Supervisor, Operator, Fleet Manager and the robot’s HMI — and is now the current model. None of the three acknowledges either of the others. See [[information-architecture]].'
+            'Three models now exist. The earlier documentation lists Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config and Debug. The prototype navigation shows Dashboard, Live Status, Analytics, AMR Trips, Staging Area and WIP Inventory. A team-supplied architecture diagram describes the product by role instead — Ati Flow Configurator, Supervisor, Operator, Fleet Manager and the robot’s HMI — and is now the current model. None of the three acknowledges either of the others. See [[architecture]].'
           ],
           [
             'Fleet Supervisor, twice over',
-            'The role documentation itself already disagreed — [[users|Users]] narrows Fleet Supervisor to handling robots with issues only; [[roles-and-permissions|Roles and permissions]] gives it zone-wide Fleet Monitor and robot-management access. Neither has been checked against the new, role-based [[information-architecture|information architecture]], where the role appears only as a reconstructed, unconfirmed branch.'
+            'The role documentation itself already disagreed — the [[users|Users and permissions]] page’s narrative description narrows Fleet Supervisor to handling robots with issues only, while its own permission matrix gives it zone-wide Fleet Monitor and robot-management access. Neither has been checked against the new, role-based [[architecture|information architecture]], where the role appears only as a reconstructed, unconfirmed branch.'
           ],
           [
             'One name, two Operators',
-            'The new [[information-architecture|information architecture]]’s **Operator** (merged Request Operator and Dispatch Operator) and the **Operator** in the earlier four-user model ([[users]]) are not confirmed to be the same role.'
+            'The new [[architecture|information architecture]]’s **Operator** (merged Request Operator and Dispatch Operator) and the **Operator** in the earlier four-user model ([[users]]) are not confirmed to be the same role.'
           ],
           [
             'One word, two artefacts: "map"',
@@ -88,19 +102,11 @@ export const openQuestions = [
           ],
           [
             'Names one word apart',
-            'Fleet Manager and Deployment Manager are software; Fleet Supervisor and Supervisor are people; Fleet Monitor is a screen; Supervisor Mode is a control. The disambiguation table on [[ati-flow]] keeps them apart.'
+            'Fleet Manager and Deployment Manager are software; Fleet Supervisor and Supervisor are people; Fleet Monitor is a screen; Supervisor Mode is a control. The disambiguation table on [[ati-flow|the Ati Flow overview]] keeps them apart.'
           ],
           [
             'Fleet Manager vs Fleet Monitor',
             '[[v-fleet-manager|Fleet Manager]] is a separate system that Ati Flow is intended to replace. [[ui-fleet-monitor|Fleet Monitor]] is a page inside Ati Flow. The names are one word apart. How much of Fleet Manager remains to be absorbed — [[v-route-ops|Route Ops]] is one known gap — is not documented.'
-          ],
-          [
-            'The live view',
-            'Called **Fleet Monitor** in the documentation and **Live Fleet Status** in the prototype. See [[ui-fleet-monitor]] and [[ui-live-fleet-status]].'
-          ],
-          [
-            'Trip and Task',
-            'Both name a unit of robot work. Neither is defined. See [[trip]] and [[task]].'
           ],
           [
             'Machine vs "consumption point"',
@@ -108,7 +114,7 @@ export const openQuestions = [
           ],
           [
             'Roles and modes',
-            'Four roles are documented. The prototype exposes a single "Supervisor Mode" selector with no role switching. See [[roles-and-permissions]].'
+            'Four roles are documented. The prototype exposes a single "Supervisor Mode" selector with no role switching. See [[users|Users and permissions]].'
           ],
           [
             'The word "workflow"',
@@ -127,7 +133,11 @@ export const openQuestions = [
       ]),
       h('Resolved'),
       list([
-        '**Processing Area, Processing Zone, Process Area, Process Zone** — confirmed to be the same entity by Suryajit (Product Manager), 18 September 2026. Processing Area is now the standard term. See [[d-processing-area-terminology]] and [[processing-zone|Processing Area]].'
+        '**Processing Area, Processing Zone, Process Area, Process Zone** — confirmed to be the same entity by Suryajit (Product Manager), 18 September 2026. Processing Area is now the standard term. See [[d-processing-area-terminology]] and [[processing-zone|Processing Area]].',
+        '**Trip and Task** — confirmed to name the same thing, with no conceptual difference. Ati currently uses Trip. See [[trip]].',
+        '**Fleet Monitor and Live Fleet Status** — confirmed to be the same screen under two names. Fleet Monitor is the documented, standard name going forward; Live Fleet Status / Live Status is the current prototype label. See [[ui-fleet-monitor]].',
+        '**Mission and Workflow** — confirmed to name the same thing. Mission is the wider industry term; Ati Flow currently calls it Workflow because it is an orchestration product. See [[d-workflow-over-mission]].',
+        '**System Integrator and Solutions Architect (Configurator)** — confirmed to be the same person and the same permission role. System Integrator names who they typically work for — a third-party company delivering deployment services to the client, rather than an Ati employee; Solutions Architect / Configurator names what they do in the product. Not a fifth user. See [[v-system-integrator]].'
       ]),
       h('How to close one'),
       p(
@@ -169,8 +179,33 @@ export const openQuestions = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Added two questions from the Industrial Design 1:1: whether "consumption point", used in some software surfaces, names the same thing as Machine or Consumption Unit; and why Deployment Manager 5.4 increased the steps required for tasks compared to the previous version. Logged the Machine vs "consumption point" naming clash as a contradiction alongside the others.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added questions raised by the current, on-the-ground deployment sequence: whether manual SLAM mapping (currently done with a PlayStation controller) can be automated, what adding materials to Ati Flow actually involves, what happens afterward, and whether this concrete sequence has been reconciled against the documented nine-stage deployment workflow.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added two questions from an internal design/architecture review: how System Integrator relates to the existing four-user model, and whether "IT and production planners doing the configuration" describes the same role as Solutions Architect / Configurator under different job titles, or something new.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Closed the Trip vs Task contradiction: confirmed to name the same thing, with no conceptual difference — Ati currently uses Trip. Merged the separate Task pages into Trip.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Closed two more contradictions: Fleet Monitor and Live Fleet Status are the same screen (Fleet Monitor is the standard name going forward, and the two pages have been merged), and Mission and Workflow are the same concept (Ati Flow currently uses Workflow because it is an orchestration product — see the new decision, Say "Workflow", not "Mission").'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Closed the question of how System Integrator relates to the four-user model: confirmed to be the same person as the Solutions Architect (Configurator), naming the typical third-party employer relationship rather than a fifth persona. Narrowed the remaining open question to whether "IT / production planner" is a third job title for the same role.'
       }
     ],
-    related: ['users', 'robot-states', 'processing-zone', 'trip', 'task', 'information-architecture', 'v-material-station-mapping', 'v-machine', 'fleet', 'information-vs-execution-layer', 'd-processing-area-terminology', 'v-deployment-manager', 'wf-deployment']
+    related: ['users', 'robot-states', 'processing-zone', 'trip', 'architecture', 'v-material-station-mapping', 'v-machine', 'fleet', 'information-vs-execution-layer', 'd-processing-area-terminology', 'v-deployment-manager', 'wf-deployment', 'v-map-creation', 'v-system-integrator', 'v-mhe']
   }
 ];

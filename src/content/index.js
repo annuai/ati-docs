@@ -6,6 +6,7 @@ import { vocabulary } from './vocabulary.js';
 import { workflows } from './workflows.js';
 import { ui } from './ui.js';
 import { decisions } from './decisions.js';
+import { teams } from './teams.js';
 import { openQuestions } from './openQuestions.js';
 import { isKnownAuthor } from '../data/authors.js';
 
@@ -37,9 +38,9 @@ export const sections = [
   {
     id: 'ati-flow',
     title: 'Ati Flow',
-    description: 'What Ati Flow is, how it is structured, and who uses each part of it.',
+    description: 'What Ati Flow is, how it is structured, who uses each part of it, and every screen in it.',
     defaultType: 'product',
-    entries: atiFlow
+    entries: [...atiFlow, ...ui]
   },
   {
     id: 'concepts',
@@ -63,18 +64,18 @@ export const sections = [
     entries: workflows
   },
   {
-    id: 'ui',
-    title: 'UI',
-    description: 'The product’s screens, components, patterns and states — documented as knowledge.',
-    defaultType: 'reference',
-    entries: ui
-  },
-  {
     id: 'decisions',
     title: 'Decisions',
     description: 'Terminology, UX and product-principle decisions the source material records.',
     defaultType: 'decision',
     entries: decisions
+  },
+  {
+    id: 'teams',
+    title: 'Teams at Ati',
+    description: 'Who does what across the company, briefly.',
+    defaultType: 'team',
+    entries: teams
   },
   {
     id: 'open-questions',
@@ -96,6 +97,7 @@ export const typeLabels = {
   workflow: 'Workflow',
   screen: 'Screen',
   decision: 'Decision',
+  team: 'Team',
   reference: 'Reference'
 };
 

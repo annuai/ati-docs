@@ -19,6 +19,8 @@ const S = {
 
 // Knowledge supplied directly in conversation rather than found in this folder.
 const MOM = 'Suryajit (Product Manager) — Ati Flow system-understanding meeting, 18 September 2026';
+const TRANSCRIPT = 'Internal design/architecture review meeting, transcript supplied in conversation, September 2026';
+const DIRECTIVE = 'Ati team — terminology directive, supplied in conversation, September 2026';
 
 export const concepts = [
   {
@@ -84,7 +86,7 @@ export const concepts = [
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.glossary, S.deployment, S.architecture, S.ia],
+    sources: [S.glossary, S.deployment, S.architecture, S.ia, TRANSCRIPT],
     blocks: [
       h('Why it matters'),
       p(
@@ -108,8 +110,13 @@ export const concepts = [
       ),
       h('Fleet configuration, in the simplest terms'),
       p(
-        'At its core, configuring a fleet is a group-of-robots-to-map assignment: a group of [[robot|AMRs]] gets assigned to a [[map|Map]]. Multiple fleets typically exist because of different robot types, different maps, or different operational requirements.'
+        'At its core, configuring a fleet is a group-of-robots-to-map assignment: a group of [[robot|Robots]] gets assigned to a [[map|Map]]. Multiple fleets and maps typically exist for three concrete reasons:'
       ),
+      list([
+        'Different robot types need different maps',
+        'Stitching very large maps together is technically painful today',
+        'It keeps configuration and day-to-day operations simpler to manage'
+      ]),
       callout(
         'Is Fleet a frontend concept at all?',
         'After the robot-to-map assignment is made, Fleet appears to carry more weight in the backend/execution architecture than in the configuration experience a user sees. Whether Fleet needs to be exposed as a major frontend concept at all, or whether the same outcome is better represented directly as a Robot → Map assignment, is unresolved. See [[open-questions]].',
@@ -124,6 +131,11 @@ export const concepts = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Added the simplest framing of fleet configuration — group of robots assigned to a map — and flagged the open question of whether Fleet needs frontend prominence at all, from the Ati Flow system-understanding meeting.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Replaced the vague "different robot types, maps, or operational requirements" with three concrete reasons multiple fleets/maps exist, from an internal design/architecture review: robot-type-specific maps, large maps being technically painful to stitch together today, and simpler configuration and operations.'
       }
     ],
     related: ['robot', 'orchestration', 'traffic-control', 'zone', 'ui-fleet-monitor', 'map', 'open-questions']
@@ -143,7 +155,7 @@ export const concepts = [
     blocks: [
       h('Why it matters'),
       p(
-        'Zones are how the product divides a large floor into something a person can be responsible for. An [[roles-and-permissions|Operator]] sees their own zone. A Fleet Supervisor owns one or more zones. A Head of Operations sees all of them. [[ui-fleet-monitor|Fleet Monitor]] is described as a live, zone-based view of robots, tasks and traffic.'
+        'Zones are how the product divides a large floor into something a person can be responsible for. An [[users|Operator]] sees their own zone. A Fleet Supervisor owns one or more zones. A Head of Operations sees all of them. [[ui-fleet-monitor|Fleet Monitor]] is described as a live, zone-based view of robots, tasks and traffic.'
       ),
       h('The word is used in more than one way'),
       p(
@@ -173,7 +185,7 @@ export const concepts = [
       ),
       p('See also [[processing-zone|Processing Area]] — a material-grouping concept, now confirmed distinct from this geographical meaning of zone. See [[d-processing-area-terminology]].')
     ],
-    related: ['processing-zone', 'map-annotation', 'traffic-control', 'roles-and-permissions']
+    related: ['processing-zone', 'map-annotation', 'traffic-control', 'users']
   },
 
   {
@@ -196,9 +208,14 @@ export const concepts = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Resolved: Processing Zone, Process Area and Process Zone are the same entity as Processing Area, confirmed by Suryajit (Product Manager) in the Ati Flow system-understanding meeting. Rewrote this page around what a Processing Area actually does — segregating a local material list out of Plant Master Data — instead of leaving it as an open naming gap. See [[d-processing-area-terminology]].'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Resolved the physical/geographic gap: a Processing Area is confirmed to not be inherently physical — it can span multiple physical locations, and one physical location can hold multiple Processing Areas. Sharpened the prefix-filtering gap: excluding one item from an otherwise-matching prefix group needs Excel-like filtering, which is not supported today.'
       }
     ],
-    sources: [S.glossary, S.prototype, S.faq, S.prdV2, S.prdV3, MOM],
+    sources: [S.glossary, S.prototype, S.faq, S.prdV2, S.prdV3, MOM, TRANSCRIPT],
     blocks: [
       callout(
         'Resolved — one name now',
@@ -222,6 +239,10 @@ export const concepts = [
         ],
         'A Processing Area may correspond to an operational or manufacturing section of the floor, but its software function is primarily material grouping, not a geographical boundary.'
       ),
+      callout(
+        'Resolved — not inherently physical',
+        'A Processing Area is confirmed to not be inherently a physical or geographic zone. It can span multiple physical locations, and a single physical location can contain multiple Processing Areas. It is purely a categorisation convenience on top of Master Data.'
+      ),
       h('Where it sits in the wider configuration flow'),
       p('The full flow, as it exists today, runs from master data to execution:'),
       chain(
@@ -236,10 +257,10 @@ export const concepts = [
       ),
       h('How the local material list gets built'),
       p(
-        'Today, materials are pulled from Master Data into a Processing Area using prefixes — a prefix can match a single material, several related materials, or a whole material group. A redesigned configuration experience does not need to expose that prefix logic directly to a user; simpler interactions such as search, filter, multi-select, grouping, and including or excluding individual materials from a group can sit on top of the same underlying grouping capability.'
+        'Today, materials are pulled from Master Data into a Processing Area using prefixes — a prefix can match a single material, several related materials, or a whole material group. This is criticised as clunky, particularly for excluding one item from an otherwise-matching group. A redesigned configuration experience does not need to expose that prefix logic directly to a user; simpler interactions such as search, filter, multi-select, grouping, and including or excluding individual materials from a group can sit on top of the same underlying grouping capability.'
       ),
       gap(
-        'Whether a Processing Area always corresponds one-to-one with a physical operational section, or is purely a configuration-side grouping with no fixed physical counterpart, has not been confirmed.'
+        'Excluding a single item from an otherwise-matching prefix group is not currently supported — it would need Excel-like filtering, which the system does not have today.'
       )
     ],
     related: ['zone', 'material-flow', 'open-questions', 'v-processing-area', 'v-station', 'v-staging-area', 'd-processing-area-terminology', 'v-material-station-mapping']
@@ -374,8 +395,19 @@ export const concepts = [
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.glossary, S.deployment],
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added that "Mission" is the standard industry term for what Ati Flow, as an orchestration product, currently calls a Workflow — the same concept, not two different ones. See [[d-workflow-over-mission]].'
+      }
+    ],
+    sources: [S.glossary, S.deployment, DIRECTIVE],
     blocks: [
+      callout(
+        'Mission is the industry word; Ati Flow says Workflow',
+        'A **mission**, in the wider robotics/AMR industry, is exactly what this page describes: a composed sequence of actions that gets a job done. Ati Flow, being an orchestration product, currently calls this a **Workflow**. There is no meaning difference — this may be revisited as the product matures. See [[d-workflow-over-mission]].'
+      ),
       h('Why it matters'),
       p(
         'Missions are where the annotated [[map]] becomes actual transport behaviour. They are the unit a [[fleet]] allocates and a [[robot]] executes.'
@@ -407,7 +439,7 @@ export const concepts = [
         'Priority and interrupt behaviour is designed into the mission: whether it can be preempted, and where in its route preemption is safe. Real request patterns after go-live often show that a mission built for average conditions does not hold at peak load.'
       )
     ],
-    related: ['workflow', 'fleet', 'map-annotation', 'v-taxi', 'v-milk-run', 'v-bus']
+    related: ['workflow', 'fleet', 'map-annotation', 'v-taxi', 'v-milk-run', 'v-bus', 'd-workflow-over-mission', 'v-mission']
   },
 
   {
@@ -416,16 +448,20 @@ export const concepts = [
     summary: 'The configured logic for transport behaviour — what should happen, expressed as missions and actions.',
     simple:
       'A workflow is the recipe. It says which steps make up a job, in what order, and how important that job is.',
-    aliases: ['workflows', 'transport behaviour'],
+    aliases: ['workflows', 'transport behaviour', 'mission'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.glossary, S.ia, S.architecture, S.screens],
+    sources: [S.glossary, S.ia, S.architecture, S.screens, DIRECTIVE],
     blocks: [
       callout(
         'One word, two meanings',
-        'In the product, a **workflow** is configured transport logic — it lives on the [[ui-workflows|Workflows]] surface next to Maps and Robots. In deployment conversations, *workflow* also means a human process, as in the [[wf-deployment|AMR deployment workflow]]. This documentation keeps the two in different sections and says which is meant.',
+        'In the product, a **workflow** is configured transport logic — it lives on the [[ui-workflows|Workflows]] surface next to Maps and Robots. In deployment conversations, *workflow* also means a human process, as in the [[wf-deployment|Site deployment workflow]]. This documentation keeps the two in different sections and says which is meant.',
         'gap'
+      ),
+      callout(
+        'Workflow and Mission are the same thing',
+        '**Mission** is the standard word for this used across the wider robotics/AMR industry. Ati Flow, being an orchestration product, currently calls it **Workflow** instead — there is no conceptual difference. This is a current terminology call, not a permanent one; it may be worth revisiting later. See [[d-workflow-over-mission]].'
       ),
       h('Why it matters'),
       p(
@@ -433,13 +469,13 @@ export const concepts = [
       ),
       h('What it contains'),
       list([
-        '[[missions-and-actions|Mission and action design]] — the steps themselves',
+        '[[missions-and-actions|Action and sub-mission design]] — the steps composed into the workflow itself',
         'Mission patterns — taxi, milk run, bus',
         'Priority rules — how urgent a job is and whether it can be interrupted'
       ]),
       h('Who touches it'),
       p(
-        'Editing workflows is Configurator work. A Head of Operations can view and approve them, a Fleet Supervisor can view them to understand what is configured, and an Operator does not see them at all. See [[roles-and-permissions]].'
+        'Editing workflows is Configurator work. A Head of Operations can view and approve them, a Fleet Supervisor can view them to understand what is configured, and an Operator does not see them at all. See [[users]].'
       ),
       h('The minimum a workflow needs'),
       p(
@@ -456,9 +492,14 @@ export const concepts = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Added the workflow’s minimum requirement (material, pick station, drop station, movement rules) and flagged the open question of whether the current Machine dependency in workflow creation is required, from the Ati Flow system-understanding meeting.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added that "Workflow" and "Mission" are the same concept — Mission is the wider industry term, Workflow is Ati Flow\'s current product term, chosen because it is an orchestration product. See [[d-workflow-over-mission]].'
       }
     ],
-    related: ['missions-and-actions', 'map', 'ui-workflows', 'roles-and-permissions', 'v-machine', 'information-vs-execution-layer', 'open-questions']
+    related: ['missions-and-actions', 'map', 'ui-workflows', 'users', 'v-machine', 'information-vs-execution-layer', 'open-questions', 'd-workflow-over-mission', 'v-mission']
   },
 
   {
@@ -467,22 +508,33 @@ export const concepts = [
     summary: 'Two layers inside Ati Flow: one defines what needs to move and where; the other defines how the physical movement actually happens.',
     simple:
       'One half of Ati Flow decides what should move, from where, to where. The other half makes a robot actually go and do it. Keeping the two separate stops workflow configuration from getting mixed up with fleet and map detail a user should not need to know about.',
-    aliases: ['configuration layer', 'execution layer'],
+    aliases: ['configuration layer', 'execution layer', 'booking layer', 'information layer'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-18',
-    sources: [MOM],
+    sources: [MOM, TRANSCRIPT],
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added "Booking Layer" as an alias for the information layer, and named the specific decoupling point an internal design/architecture review kept circling back to: a workflow does not need to know about fleets, and a fleet does not need to know about Processing Areas.'
+      }
+    ],
     blocks: [
       h('The two layers'),
       table(
         ['Layer', 'What it contains', 'Purpose'],
         [
-          ['Information / Configuration', 'Master Data, [[processing-zone|Processing Area]], material grouping, [[v-material-station-mapping|material station mapping]], [[workflow|workflow]] definition', 'Defines what needs to move, from where, and to where'],
-          ['Execution', '[[map|Map]], [[fleet|Fleet]], [[robot|Robot]]/AMR, actual movement execution', 'Defines how the physical movement is carried out']
+          ['Information / Configuration (Booking)', 'Master Data, [[processing-zone|Processing Area]], material grouping, [[v-material-station-mapping|material station mapping]], [[workflow|workflow]] definition', 'Defines what needs to move, from where, and to where'],
+          ['Execution', '[[map|Map]], [[fleet|Fleet]], [[robot|Robot]], actual movement execution', 'Defines how the physical movement is carried out']
         ]
       ),
       p(
         'This maps onto the five-layer [[architecture]] already documented: the information/configuration layer corresponds to the configuration side of the orchestration layer, and the execution layer corresponds to the fleet and robot/autonomy layers.'
+      ),
+      callout(
+        'The two layers are only loosely coupled',
+        'A [[workflow|Workflow]] does not need to know about [[fleet|Fleet]], and a Fleet does not need to know about [[processing-zone|Processing Area]]. An internal design/architecture review identified forcing one hierarchy onto the other as the main source of confusion when discussing this split — the two are deliberately decoupled.'
       ),
       callout(
         'Design direction',
@@ -496,66 +548,38 @@ export const concepts = [
   },
 
   {
-    id: 'task',
-    title: 'Task',
-    summary: 'A unit of work assigned to a robot. The term is used throughout the sources but never formally defined.',
-    simple:
-      'A task is a piece of work waiting for a robot. The live view shows a queue of them, and the fleet decides which robot picks up which one.',
-    aliases: ['task queue', 'task allocation'],
-    status: 'needs-confirmation',
-    author: 'Annuai',
-    added: '2026-09-16',
-    sources: [S.deployment, S.ia, S.glossary],
-    blocks: [
-      callout(
-        'Used, but not defined',
-        'No source file in this folder defines what a task is as a record. What follows is what the sources *show* about tasks, not a definition to rely on.',
-        'gap'
-      ),
-      h('What the sources show'),
-      list([
-        'Fleet management includes **task allocation logic** — how an incoming request gets assigned to a specific idle or nearby robot.',
-        '[[ui-fleet-monitor|Fleet Monitor]] is described as a live, zone-based view of robots, **tasks** and traffic.',
-        'An Operator sees robot status and the **task queue** for their own zone.',
-        'Day-to-day task queues and manual dispatch are explicitly *not* a Configurator concern — they are operational.'
-      ]),
-      h('Task or trip?'),
-      p(
-        'The prototype uses [[trip]] for the same general idea — a job a robot is doing right now, with an identifier and a next station. Whether a trip is one task, several tasks, or the execution record of a [[missions-and-actions|mission]] is not established anywhere. Treat the two as unreconciled until Ati confirms the model.'
-      )
-    ],
-    related: ['trip', 'fleet', 'orchestration', 'ui-fleet-monitor', 'open-questions']
-  },
-
-  {
     id: 'trip',
     title: 'Trip',
-    summary: 'The in-product name for a journey a robot is currently making. Visible in the UI, undefined in the documentation.',
+    summary: 'The in-product name for a journey a robot is making — a robot, a load, and a job, from here to there.',
     simple:
-      'A trip is one journey: this robot, this load, from here to there. The live view shows its identifier and where the robot is heading next.',
-    aliases: ['AMR trip', 'trip ID'],
-    status: 'needs-confirmation',
+      'A trip is one journey: this robot, this load, from here to there. The live view shows its identifier and where the robot is heading next. "Task" is sometimes used for the same thing, but Ati uses Trip — there is no conceptual difference between the two, they are all trips.',
+    aliases: ['AMR trip', 'trip ID', 'task', 'task queue'],
+    status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.prototype, S.faq],
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Resolved: Task and Trip name the same thing, with no conceptual difference — Ati currently uses Trip. Merged the separate Task page into this one rather than leaving them as two unreconciled names for the same idea.'
+      }
+    ],
+    sources: [S.prototype, S.faq, S.deployment, S.ia, S.glossary],
     blocks: [
-      callout(
-        'Used, but not defined',
-        'Trip appears only in the Ati Flow prototype. No written source in this folder defines it.',
-        'gap'
-      ),
       h('What the sources show'),
       list([
         'The prototype navigation includes an **AMR Trips** page.',
         'The robot detail panel has a **Trip Details** section containing a *Trip ID* and a *Next Station*.',
         'Trip identifiers follow the shape `TRP-20487`; stations follow `S100` to `S105`.',
-        'The activity timeline records events such as *Trip TRP-20487 assigned*, which implies a trip is assigned to a robot rather than owned by it.'
+        'The activity timeline records events such as *Trip TRP-20487 assigned*, which implies a trip is assigned to a robot rather than owned by it.',
+        'Fleet management includes **task allocation logic** — how an incoming trip gets assigned to a specific idle or nearby robot.',
+        '[[ui-fleet-monitor|Fleet Monitor]] is described as a live, zone-based view of robots, trips and traffic.',
+        'An Operator sees robot status and the trip queue for their own zone.',
+        'Day-to-day trip queues and manual dispatch are explicitly *not* a Configurator concern — they are operational.'
       ]),
-      p(
-        'See [[task]] for the same ambiguity from the other direction, and [[ui-live-fleet-status]] for where a trip is displayed.'
-      )
+      p('See [[ui-fleet-monitor]] for where a trip is displayed.')
     ],
-    related: ['task', 'robot', 'ui-live-fleet-status', 'material-flow']
+    related: ['robot', 'material-flow', 'fleet', 'orchestration', 'ui-fleet-monitor']
   },
 
   {
@@ -594,7 +618,7 @@ export const concepts = [
         { label: 'Robot', to: 'robot', note: 'belongs to' },
         { label: 'Fleet', to: 'fleet', note: 'coordinated by' },
         { label: 'Orchestration', to: 'orchestration', note: 'turns demand into' },
-        { label: 'Tasks and trips', to: 'task', note: 'which move' },
+        { label: 'Trips', to: 'trip', note: 'which move' },
         { label: 'Material', to: 'material-flow' }
       ]),
       callout(
@@ -615,7 +639,7 @@ export const concepts = [
     status: 'draft',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.overview, S.deployment, S.architecture, S.screens, S.prototype, MOM],
+    sources: [S.overview, S.deployment, S.architecture, S.screens, S.prototype, MOM, TRANSCRIPT],
     blocks: [
       h('Why it matters'),
       p(
@@ -630,7 +654,11 @@ export const concepts = [
       ]),
       h('Containers, so far'),
       p(
-        'Containers currently support basic point-to-point material movement, identified by a Container ID used for operational pick-and-drop matching. The system does not necessarily track a container’s exact contents in detail — a Container ID resolves *how a container is moved and matched*, not *what it is a record of*.'
+        'Containers currently support basic point-to-point material movement, identified by a Container ID — or [[v-mhe|MHE code]] — used for operational pick-and-drop matching. The system does not necessarily track a container’s exact contents in detail — a Container ID resolves *how a container is moved and matched*, not *what it is a record of*.'
+      ),
+      callout(
+        'A deliberate scope gap, for now',
+        'There is no container-type-to-material mapping and no empty-container or inventory tracking yet. This is acknowledged as a deliberate scope gap rather than an oversight — the system is meant to scale, and both are expected to be added later.'
       ),
       gap(
         'There is still no model of material itself in any source: no definition of a material, a material type, a load or a unit, and no detailed inventory model of what is inside a container. `WIP Inventory` and `Staging Area` remain navigation labels with no documented content behind them.'
@@ -641,9 +669,14 @@ export const concepts = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Added what the Ati team confirmed about containers — point-to-point movement identified by a Container ID, without necessarily tracking detailed contents — partially closing this page’s material-model gap. Source: Ati Flow system-understanding meeting.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added that containers are also identified by MHE codes, and that the absence of container-type-to-material mapping and empty-container/inventory tracking is a deliberate, temporary scope gap rather than an oversight — from an internal design/architecture review.'
       }
     ],
-    related: ['orchestration', 'wf-material-movement', 'v-wip', 'processing-zone']
+    related: ['orchestration', 'wf-material-movement', 'v-wip', 'processing-zone', 'v-mhe']
   },
 
   {
@@ -750,7 +783,7 @@ export const concepts = [
         'One design principle is relevant here: expose the operational decision a user needs rather than reproducing every internal robot state. Low-level state belongs in [[ui-debug|Debug]]. See [[d-expose-the-decision]].'
       )
     ],
-    related: ['robot', 'ui-live-fleet-status', 'wf-exceptions', 'open-questions']
+    related: ['robot', 'ui-fleet-monitor', 'wf-exceptions', 'open-questions']
   },
 
   {
@@ -839,10 +872,10 @@ export const concepts = [
       ),
       h('Who configures what'),
       p(
-        'Configuration authority sits with the Solutions Architect (Configurator). Operational control — reassigning a robot, raising a priority — sits with Operators and Supervisors. See [[roles-and-permissions]].'
+        'Configuration authority sits with the Solutions Architect (Configurator). Operational control — reassigning a robot, raising a priority — sits with Operators and Supervisors. See [[users]].'
       )
     ],
-    related: ['wf-deployment', 'roles-and-permissions', 'integrations', 'map-annotation', 'd-keep-the-layers-clear']
+    related: ['wf-deployment', 'users', 'integrations', 'map-annotation', 'd-keep-the-layers-clear']
   },
 
   {

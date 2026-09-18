@@ -11,6 +11,7 @@ const S = {
 
 // Knowledge supplied directly in conversation rather than found in this folder.
 const MOM = 'Suryajit (Product Manager) — Ati Flow system-understanding meeting, 18 September 2026';
+const DIRECTIVE = 'Ati team — terminology directive, supplied in conversation, September 2026';
 
 const NOT_RECORDED = 'Not recorded in the source material.';
 
@@ -51,6 +52,37 @@ export const decisions = [
       p('The prototype is not fully consistent with this: its navigation still contains **AMR Trips**.')
     ],
     related: ['robot', 'v-amr', 'v-robot']
+  },
+
+  {
+    id: 'd-workflow-over-mission',
+    slug: 'workflow-over-mission',
+    kind: 'decision',
+    title: 'Say "Workflow", not "Mission"',
+    summary: 'Mission and Workflow name the same thing. Ati Flow currently calls it Workflow — worth revisiting later.',
+    aliases: ['terminology', 'naming', 'mission'],
+    status: 'current',
+    category: 'Terminology',
+    author: 'Annuai',
+    added: '2026-09-18',
+    sources: [DIRECTIVE],
+    context:
+      '**Mission** is the standard word used across the robotics and AMR industry for a composed sequence of robot actions that gets a job done. Ati Flow is an orchestration product, and its Workflows surface uses **Workflow** for that same idea.',
+    decision:
+      'Use **Workflow** as the product-facing term. Mission and Workflow are the same concept, with no meaning difference — this is not a distinction to preserve in new content.',
+    why: 'Ati Flow is orchestration software, and "Workflow" fits that framing better than the more industry/robotics-flavoured "Mission". This is a current call, not a permanent one: it may be worth revisiting as the product and its terminology mature.',
+    alternatives: [
+      'Use **Mission** throughout, matching general industry usage — rejected for now since it reads as less native to an orchestration product.',
+      'Use both interchangeably — rejected: this is exactly the kind of split naming that has caused confusion elsewhere in this documentation (see [[d-robot-over-amr]], [[d-processing-area-terminology]]).'
+    ],
+    blocks: [
+      callout(
+        'How to apply it',
+        'Write *Workflow* in interface labels and documentation headings. Mention *Mission* once, to name it as the industry-standard term, and link to [[v-mission]] or [[missions-and-actions]].'
+      ),
+      p('This may need revisiting: if Ati Flow’s positioning shifts, or if "Mission" turns out to communicate better to a new audience, this call should be reopened rather than treated as settled forever.')
+    ],
+    related: ['workflow', 'missions-and-actions', 'v-mission', 'd-robot-over-amr']
   },
 
   {
@@ -165,10 +197,10 @@ export const decisions = [
       'Show everything read-only — keeps one mental model of the product, but exposes configuration vocabulary to people who never act on it.'
     ],
     blocks: [
-      p('The full matrix is on [[roles-and-permissions]].'),
+      p('The full matrix is on [[users]].'),
       gap('Whether "hidden" means removed from navigation, blocked at the route, or both, is not specified.')
     ],
-    related: ['roles-and-permissions', 'ui-states', 'd-debug-is-configurator-only']
+    related: ['users', 'ui-states', 'd-debug-is-configurator-only']
   },
 
   {
@@ -194,7 +226,7 @@ export const decisions = [
         'This is the one place in the permission matrix where the site-wide operational role has *less* access than a configuration role — which is the point. Authority over operations and authority over the machine are different things.'
       )
     ],
-    related: ['ui-debug', 'roles-and-permissions', 'd-expose-the-decision', 'v-debug']
+    related: ['ui-debug', 'users', 'd-expose-the-decision', 'v-debug']
   },
 
   {

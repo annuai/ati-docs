@@ -20,23 +20,32 @@ const S = {
 
 export const ui = [
   {
-    id: 'ui-live-fleet-status',
-    slug: 'live-fleet-status',
+    id: 'ui-fleet-monitor',
+    slug: 'fleet-monitor',
     kind: 'screen',
-    title: 'Live Fleet Status',
-    summary: 'The live operational screen in the Ati Flow prototype: a facility map beside a robot detail panel.',
+    title: 'Fleet Monitor',
+    summary: 'The live, zone-based view of robots, tasks and traffic — a facility map beside a robot detail panel.',
     simple:
-      'One screen that answers "what is happening right now?" — a map of the floor with the robots on it, and everything known about whichever robot you select.',
-    aliases: ['Live Status', 'fleet status', 'live map'],
+      'The screen you watch to know whether the fleet is behaving: a map of the floor with the robots on it, and everything known about whichever robot you select.',
+    aliases: ['monitor', 'live view', 'Live Fleet Status', 'Live Status', 'fleet status', 'live map'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.prototype, S.prototypeCss],
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Merged the separate "Live Fleet Status" screen page into this one. The two were the same screen under two names — the documented information architecture calls it Fleet Monitor, the current prototype UI labels and navigates to it as Live Fleet Status / Live Status. Fleet Monitor is the standard, documented name going forward; nothing from either page was removed.'
+      }
+    ],
+    sources: [S.ia, S.screens, S.glossary, S.prototype, S.prototypeCss],
     purpose:
-      'Show the current state of the fleet in a zone, and let a person understand one robot in detail without leaving the view.',
+      'Show the current state of the fleet in a zone — what is happening now — and let a person understand one robot in detail without leaving the view.',
     users: [
-      'Reached from the prototype navigation as **Live Status**',
-      'The sidebar shows a **Supervisor Mode** selector and a **Processing Zone** set to *Zone 24*'
+      '**Operator** — their own zone',
+      '**Fleet Supervisor** — their own zone or zones, with reassignment control',
+      '**Head of Operations** — all zones',
+      '**Configurator** — view only, to verify that a configuration behaves correctly'
     ],
     see: [
       'A facility map with robots, routes and stations drawn on it',
@@ -45,7 +54,8 @@ export const ui = [
       'A selection readout naming the currently selected robot',
       'A detail panel for that robot: status pill, robot image, identifier, battery percentage and bar, current state',
       '**Trip Details** — trip ID and next station',
-      '**Recent Activity** — a short timeline of events with timestamps'
+      '**Recent Activity** — a short timeline of events with timestamps',
+      'Robot status and the trip queue for the zones the role can access'
     ],
     do: [
       'Select a robot by clicking it on the map',
@@ -53,7 +63,9 @@ export const ui = [
       'Toggle **Show Layers** over the map',
       'Zoom and reset the map view',
       'Pause — and then resume — using the action at the foot of the detail panel',
-      'Close the detail panel'
+      'Close the detail panel',
+      'An Operator can raise a manual priority request, with the trade-off shown before confirming',
+      'A Fleet Supervisor can reassign work within their zones'
     ],
     states: [
       '**Moving** — the robot is executing a trip. Yellow on the map, teal status pill.',
@@ -65,55 +77,15 @@ export const ui = [
       h('Reading the identifiers'),
       p('Two identifier shapes appear on this screen:'),
       code('Trip       TRP-20487\nStation    S102'),
-      h('How this screen relates to Fleet Monitor'),
       callout(
-        'Two names for one idea',
-        'The documented information architecture calls the live view **[[ui-fleet-monitor|Fleet Monitor]]**. This prototype calls it **Live Fleet Status** and navigates to it as **Live Status**. They describe the same kind of view. The naming has not been reconciled.',
-        'gap'
+        'Currently labelled "Live Fleet Status" in the prototype',
+        'The prototype reaches this screen from navigation labelled **Live Status**, and its sidebar shows a **Supervisor Mode** selector and a **Processing Area** set to *Zone 24* (see [[processing-zone|Processing Area]]). Fleet Monitor is the name used going forward — treat Live Fleet Status and Live Status as the same screen under an earlier label, not a separate one.'
       ),
       gap(
-        'The prototype is the only record of this screen. There is no specification, no annotated design and no screenshot in this folder — the working prototype source is the reference. It is kept in `old/prototype/`.'
+        'The prototype is the only record of this screen’s layout and interaction detail. There is no specification, no annotated design and no screenshot in this folder — the working prototype source is the reference. It is kept in `old/prototype/`.'
       )
     ],
-    related: ['ui-fleet-monitor', 'robot-states', 'trip', 'ui-components', 'zone']
-  },
-
-  {
-    id: 'ui-fleet-monitor',
-    slug: 'fleet-monitor',
-    kind: 'screen',
-    title: 'Fleet Monitor',
-    summary: 'The live, zone-based view of robots, tasks and traffic.',
-    simple: 'The screen you watch to know whether the fleet is behaving.',
-    aliases: ['monitor', 'live view'],
-    status: 'current',
-    author: 'Annuai',
-    added: '2026-09-16',
-    sources: [S.ia, S.screens, S.glossary],
-    purpose: 'Answer the operational question: what is happening now?',
-    users: [
-      '**Operator** — their own zone',
-      '**Fleet Supervisor** — their own zone or zones, with reassignment control',
-      '**Head of Operations** — all zones',
-      '**Configurator** — view only, to verify that a configuration behaves correctly'
-    ],
-    see: [
-      'Live robots, tasks, traffic and zone-level operational state',
-      'Robot status and the task queue for the zones the role can access'
-    ],
-    do: [
-      'An Operator can raise a manual priority request, with the trade-off shown before confirming',
-      'A Fleet Supervisor can reassign work within their zones'
-    ],
-    states: ['Not documented. See [[robot-states]] for the robot states the sources do establish.'],
-    blocks: [
-      callout(
-        'Naming',
-        'The prototype’s equivalent screen is called [[ui-live-fleet-status|Live Fleet Status]]. Treat the two entries as two records of the same view until Ati settles the name.'
-      ),
-      gap('No layout, field list or interaction detail for Fleet Monitor exists in the written sources — only its scope and who may use it.')
-    ],
-    related: ['ui-live-fleet-status', 'fleet', 'zone', 'task', 'roles-and-permissions']
+    related: ['robot-states', 'trip', 'ui-components', 'zone', 'fleet', 'users']
   },
 
   {
@@ -143,7 +115,7 @@ export const ui = [
       ),
       gap('No field list, form or layout is documented.')
     ],
-    related: ['robot', 'zone', 'roles-and-permissions', 'v-maintenance']
+    related: ['robot', 'zone', 'users', 'v-maintenance']
   },
 
   {
@@ -222,11 +194,11 @@ export const ui = [
     blocks: [
       callout(
         'Not to be confused with the deployment workflow',
-        'This surface holds configured transport behaviour. The [[wf-deployment|AMR deployment workflow]] is a human process. See [[workflow]] for the terminology note.'
+        'This surface holds configured transport behaviour. The [[wf-deployment|Site deployment workflow]] is a human process. See [[workflow]] for the terminology note.'
       ),
       p('The complete node library and a worked example live on [[ui-workflow-builder|Workflow Builder]].')
     ],
-    related: ['ui-workflow-builder', 'workflow', 'missions-and-actions', 'ui-maps', 'roles-and-permissions']
+    related: ['ui-workflow-builder', 'workflow', 'missions-and-actions', 'ui-maps', 'users']
   },
 
   {
@@ -435,7 +407,7 @@ export const ui = [
     blocks: [
       p('Dock placement decisions are made physically during [[wf-deployment|infrastructure setup]] and reflected here. See [[wf-charging]].')
     ],
-    related: ['roles-and-permissions', 'wf-charging', 'v-dock', 'wf-deployment']
+    related: ['users', 'wf-charging', 'v-dock', 'wf-deployment']
   },
 
   {
@@ -460,12 +432,13 @@ export const ui = [
         'The architecture is explicit: expose the operational decision a user needs rather than reproducing every internal robot state. Debug is where that internal state is allowed to live. See [[d-debug-is-configurator-only]].'
       )
     ],
-    related: ['d-debug-is-configurator-only', 'robot-states', 'roles-and-permissions', 'v-debug']
+    related: ['d-debug-is-configurator-only', 'robot-states', 'users', 'v-debug']
   },
 
   {
     id: 'ui-components',
     slug: 'components',
+    kind: 'reference',
     title: 'Components',
     summary: 'The interface pieces the Ati Flow prototype is built from, and what each one is for.',
     simple:
@@ -546,12 +519,13 @@ export const ui = [
         'There is no component library, no named design tokens beyond the CSS variables in the prototype stylesheet, and no documented component states beyond those listed above.'
       )
     ],
-    related: ['ui-live-fleet-status', 'ui-states', 'ui-patterns', 'd-documentation-mirrors-the-product']
+    related: ['ui-fleet-monitor', 'ui-states', 'ui-patterns', 'd-documentation-mirrors-the-product']
   },
 
   {
     id: 'ui-patterns',
     slug: 'patterns',
+    kind: 'reference',
     title: 'Patterns',
     summary: 'How Ati explains and organises a screen — the reading order and the layer rule.',
     simple:
@@ -584,12 +558,13 @@ export const ui = [
       ),
       p('See [[d-keep-the-layers-clear]] and [[d-expose-the-decision]].')
     ],
-    related: ['ui-components', 'wf-exceptions', 'd-keep-the-layers-clear', 'information-architecture']
+    related: ['ui-components', 'wf-exceptions', 'd-keep-the-layers-clear', 'architecture']
   },
 
   {
     id: 'ui-states',
     slug: 'states',
+    kind: 'reference',
     title: 'States',
     summary: 'The states the interface actually shows, and where they come from.',
     simple: 'What a screen can look like when things are normal, when something is wrong, and when there is nothing to show.',
@@ -619,6 +594,6 @@ export const ui = [
         'Loading, empty, error and offline states are not designed or described anywhere in the source material. Neither is the complete robot state machine — see [[robot-states]].'
       )
     ],
-    related: ['robot-states', 'ui-components', 'ui-live-fleet-status', 'd-role-based-visibility']
+    related: ['robot-states', 'ui-components', 'ui-fleet-monitor', 'd-role-based-visibility']
   }
 ];
