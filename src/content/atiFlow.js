@@ -248,67 +248,201 @@ export const atiFlow = [
   {
     id: 'information-architecture',
     title: 'Information architecture',
-    summary: 'The surfaces the product is divided into, and the decision each one supports.',
+    summary: 'One configuration app for the person setting up a site, three role-based apps for daily use, and the robot’s own on-device interface.',
     simple:
-      'The product is split into seven screens. Each one answers a different question, and the split is deliberate.',
+      'Ati Flow is not one screen split seven ways. It is a setup app for the person configuring a site, separate apps for the people using it day to day — a supervisor, someone requesting material, someone dispatching it — and a small interface on the robot itself.',
     aliases: ['IA', 'pages', 'navigation'],
     status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: [S.ia, S.screens, S.prototype],
+    sources: [TEAM, S.ia, S.screens, S.prototype],
     blocks: [
       h('Every surface, every feature, at a glance'),
       p(
-        'One diagram of the whole product: the seven documented screens, and every feature recorded for each of them. Read it as a map, not a menu — the detail pages linked throughout this section are where each branch is explained.'
+        'This diagram replaces the earlier surface list below with the architecture the Ati team supplied directly: two architecture diagrams showing how the product actually divides by *who is using it*, not by screen name. Read it left to right — [[ati-flow|Ati Flow]] splits into one configuration app and three client-facing apps; underneath, [[v-fleet-manager|Fleet Manager]] coordinates the fleet before work reaches a physical [[robot|robot]], which exposes its own small interface.'
       ),
       mermaid(
-        `mindmap
-  root(("Ati Flow"))
-    ("Fleet Monitor")
-      ("Live robots, tasks & traffic, by zone")
-      ("Manual priority request — Operator")
-      ("Reassign work within a zone — Fleet Supervisor")
-      ("View only — Configurator")
-    ("Robots")
-      ("Add, edit, delete, rename")
-      ("Assign a robot to a zone")
-      ("Mark a robot for maintenance")
-      ("Low-level parameters — Configurator only")
-    ("Maps")
-      ("Build & validate the SLAM map")
-      ("Positions & stations")
-      ("Zones — behavioural, exclusion, forbidden, preferred")
-      ("Traffic & gate rules")
-      ("Zone access by robot type")
-    ("Workflows")
-      ("Missions & the actions they are composed from")
-      ("Mission patterns — taxi, milk run, bus")
-      ("Priority & interrupt rules")
-      ("Reusable sub-missions")
-      ("Approval — Head of Operations")
-      ("Workflow Builder")
-        ("Move — localisation, turn, dock, move, footprint, switch map")
-        ("Logic — if, while, loop, wait, pause, prompt user")
-        ("Errors — try/catch, create log")
-        ("Sound & Light — play sound, show light")
-        ("Email — send email")
-        ("AIoT — Bluetooth, set output, set/reset I-O, wait for input")
-    ("Integrations")
-      ("ERP connections")
-      ("Master data mapping")
-      ("Sync logs & health")
-    ("Setup & Config")
-      ("Site & network configuration")
-      ("Dock placement")
-      ("User & role management")
-    ("Debug — Configurator only")
-      ("Raw robot state")
-      ("Calibration")
-      ("Diagnostic logs & overrides")`,
-        'The current, documented information architecture — seven screens and their recorded features. Workflow Builder is drawn as part of Workflows, since it is reached from there rather than being a separate top-level surface.'
+        `flowchart LR
+    AF(("Ati Flow")):::hub
+
+    subgraph CFG["Ati Flow Configurator — admin"]
+        direction TB
+        CFG1["Map Configuration"]
+        CFG2["AMR Configuration"]
+        CFG3["API Configuration"]
+        CFG4["User and Role Configuration"]
+        CFG5["Fleet Configuration"]
+        CFG6["Traffic Management"]
+        CFG7["Devices Configuration"]
+        CFG8["Zonal Configuration"]
+    end
+
+    subgraph SUP["Supervisor — client"]
+        direction TB
+        SUP1["Staging Area"]
+        SUP2["Live Monitoring"]
+        SUP3["WIP Inventory"]
+        SUP4["Trip Booking"]
+        SUP5["Trip Management"]
+        SUP6["Alerts"]
+        SUP7["Analytics"]
+        SUP8["Settings"]
+    end
+
+    subgraph REQ["Request Operator — client"]
+        direction TB
+        REQ1["Request Material"]
+        REQ2["Request Activity"]
+        REQ3["Staging Area"]
+        REQ4["Alerts"]
+        REQ5["Settings"]
+    end
+
+    subgraph DIS["Dispatch Operator — client"]
+        direction TB
+        DIS1["Request Management"]
+        DIS2["Staging Area"]
+    end
+
+    AF --> CFG
+    AF --> SUP
+    AF --> REQ
+    AF --> DIS
+
+    FM(("Fleet Manager")):::hub
+    AF --> FM
+
+    AMR(("AMR")):::hub
+    FM --> AMR
+
+    subgraph HMI["HMI — on the robot"]
+        direction TB
+        HMI1["Live Status of AMR"]
+        HMI2["Operation"]
+    end
+
+    AMR --> HMI
+
+    class CFG cfgGroup
+    class SUP supGroup
+    class REQ reqGroup
+    class DIS disGroup
+    class HMI hmiGroup
+
+    classDef hub fill:#cfeae3,stroke:#7fc2b6,color:#173c34,font-weight:700,stroke-width:2px;
+    classDef cfgGroup fill:#e2eefb,stroke:#b7d1ef,color:#1f3a5f;
+    classDef supGroup fill:#e5f4e1,stroke:#bfe2b5,color:#22492a;
+    classDef reqGroup fill:#fdf0dc,stroke:#f2d8a7,color:#5c4114;
+    classDef disGroup fill:#f4e2f6,stroke:#ddbfe3,color:#4a2350;
+    classDef hmiGroup fill:#fbe1e5,stroke:#efc1ca,color:#5c2530;
+    classDef default fill:#ffffff,stroke:#d8dee5,color:#33403c;`,
+        'The current, team-supplied information architecture. Ati Flow Configurator is the one admin app; Supervisor, Request Operator and Dispatch Operator are the client-facing apps built for daily use. Fleet Manager now exposes its configuration through the Configurator and its monitoring through Supervisor, rather than as a separate app — the change that removed most of the overlap in the earlier version of this diagram.'
       ),
-      h('The documented surfaces'),
-      p('Current naming, reflecting product terminology in use today.'),
+      h('Every group, in full'),
+      p('The diagram above stops at feature-group level so it stays readable. Every item inside each group:'),
+      accordions([
+        {
+          title: 'Ati Flow Configurator — admin',
+          tag: '8 groups',
+          body: [
+            defs([
+              { term: 'Map Configuration', text: 'Map Manager — generate a new map, manage saved maps, edit saved maps, preview saved maps.' },
+              { term: 'AMR Configuration', text: 'AMR Manager — view the AMR list, add a new AMR, configure an AMR, manage the AMR list.' },
+              { term: 'API Configuration', text: 'API Connections — Fleet Manager connection, AMR API, ERP API.' },
+              {
+                term: 'User & Role Configuration',
+                text: 'User Configuration — view users, update permissions, add users, manage the user list. Assign Roles — view existing roles, manage roles, add new roles.'
+              },
+              {
+                term: 'Fleet Configuration',
+                text: 'View Existing Fleets — view AMRs, maps and triggers. Make New Fleets — assign AMRs, maps and triggers. Manage Fleets.'
+              },
+              { term: 'Traffic Management', text: 'Manage, add and edit traffic rules.' },
+              {
+                term: 'Devices Configuration',
+                text: 'Execution Source Config — Requester Device, Dispatcher Device, Supervisor Device. Trigger Manager — manage and add triggers. RTLS Manager.'
+              },
+              {
+                term: 'Zonal Configuration',
+                text: 'Material config, Container config and Workflow Config — view, set rules for, and manage each. Staging Area and WIP Inventory — view and manage. Station Mapping — map material and containers to stations.'
+              }
+            ])
+          ]
+        },
+        {
+          title: 'Supervisor — client',
+          tag: '8 groups',
+          body: [
+            defs([
+              { term: 'Staging Area', text: 'Manage and view staging area cells.' },
+              {
+                term: 'Live Monitoring',
+                text: 'Live status, an energy card, robot status, an info panel, route preview, available actions, stations and an emergency stop.'
+              },
+              { term: 'WIP Inventory', text: 'WIP inventory status and management.' },
+              {
+                term: 'Trip Booking',
+                text: 'Route selection, book a trip, schedule a trip, station tagging, dock operations, charging, parking, excluding a robot from a trip, and battery swap.'
+              },
+              { term: 'Trip Management', text: 'Active trips, trip history, cancel a trip.' },
+              { term: 'Alerts', text: 'Action items and alert history.' },
+              { term: 'Analytics', text: 'KPIs and the data log.' },
+              { term: 'Settings', text: 'Common buttons, plugin settings, system settings.' }
+            ])
+          ]
+        },
+        {
+          title: 'Request Operator — client',
+          tag: '5 groups',
+          body: [
+            defs([
+              { term: 'Request Material', text: 'Material request, container request.' },
+              { term: 'Request Activity', text: 'Request status, request history, cancel a request.' },
+              { term: 'Staging Area', text: 'View and manage staging area cells.' },
+              { term: 'Alerts', text: 'Action items, alert history.' },
+              { term: 'Settings', text: 'Not further documented.' }
+            ])
+          ]
+        },
+        {
+          title: 'Dispatch Operator — client',
+          tag: '2 groups',
+          body: [
+            defs([
+              { term: 'Request Management', text: 'Request status, request history.' },
+              { term: 'Staging Area', text: 'View and manage staging area cells.' }
+            ])
+          ]
+        },
+        {
+          title: 'AMR — HMI, on the robot',
+          tag: '2 groups',
+          body: [
+            defs([
+              {
+                term: 'Live Status of AMR',
+                text: 'Wi-Fi connection, idle state, power on/off, moving state, Fleet Manager connection, trip assignment, obstacle detection, error state.'
+              },
+              { term: 'Operation', text: 'Mode change, send to park, recover location, send to charging, AMR info, power on/off.' }
+            ])
+          ]
+        }
+      ]),
+      callout(
+        'Two labels were hard to read on the supplied diagram',
+        'One item under Supervisor → Trip Booking and one under Supervisor → Settings were only partly legible in the source image. Both are rendered above as the closest confident reading rather than a guess at the missing word — worth confirming with whoever drew the diagrams.',
+        'gap'
+      ),
+      h('Corrected terms'),
+      p(
+        'The previous version of this page used screen names from the earlier documentation — **Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug** — and two prototype role names, **Requester** and **Dispatcher**. None of those are the terms the team’s own architecture diagrams use. The current terms are **Ati Flow Configurator**, **Supervisor**, **Request Operator** and **Dispatch Operator**.'
+      ),
+      h('The earlier, screen-based model'),
+      callout(
+        'Superseded, not deleted',
+        'The table below is what the earlier documentation (and the separate Ati Flow prototype) described before the team supplied the diagrams above. It is kept for the audit trail, and because most of the [[ui|UI]] section is still written against it. Reconciling the two — which UI page maps to which app above — is now an open question rather than a settled fact. See [[open-questions]].',
+        'gap'
+      ),
       table(
         ['Page', 'Covers'],
         [
@@ -321,38 +455,31 @@ export const atiFlow = [
           ['[[ui-debug|Debug]]', 'Low-level configuration and diagnostics — Configurator only']
         ]
       ),
-      h('Which surface for which need'),
-      table(
-        ['Need', 'Primary surface', 'Typical user'],
-        [
-          ['See live movement', 'Fleet Monitor', 'Operator / Fleet Supervisor / Head of Operations'],
-          ['Manage a robot', 'Robots', 'Fleet Supervisor / Head of Operations / Configurator'],
-          ['Edit movement environment', 'Maps', 'Configurator'],
-          ['Edit transport behaviour', 'Workflows', 'Configurator'],
-          ['Check business-system connection', 'Integrations', 'Head of Operations / Configurator'],
-          ['Diagnose low-level robot state', 'Debug', 'Configurator']
-        ]
-      ),
       callout(
-        'Two information architectures exist in this folder',
+        'Three information architectures now exist in this folder',
         [
-          'The list above comes from the documentation. The Ati Flow prototype shows a different navigation: **Dashboard, Live Status, Analytics, AMR Trips, Staging Area, WIP Inventory**, followed by Notifications, Settings and Profile.',
-          'Neither source acknowledges the other. Both are recorded here. See [[open-questions]].'
+          'The table above is the earlier documentation. The separate Ati Flow prototype shows a third navigation again: **Dashboard, Live Status, Analytics, AMR Trips, Staging Area, WIP Inventory**, followed by Notifications, Settings and Profile.',
+          'None of the three sources acknowledges either of the others. All three are recorded here. See [[open-questions]].'
         ],
         'gap'
-      ),
-      p('For what each screen actually shows, see the [[ui|UI]] section.')
+      )
     ],
     revisions: [
       {
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Added a full diagram of every screen and its documented features, drawn from the individual UI section pages, so the whole product is visible in one place rather than only as a surface list.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Replaced the screen-based diagram with the architecture the Ati team supplied directly — Ati Flow Configurator, Supervisor, Request Operator, Dispatch Operator and the robot’s own HMI — and corrected terminology that did not match current usage (Requester → Request Operator, Dispatcher → Dispatch Operator). The earlier screen-based model is kept below as superseded, and the mismatch between the two is logged as an open question.'
       }
     ],
     related: [
       'roles-and-permissions',
       'ati-flow',
+      'v-fleet-manager',
       'ui-live-fleet-status',
       'ui-fleet-monitor',
       'ui-robots',

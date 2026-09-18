@@ -197,6 +197,7 @@ directly, the entry cites them rather than a file, so a reader can always tell w
 | `Ati Flow` | That Ati Flow is a combination of Fleet Manager, Deployment Manager and an orchestration layer connected to ERP and warehouse-management APIs chosen per client. | Ati team, September 2026 |
 | `Fleet Manager` (revised) | What it actually does — fleet management, telling robots where to go, booking and managing trips, analytics, surfacing traffic problems — and that it is deliberately not an intelligent system. | Ati team, September 2026 |
 | `Deployment Manager` | That Ati support engineers use it to configure and deploy the robots. | Ati team, September 2026 |
+| `Information architecture` | Two architecture diagrams showing the product's real, role-based structure — Ati Flow Configurator (admin), Supervisor / Request Operator / Dispatch Operator (client apps), Fleet Manager, and the robot's own HMI — replacing the earlier screen-based model (Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug) and correcting two prototype role names (Requester → Request Operator, Dispatcher → Dispatch Operator). This is now a third, unreconciled information architecture alongside the earlier documentation and the separate prototype navigation — see section 5 below and the Open questions page. | Ati team, September 2026 |
 | `VISA` | First-in-first-out approval for robots entering a controlled zone, used particularly at intersections with traffic from several directions. | Ati team, September 2026 |
 | `WMS` | That warehouse management systems are among the APIs the orchestration layer connects to. Previously excluded from the glossary for having no source. | Ati team, September 2026 |
 | `Users` | That the newly proposed system has three users — Operator, Fleet Supervisor, Supervisor — and that whether Fleet Supervisor is required is unconfirmed. | Ati team, September 2026 |
@@ -213,10 +214,13 @@ place if it turns out to be wrong.
 
 These are preserved in the application rather than resolved.
 
-1. **Two different information architectures.** The documentation IA lists Maps, Workflows,
-   Fleet Monitor, Robots, Integrations, Setup & Config, Debug. The React prototype's sidebar shows
-   Dashboard, Live Status, Analytics, AMR Trips, Staging Area, WIP Inventory. Neither source
-   acknowledges the other. Both are documented, side by side, in the UI section.
+1. **Three different information architectures.** The original documentation IA lists Maps,
+   Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug. The React prototype's
+   sidebar shows Dashboard, Live Status, Analytics, AMR Trips, Staging Area, WIP Inventory. A third,
+   team-supplied pair of architecture diagrams (added 2026-09-18) describes the product by role
+   instead — Ati Flow Configurator, Supervisor, Request Operator, Dispatch Operator, Fleet Manager,
+   and the robot's own HMI — and is now treated as the current model on the Information architecture
+   page. None of the three sources acknowledges either of the others.
 2. **Fleet Monitor vs Live Fleet Status.** The IA page calls the live view "Fleet Monitor"; the
    prototype titles the same kind of view "Live Fleet Status" and navigates to it as "Live Status".
 3. **Zone vs Processing Zone.** The glossary defines Zone as geographical and flags Processing Zone

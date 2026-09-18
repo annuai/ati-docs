@@ -33,7 +33,8 @@ export const openQuestions = [
         '**Should a “map” stay one word?** Autonomy engineers and Solutions Architects mean different things by it. The shared name is deliberate — one word is simpler to learn — but whether the simplicity is worth the ambiguity has not been decided. See [[map]].',
         'How does the Solutions Architect relate to [[v-deployment-manager|Deployment Manager]], the tool Ati support engineers use to configure and deploy robots? The two describe closely related work.',
         'How does [[v-visa|VISA]] relate to the **gates** and **exclusion zones** in the deployment material — is it their implementation, or a separate mechanism?',
-        'How much of [[v-fleet-manager|Fleet Manager]] has Ati Flow already absorbed, and on what timeline?'
+        'How much of [[v-fleet-manager|Fleet Manager]] has Ati Flow already absorbed, and on what timeline?',
+        'How does the earlier screen-based [[ui|UI]] section (Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug) map onto the current, team-supplied [[information-architecture|role-based architecture]] (Ati Flow Configurator, Supervisor, Request Operator, Dispatch Operator)? No entry has reconciled the two yet.'
       ]),
       h('Questions the source material raises'),
       list([
@@ -51,7 +52,7 @@ export const openQuestions = [
         [
           [
             'Information architecture',
-            'The documentation lists Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config and Debug. The prototype navigation shows Dashboard, Live Status, Analytics, AMR Trips, Staging Area and WIP Inventory. Neither acknowledges the other. See [[information-architecture]].'
+            'Three models now exist. The earlier documentation lists Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config and Debug. The prototype navigation shows Dashboard, Live Status, Analytics, AMR Trips, Staging Area and WIP Inventory. A team-supplied architecture diagram describes the product by role instead — Ati Flow Configurator, Supervisor, Request Operator, Dispatch Operator, Fleet Manager and the robot’s HMI — and is now the current model. None of the three acknowledges either of the others. See [[information-architecture]].'
           ],
           [
             'One word, two artefacts: "map"',
@@ -116,6 +117,11 @@ export const openQuestions = [
         date: '2026-09-17',
         author: 'Annuai',
         note: 'Added the unresolved question of whether “map” should keep covering two different artefacts.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added the team-supplied, role-based architecture as a third unreconciled information architecture, and logged the open question of how it maps onto the earlier screen-based UI section.'
       }
     ],
     related: ['users', 'robot-states', 'processing-zone', 'trip', 'task', 'information-architecture']
