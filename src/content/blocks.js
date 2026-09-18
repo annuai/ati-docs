@@ -40,6 +40,9 @@ export const relationship = (nodes, caption) => ({ t: 'relationship', nodes, cap
 
 export const figure = (src, alt, caption) => ({ t: 'figure', src, alt, caption });
 
+/** A Mermaid diagram, for structure too large or branching for chain/flow/relationship. */
+export const mermaid = (code, caption) => ({ t: 'mermaid', code, caption });
+
 /** Short term/meaning pairs inside a page. Renders the "What does this mean?" pattern. */
 export const defs = (items, title) => ({ t: 'defs', items, title });
 

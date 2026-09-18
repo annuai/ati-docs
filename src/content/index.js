@@ -1,5 +1,6 @@
 import { gettingStarted } from './gettingStarted.js';
-import { product } from './product.js';
+import { atiRobotics } from './atiRobotics.js';
+import { atiFlow } from './atiFlow.js';
 import { concepts } from './concepts.js';
 import { vocabulary } from './vocabulary.js';
 import { workflows } from './workflows.js';
@@ -26,11 +27,19 @@ export const sections = [
     ordered: true
   },
   {
-    id: 'product',
-    title: 'Product',
+    id: 'ati-robotics',
+    title: 'Ati Robotics',
+    description: 'The company behind Ati Flow — an OEM that builds both the robots and the software.',
+    defaultType: 'product',
+    entries: atiRobotics,
+    standalone: true
+  },
+  {
+    id: 'ati-flow',
+    title: 'Ati Flow',
     description: 'What Ati Flow is, how it is structured, and who uses each part of it.',
     defaultType: 'product',
-    entries: product
+    entries: atiFlow
   },
   {
     id: 'concepts',

@@ -588,6 +588,22 @@
   padding: var(--space-lg);
 }
 
+.diagram__mermaid {
+  display: flex;
+  justify-content: center;
+  overflow-x: auto;
+}
+
+.diagram__mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.diagram__error {
+  color: var(--color-danger);
+  font-size: var(--text-sm);
+}
+
 .diagram__caption {
   margin-top: var(--space-md);
   font-size: var(--text-sm);

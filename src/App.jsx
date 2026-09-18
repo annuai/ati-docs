@@ -23,6 +23,7 @@ export function App() {
         <Route path="/search" element={<SearchPage />} />
         <Route path="/vocabulary" element={<VocabularyPage />} />
         <Route path="/open-questions" element={<StandalonePage sectionId="open-questions" />} />
+        <Route path="/ati-robotics" element={<StandalonePage sectionId="ati-robotics" />} />
         <Route path="/contributors" element={<ContributorsPage />} />
         <Route path="/getting-started" element={<Navigate to="/start" replace />} />
         <Route path="/:sectionId" element={<SectionPage />} />

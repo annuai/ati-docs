@@ -1,4 +1,4 @@
-import { p, h, list, table, callout, gap, chain, relationship, defs, accordions, figure } from './blocks.js';
+import { p, h, list, table, callout, gap, chain, relationship, defs, accordions, mermaid, cards } from './blocks.js';
 
 // Knowledge contributed directly by the Ati team rather than found in this folder.
 const TEAM = 'Ati team — noted September 2026';
@@ -14,63 +14,10 @@ const S = {
   prototype: 'old/prototype/'
 };
 
-export const product = [
-  {
-    id: 'ati-robotics',
-    title: 'Ati Robotics',
-    summary: 'An OEM that builds both the robots and the orchestration software that runs them.',
-    simple:
-      'Ati is an OEM. It manufactures the robots itself, and it builds the software that decides what those robots do. Both halves come from the same company.',
-    aliases: ['Ati', 'the company', 'OEM'],
-    status: 'current',
-    author: 'Annuai',
-    added: '2026-09-16',
-    revisions: [
-      {
-        date: '2026-09-16',
-        author: 'Annuai',
-        note: 'Rewritten. Ati is an OEM that builds both the robots and the orchestration software — the page previously recorded this as a gap.'
-      }
-    ],
-    sources: [TEAM, S.overview, 'public/assets/ati-sherpa.png'],
-    blocks: [
-      h('What Ati builds'),
-      p('Two halves of one system, both made in-house:'),
-      defs([
-        {
-          term: 'The robots',
-          text: 'The physical machines that move material around a factory floor. See [[robot]].'
-        },
-        {
-          term: 'The orchestration software',
-          text: '[[ati-flow|Ati Flow]], which decides what needs moving, which robot moves it, and when. See [[orchestration]].'
-        }
-      ]),
-      h('Why being an OEM matters'),
-      p(
-        'An [[v-oem|OEM]] manufactures what it sells rather than reselling or integrating someone else’s equipment. For Ati that means the fleet is not software from one vendor wrapped around robots from another — the machine and the system that commands it are built by the same company.'
-      ),
-      p(
-        'It also explains the shape of this documentation. Robot-level configuration, the [[map|map]] and the [[missions-and-actions|mission]] logic are all Ati’s concern, which is why [[configuration-layers]] runs from drive parameters all the way up to business-system integration.'
-      ),
-      figure(
-        '/assets/ati-sherpa.png',
-        'An Ati Sherpa XT Lite autonomous mobile robot: a yellow four-wheeled vehicle with a sensor mast, a safety beacon and a side access panel.',
-        'The robot in Ati’s product render. Its chassis is labelled Ati · Sherpa XT Lite — the only hardware naming that appears anywhere in the source material.'
-      ),
-      gap(
-        'The company itself is still largely undocumented here: no founding, market, customer base, hardware line-up, product family or roadmap. The robot line is known only by the name printed on one render.'
-      ),
-      p(
-        'Building both halves also means two documentation traditions in one company — requirement documents on the software side, a build list and a design risk analysis on the hardware side. See [[engineering-documents]].'
-      ),
-      p('For the software half in detail, read [[ati-flow]].')
-    ],
-    related: ['ati-flow', 'robot', 'orchestration', 'v-oem', 'v-sherpa', 'engineering-documents']
-  },
-
+export const atiFlow = [
   {
     id: 'ati-flow',
+    slug: 'overview',
     title: 'Ati Flow',
     summary: 'The software layer that turns a factory’s material demand into coordinated robot movement.',
     simple:
@@ -154,9 +101,22 @@ export const product = [
           ['[[v-supervisor-mode|Supervisor Mode]]', 'A selector in the prototype sidebar; what it switches is undocumented', 'Software — a control']
         ]
       ),
+      h('The product, screen by screen'),
+      p(
+        'Everything above is the product in outline. [[information-architecture|Information architecture]] draws the full map — every screen and the features on it — in one diagram. The seven surfaces themselves:'
+      ),
+      cards([
+        { title: 'Fleet Monitor', text: 'Live robots, tasks and traffic, by zone.', tag: 'Operations', to: '/ui/fleet-monitor' },
+        { title: 'Robots', text: 'Add, edit, assign to zone, mark for maintenance.', tag: 'Setup', to: '/ui/robots' },
+        { title: 'Maps', text: 'SLAM mapping, positions, zones, traffic and gate rules.', tag: 'Configuration', to: '/ui/maps' },
+        { title: 'Workflows', text: 'Mission and action design, patterns, priority rules, and the Workflow Builder.', tag: 'Configuration', to: '/ui/workflows' },
+        { title: 'Integrations', text: 'ERP connections, master data mapping, sync logs.', tag: 'Configuration', to: '/ui/integrations' },
+        { title: 'Setup & Config', text: 'Site, network, docks, users and roles.', tag: 'Configuration', to: '/ui/setup-and-config' },
+        { title: 'Debug', text: 'Low-level diagnostics. Configurator only.', tag: 'Diagnostics', to: '/ui/debug' }
+      ]),
       h('Where to go next'),
       p(
-        'Read [[users]] for who uses it, [[architecture]] for the layer model, [[information-architecture]] for the list of surfaces, and the [[concepts|Concepts]] section for the ideas the product is built from.'
+        'Read [[users]] for who uses it, [[architecture]] for the layer model, [[information-architecture]] for the full diagram of every surface and feature, and the [[concepts|Concepts]] section for the ideas the product is built from.'
       )
     ],
     revisions: [
@@ -164,9 +124,29 @@ export const product = [
         date: '2026-09-16',
         author: 'Annuai',
         note: 'Added what Ati Flow is made of — Fleet Manager, Deployment Manager and an orchestration layer over ERP and WMS APIs — plus a disambiguation table for the similar names.'
+      },
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added a screen-by-screen card grid linking directly into the UI section, so this page works as the hub for the whole product rather than just the concept summary.'
       }
     ],
-    related: ['users', 'architecture', 'orchestration', 'information-architecture', 'v-fleet-manager', 'v-deployment-manager', 'ati-robotics']
+    related: [
+      'users',
+      'architecture',
+      'orchestration',
+      'information-architecture',
+      'v-fleet-manager',
+      'v-deployment-manager',
+      'ati-robotics',
+      'ui-fleet-monitor',
+      'ui-robots',
+      'ui-maps',
+      'ui-workflows',
+      'ui-integrations',
+      'ui-setup-and-config',
+      'ui-debug'
+    ]
   },
 
   {
@@ -277,6 +257,56 @@ export const product = [
     added: '2026-09-16',
     sources: [S.ia, S.screens, S.prototype],
     blocks: [
+      h('Every surface, every feature, at a glance'),
+      p(
+        'One diagram of the whole product: the seven documented screens, and every feature recorded for each of them. Read it as a map, not a menu — the detail pages linked throughout this section are where each branch is explained.'
+      ),
+      mermaid(
+        `mindmap
+  root(("Ati Flow"))
+    ("Fleet Monitor")
+      ("Live robots, tasks & traffic, by zone")
+      ("Manual priority request — Operator")
+      ("Reassign work within a zone — Fleet Supervisor")
+      ("View only — Configurator")
+    ("Robots")
+      ("Add, edit, delete, rename")
+      ("Assign a robot to a zone")
+      ("Mark a robot for maintenance")
+      ("Low-level parameters — Configurator only")
+    ("Maps")
+      ("Build & validate the SLAM map")
+      ("Positions & stations")
+      ("Zones — behavioural, exclusion, forbidden, preferred")
+      ("Traffic & gate rules")
+      ("Zone access by robot type")
+    ("Workflows")
+      ("Missions & the actions they are composed from")
+      ("Mission patterns — taxi, milk run, bus")
+      ("Priority & interrupt rules")
+      ("Reusable sub-missions")
+      ("Approval — Head of Operations")
+      ("Workflow Builder")
+        ("Move — localisation, turn, dock, move, footprint, switch map")
+        ("Logic — if, while, loop, wait, pause, prompt user")
+        ("Errors — try/catch, create log")
+        ("Sound & Light — play sound, show light")
+        ("Email — send email")
+        ("AIoT — Bluetooth, set output, set/reset I-O, wait for input")
+    ("Integrations")
+      ("ERP connections")
+      ("Master data mapping")
+      ("Sync logs & health")
+    ("Setup & Config")
+      ("Site & network configuration")
+      ("Dock placement")
+      ("User & role management")
+    ("Debug — Configurator only")
+      ("Raw robot state")
+      ("Calibration")
+      ("Diagnostic logs & overrides")`,
+        'The current, documented information architecture — seven screens and their recorded features. Workflow Builder is drawn as part of Workflows, since it is reached from there rather than being a separate top-level surface.'
+      ),
       h('The documented surfaces'),
       p('Current naming, reflecting product terminology in use today.'),
       table(
@@ -313,7 +343,27 @@ export const product = [
       ),
       p('For what each screen actually shows, see the [[ui|UI]] section.')
     ],
-    related: ['roles-and-permissions', 'ati-flow', 'ui-live-fleet-status', 'open-questions']
+    revisions: [
+      {
+        date: '2026-09-18',
+        author: 'Annuai',
+        note: 'Added a full diagram of every screen and its documented features, drawn from the individual UI section pages, so the whole product is visible in one place rather than only as a surface list.'
+      }
+    ],
+    related: [
+      'roles-and-permissions',
+      'ati-flow',
+      'ui-live-fleet-status',
+      'ui-fleet-monitor',
+      'ui-robots',
+      'ui-maps',
+      'ui-workflows',
+      'ui-workflow-builder',
+      'ui-integrations',
+      'ui-setup-and-config',
+      'ui-debug',
+      'open-questions'
+    ]
   },
 
   {

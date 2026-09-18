@@ -8,6 +8,7 @@ import { Accordion } from './Accordion.jsx';
 import { ContentCard } from './ContentCard.jsx';
 import { Chain, Relationship } from './DiagramBlock.jsx';
 import { Workflow } from '../workflows/Workflow.jsx';
+import { MermaidBlock } from './MermaidBlock.jsx';
 
 /*
   Turns content data into markup.
@@ -16,7 +17,7 @@ import { Workflow } from '../workflows/Workflow.jsx';
   has to know the helpers in `src/content/blocks.js`.
 */
 
-const WIDE = new Set(['table', 'chain', 'flow', 'figure', 'cards', 'relationship']);
+const WIDE = new Set(['table', 'chain', 'flow', 'figure', 'cards', 'relationship', 'mermaid']);
 
 function Block({ block }) {
   switch (block.t) {
@@ -63,6 +64,9 @@ function Block({ block }) {
 
     case 'figure':
       return <ImageBlock src={block.src} alt={block.alt} caption={block.caption} />;
+
+    case 'mermaid':
+      return <MermaidBlock code={block.code} caption={block.caption} />;
 
     case 'defs':
       return (
