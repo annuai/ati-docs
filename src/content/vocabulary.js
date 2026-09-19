@@ -40,6 +40,8 @@ const ORG = 'Ati team — org structure and internal tooling, supplied in conver
 const CUR = 'Ati team — the current, on-the-ground deployment sequence, supplied in conversation, September 2026';
 const TRANSCRIPT = 'Internal design/architecture review meeting, transcript supplied in conversation, September 2026';
 const DIRECTIVE = 'Ati team — terminology directive, supplied in conversation, September 2026';
+const PRODUCT_DAY = 'Ati team — Product Day 2025 product launch, supplied in conversation, September 2026';
+const WEB = 'https://www.atirobotics.ai/products/';
 
 export const vocabulary = [
   // ─────────────────────────────────────────────────────────────────────────
@@ -2506,20 +2508,121 @@ export const vocabulary = [
   },
 
   // ─────────────────────────────────────────────────────────────────────────
-  // MISC
+  // SHERPA PRODUCT FAMILY
   // ─────────────────────────────────────────────────────────────────────────
 
   {
     id: 'v-sherpa',
     term: 'Sherpa XT Lite',
     kind: 'term',
-    simple: 'The name printed on the robot in Ati’s product render.',
-    usedIn: ['The chassis of the robot in `public/assets/ati-sherpa.png`'],
-    note: 'This is the only hardware naming that appears anywhere in the source material, and it appears only as a label in an image. Nothing describes the model, its variants or its specifications.',
-    related: ['robot', 'ati-robotics'],
-    status: 'needs-confirmation',
+    simple: 'A trolley-tugging AMR — the entry point to Ati’s Sherpa product family.',
+    technical:
+      'A trolley AMR rated for a 3,300 lb payload at up to 1.5 m/s, using natural-feature navigation and swappable batteries for full-shift indoor/outdoor operation. ISO 3691-4 compliant, deployable without infrastructure changes.',
+    usedIn: ['The chassis of the robot in `public/assets/ati-sherpa.png`', 'Trolley towing in manufacturing and warehouse workflows'],
+    note: 'Previously the only hardware name documented anywhere in this folder. The wider Sherpa family is now recorded alongside it — see [[ati-robotics|the Ati Robotics hardware line-up]].',
+    related: ['robot', 'ati-robotics', 'v-sherpa-10k', 'v-sherpa-pallet-mover', 'v-sherpa-lifter-500', 'v-sherpa-pivot', 'v-sherpa-mecha'],
+    status: 'current',
     author: 'Annuai',
     added: '2026-09-16',
-    sources: ['public/assets/ati-sherpa.png']
+    revisions: [
+      {
+        date: '2026-09-20',
+        author: 'Annuai',
+        note: 'Added confirmed specs from the Ati Robotics products page and linked it into the wider Sherpa product family, closing the gap this entry previously recorded.'
+      }
+    ],
+    sources: ['public/assets/ati-sherpa.png', WEB]
+  },
+  {
+    id: 'v-sherpa-10k',
+    term: 'Sherpa 10K',
+    kind: 'term',
+    simple: 'A heavy-duty trolley tugger — the largest payload in the Sherpa tugger range.',
+    technical:
+      'A trolley AMR rated for a 10,000 lb (4,600 kg) payload, using natural-feature navigation with an 8-hour battery, for indoor and outdoor trolley towing.',
+    usedIn: ['Heavy trolley towing between fixed points, indoors and outdoors'],
+    related: ['v-sherpa', 'robot', 'ati-robotics'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-20',
+    sources: [WEB, PRODUCT_DAY]
+  },
+  {
+    id: 'v-sherpa-pallet-mover',
+    term: 'Sherpa Pallet Mover',
+    kind: 'term',
+    simple: 'A pallet-handling AMR that lifts and moves pallets without a forklift.',
+    technical:
+      'An AMR rated for a 3,300 lb pallet payload at up to 1.5 m/s, using LiDAR- and camera-based natural navigation with dynamic obstacle avoidance, for receiving, staging and line-side delivery.',
+    usedIn: ['Pallet receiving, staging and line-side delivery'],
+    related: ['v-sherpa', 'robot', 'ati-robotics'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-20',
+    sources: [WEB]
+  },
+  {
+    id: 'v-sherpa-lifter-500',
+    term: 'Sherpa Lifter 500',
+    kind: 'term',
+    simple: 'A compact material-handling AMR designed for partners to build custom applications on top of.',
+    technical:
+      'An AMR rated for a 1,100 lb (500 kg) payload at up to 1.2 m/s, using 3D-LiDAR natural navigation, with modular top-module configurations for pallet and bin handling. One main battery plus two auxiliary batteries give roughly 110 Ah of total power, and a turntable lets it deliver material in a precise pose.',
+    note: 'Built from the outset for partners to extend, rather than as an Ati-only product.',
+    usedIn: ['Pallet and bin handling', 'Partner-built applications on a shared platform'],
+    related: ['v-sherpa', 'robot', 'ati-robotics'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-20',
+    sources: [WEB, PRODUCT_DAY]
+  },
+  {
+    id: 'v-sherpa-pivot',
+    term: 'Sherpa Pivot',
+    kind: 'term',
+    aliases: ['Sherpa Mono Fork'],
+    simple: 'A modular material mover whose attachments change what it does — including a mono-fork configuration for moving carts with no manual hitching.',
+    technical:
+      'An AMR rated for a 1,100 lb payload at up to 1.5 m/s, using natural navigation, built around modular mono-fork and trailing-unit attachments. ISO 3691-4 compliant. The mono-fork configuration, shown publicly at Product Day 2025, moves small carts between staging areas without a person hitching or unhitching them, using a camera on the staging area so the robot picks up the correct trolley without being told which one.',
+    note: 'A first customer deployment (Chennai) was announced as expected within a couple of months of Product Day 2025 — not yet confirmed as complete.',
+    usedIn: ['Supermarket-style staging-area automation'],
+    related: ['v-sherpa', 'robot', 'ati-robotics'],
+    status: 'current',
+    author: 'Annuai',
+    added: '2026-09-20',
+    sources: [WEB, PRODUCT_DAY]
+  },
+  {
+    id: 'v-sherpa-mecha',
+    term: 'Sherpa Mecha',
+    kind: 'term',
+    simple: 'Ati’s early-stage humanoid-inspired robot — wheeled rather than legged, built to do tasks a fixed-path AMR cannot.',
+    technical:
+      'A wheeled mobile robot with two carbon-fibre, cable-driven arms and a tool-changer instead of fingers, so tools are swapped for the task rather than built into a fixed hand. At announcement it carries 12 kg total (6 kg per arm); the next iteration is targeted at 35 kg. It is offered as a research prototype for partner pre-booking rather than a shipping product.',
+    note: 'Ati’s stated position is that it is not trying to mimic a human body — it is designing a wheeled, tool-changing robot inspired by human tasks, the way an aircraft is inspired by birds without flapping wings.',
+    usedIn: [
+      'Tasks in unstructured environments outside the reach of fixed-path AMRs (announced use case)',
+      'Candidate applications named at announcement: inspection, bin picking, tapping/fastening, machine tending, metrology'
+    ],
+    related: ['v-sherpa', 'robot', 'ati-robotics', '4s-framework'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-20',
+    sources: [WEB, PRODUCT_DAY]
+  },
+  {
+    id: 'v-adivas',
+    term: 'Adivas',
+    kind: 'term',
+    simple: 'Ati’s ecosystem of accessories and integrations for automating a workflow end to end, not just the robot’s own driving.',
+    technical:
+      'A suite of Ati-built accessories and integrations — lift integration, conveyor integration, intelligent traffic management and staging-area management — that let a robot fleet be orchestrated into a complete, largely zero-touch workflow rather than just point-to-point driving.',
+    note: 'Adivas is the accessory and integration layer; [[orchestration|orchestration]] is the software concept that decides what should happen. Adivas is how that decision reaches lifts, conveyors and traffic signals on the floor.',
+    usedIn: ['End-to-end automation workflows shown at Product Day 2025'],
+    related: ['orchestration', 'v-sherpa', 'ati-robotics'],
+    status: 'needs-confirmation',
+    author: 'Annuai',
+    added: '2026-09-20',
+    sources: [PRODUCT_DAY]
   }
 ];

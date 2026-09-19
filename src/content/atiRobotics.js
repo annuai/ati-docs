@@ -8,6 +8,8 @@ const S = {
 };
 
 const SITE = 'https://www.atirobotics.ai/company/';
+const PRODUCTS = 'https://www.atirobotics.ai/products/';
+const PRODUCT_DAY = 'Ati team — Product Day 2025 product launch, supplied in conversation, September 2026';
 
 export const atiRobotics = [
   {
@@ -30,9 +32,14 @@ export const atiRobotics = [
         date: '2026-09-18',
         author: 'Krishna',
         note: 'Added founding, timeline, global offices, scale figures and company positioning from the company website, closing most of this page’s largest gap. Hardware line-up beyond the Sherpa XT Lite name, and product roadmap, are still not documented anywhere in this folder.'
+      },
+      {
+        date: '2026-09-20',
+        author: 'Annuai',
+        note: 'Added the Sherpa hardware line-up (Sherpa 10K, Pallet Mover, Lifter 500, Pivot, Mecha) from the products page and Product Day 2025, closing the gap this page previously recorded about undocumented hardware.'
       }
     ],
-    sources: [TEAM, S.overview, 'public/assets/ati-sherpa.png', SITE],
+    sources: [TEAM, S.overview, 'public/assets/ati-sherpa.png', SITE, PRODUCTS, PRODUCT_DAY],
     blocks: [
       h('What Ati builds'),
       p('Two halves of one system, both made in-house:'),
@@ -68,6 +75,7 @@ export const atiRobotics = [
           { title: '2017', note: 'Founded in Bengaluru, India, to purpose-build AMRs for factories rather than adapt warehouse AGVs' },
           { title: '2018', note: 'First enterprise AMR deployments in Indian automotive and manufacturing, including Fortune 500 customers such as Airbus, Valeo and Brose' },
           { title: '2022', note: 'Global expansion — North America, Mexico and Southeast Asia; US headquarters established in Rochester Hills, Michigan' },
+          { title: '2025', note: 'VDA 5050 compliance achieved; Sherpa hardware line-up expanded at Product Day 2025 with the Sherpa 10K, Lifter 500 and Sherpa Pivot, alongside Sherpa Mecha, an early-stage research robot' },
           { title: '2026', note: 'Rebranded to Ati Robotics, reflecting hardware, software orchestration and the intelligence layer as one platform', kind: 'outcome' }
         ],
         'Originally a motors company before the 2026 rebrand — “the name changed, the mission didn’t,” per the company site.'
@@ -98,8 +106,21 @@ export const atiRobotics = [
       p(
         'The company describes an “engineering-first” culture rooted in India’s engineering talent base: robots are hardened through real deployments before shipping, designed against failure modes rather than demos. Dr. Naveen Arulselvan, CTO, is named on the company site discussing the engineering tradeoffs involved in building AMRs for real factory floor conditions.'
       ),
-      gap(
-        'Beyond the Sherpa XT Lite name on one product render, there is still no documented hardware line-up, product family or roadmap anywhere in this folder.'
+      h('Hardware line-up'),
+      p('The Sherpa product family, as named on the company’s products page and shown at Product Day 2025:'),
+      table(
+        ['Model', 'Category', 'Payload', 'Use case'],
+        [
+          ['[[v-sherpa|Sherpa XT Lite]]', 'Trolley tugger', '3,300 lb', 'Full-shift indoor/outdoor towing, swappable batteries'],
+          ['[[v-sherpa-10k|Sherpa 10K]]', 'Trolley tugger', '10,000 lb (4,600 kg)', 'Heavy trolley towing indoors and outdoors'],
+          ['[[v-sherpa-pallet-mover|Sherpa Pallet Mover]]', 'Pallet handler', '3,300 lb', 'Autonomous pallet lifting for receiving, staging and line-side delivery'],
+          ['[[v-sherpa-lifter-500|Sherpa Lifter 500]]', 'Flexible material handler', '1,100 lb (500 kg)', 'Pallet and bin handling with modular top-module configurations'],
+          ['[[v-sherpa-pivot|Sherpa Pivot]]', 'Versatile material mover', '1,100 lb', 'Modular mono-fork and trailing-unit attachments; the mono-fork configuration was shown at Product Day 2025 moving carts with no manual hitching'],
+          ['[[v-sherpa-mecha|Sherpa Mecha]]', 'Industrial humanoid (research)', '12 kg today, 35 kg targeted', 'Wheeled dual-arm robot for tasks outside fixed-path AMR reach; open for partner pre-booking']
+        ]
+      ),
+      p(
+        'The design tradeoffs across this range are described by the [[4s-framework|4S framework]] Ati uses internally: space, speed, safety and sturdiness.'
       ),
       p(
         'Building both halves also means two documentation traditions in one company — requirement documents on the software side, a build list and a design risk analysis on the hardware side. See [[engineering-documents]].'
