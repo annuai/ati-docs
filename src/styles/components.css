@@ -802,9 +802,11 @@
 
 .light-swatch {
   flex-shrink: 0;
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  width: 1.4rem;
+  height: 0.6rem;
+  border-radius: var(--radius-sm);
   background: var(--light-color);
   box-shadow: 0 0 0 1px var(--color-border-strong) inset;
 }
@@ -821,17 +823,31 @@
   animation: light-pulse 0.5s ease-in-out infinite;
 }
 
+/* "Rolling"/"running" lights: a bright band sweeps across the bar, like a police-siren bar. */
 .light-swatch--sweep-slow,
 .light-swatch--sweep-fast {
-  background: conic-gradient(var(--light-color) 0deg 90deg, var(--light-color-2, var(--color-surface-soft)) 90deg 360deg);
+  background: var(--color-surface-soft);
 }
 
-.light-swatch--sweep-slow {
-  animation: light-sweep 2.4s linear infinite;
+.light-swatch--sweep-slow::after,
+.light-swatch--sweep-fast::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: var(--light-color);
+  box-shadow: 0 0 6px var(--light-color);
+  animation-name: light-siren;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-.light-swatch--sweep-fast {
-  animation: light-sweep 0.9s linear infinite;
+.light-swatch--sweep-slow::after {
+  animation-duration: 1.8s;
+}
+
+.light-swatch--sweep-fast::after {
+  animation-duration: 0.7s;
 }
 
 .light-swatch--off {
@@ -849,17 +865,18 @@
   }
 }
 
-@keyframes light-sweep {
+@keyframes light-siren {
   from {
-    transform: rotate(0deg);
+    transform: translateX(-120%);
   }
   to {
-    transform: rotate(360deg);
+    transform: translateX(320%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .light-swatch {
+  .light-swatch,
+  .light-swatch::after {
     animation: none !important;
   }
 }
