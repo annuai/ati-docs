@@ -110,11 +110,18 @@ Content is data. Never put documentation prose in a component.
 | A glossary term | `src/content/vocabulary.js` | `id` is prefixed `v-`; `kind` is `term`, `acronym` or `jargon` |
 | A workflow | `src/content/workflows.js` | `id` is prefixed `wf-` |
 | A screen | `src/content/ui.js` | `kind: 'screen'`, then fill `purpose`, `users`, `see`, `do`, `states` |
-| A decision | `src/content/decisions.js` | `kind: 'decision'`, then `context`, `decision`, `why`, `alternatives` |
+| A decision | `content-md/decisions/*.md` | Markdown file, not JS — see `content-md/README.md`. Frontmatter needs `context`, `decision`, `why`, `alternatives` |
 | A start-here step | `src/content/gettingStarted.js` | `step` drives ordering and previous/next |
 
 An entry gets its route, its place in navigation, its search indexing and its related-knowledge
 links automatically. Adding content is enough — do not add routes or components for it.
+
+**Decisions are being migrated to Markdown.** `content-md/decisions/*.md` is the pilot for a
+wider move away from hand-authored JS, so contributors can edit content without writing code.
+`scripts/compile-content.mjs` compiles those files into `src/content/generated/decisions.js` —
+run automatically by `npm run dev` / `npm run build`, or on demand with `npm run compile:content`.
+The rest of the sections in the table above are still plain JS for now; see `content-md/README.md`
+for the Markdown format and its authoring rules before adding another section to it.
 
 Blocks available from `src/content/blocks.js`: `p` `h` `h3` `list` `ordered` `table` `callout`
 `gap` `chain` `flow` `relationship` `figure` `defs` `accordions` `cards` `code`.
