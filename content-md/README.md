@@ -5,9 +5,9 @@ one concept, term, decision, screen, or workflow step. `scripts/compile-content.
 every file into the plain data objects `src/content/*.js` renders, so nothing about the site
 itself needs to change as content is added or edited here.
 
-**Pilot status:** only `content-md/decisions/` is wired up today. The rest of the site
-(`concepts.js`, `vocabulary.js`, `ui.js`, `workflows.js`, ...) is still hand-authored JS and will
-move here in follow-up work, once this format has been used for a while.
+Every section is here now: `concepts`, `vocabulary`, `workflows`, `ui`, `teams`, `atiFlow`,
+`atiRobotics`, `gettingStarted`, `openQuestions` and `decisions`. Nothing is hand-authored JS in
+`src/content/` any more — each of those files is a two-line re-export from `./generated/`.
 
 ## Running it
 
@@ -108,10 +108,31 @@ What Mule covers beyond navigation is not yet written down.
 :::
 ```
 
-Only `callout` and `gap` exist yet — `chain`, `flow`, `relationship`, `defs`, `accordions` and
-`cards` will be added the same way (a `:::name` container) when the sections that use them are
-migrated. If you write a `:::something` the compiler doesn't recognise yet, it will tell you at
-compile time rather than silently dropping it.
+The rest (`chain`, `flow`, `relationship`, `defs`, `cards`, `accordions`, `figure`) hold
+structured data rather than prose, so their body is YAML instead of Markdown — the keys match
+the block's fields exactly. For example, a `chain`:
+
+```markdown
+:::chain
+caption: Optional caption text
+steps:
+  - title: '2017'
+    note: Founded in Bengaluru
+  - title: '2026'
+    note: Rebranded to Ati Robotics
+    kind: outcome
+:::
+```
+
+`defs` (`title`, `items: [{term, text}]`), `flow`/`chain` (`caption`, `steps: [{title, note, kind?, tag?}]`),
+`relationship` (`caption`, `nodes: [{label, to, note}]`), `cards`/`accordions` (`items: [...]`,
+an accordion item's `body` is itself a list of blocks) and `figure` (`src`, `alt`, `caption`) all
+follow the same pattern — YAML keys named after the block's own parameters in `blocks.js`.
+
+A Mermaid diagram can carry a caption via the fence's info string: ` ```mermaid caption="..." `.
+
+If you write a `:::something` the compiler doesn't recognise, or YAML it can't parse, it says so
+at compile time rather than silently dropping it.
 
 ## When something's wrong
 

@@ -16,12 +16,13 @@ import { readdirSync, readFileSync, writeFileSync, mkdirSync, watch } from 'node
 import { join, dirname, basename } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
+import { dump, load } from 'js-yaml';
 
 const ROOT = dirname(dirname(fileURLToPath(import.meta.url)));
 const SOURCE_DIR = join(ROOT, 'content-md');
 const OUTPUT_DIR = join(ROOT, 'src', 'content', 'generated');
 
-const KNOWN_STATUSES = ['current', 'draft', 'needs-confirmation'];
+const KNOWN_STATUSES = ['current', 'draft', 'needs-confirmation', 'deprecated'];
 
 /*
   Every problem found while compiling. Printed as one report at the end, rather than
@@ -49,20 +50,32 @@ function splitParagraphs(text) {
 function parseAttrs(rest) {
   const attrs = {};
   const positional = [];
-  const pattern = /(?:(\w+)=)?"([^"]*)"|(?:(\w+)=)?(\S+)/g;
+  // "([^"\\]|\\.)*" allows a title like \"Taxi\" mode to carry an escaped quote.
+  const pattern = /(?:(\w+)=)?"((?:[^"\\]|\\.)*)"|(?:(\w+)=)?(\S+)/g;
   let match;
   while ((match = pattern.exec(rest))) {
     const key = match[1] || match[3];
-    const value = match[2] !== undefined ? match[2] : match[4];
+    const value = match[2] !== undefined ? match[2].replace(/\\(.)/g, '$1') : match[4];
     if (key) attrs[key] = value;
     else positional.push(value);
   }
   return { attrs, positional };
 }
 
+export function escapeAttr(value) {
+  return String(value).replace(/\\/g, '\\\\').replace(/"/g, '\\"');
+}
+
+// A cell like [[users|Users and permissions]] contains a literal "|", which would otherwise be
+// read as a column separator. `\|` (written by the serialiser) is the escaped, literal form.
+function splitTableRow(line) {
+  const trimmed = line.trim().replace(/^\|/, '').replace(/\|$/, '');
+  const cells = trimmed.split(/(?<!\\)\|/);
+  return cells.map((cell) => cell.trim().replace(/\\\|/g, '|'));
+}
+
 function parseTable(lines) {
-  const rows = lines
-    .map((line) => line.trim().replace(/^\|/, '').replace(/\|$/, '').split('|').map((cell) => cell.trim()));
+  const rows = lines.map(splitTableRow);
   const [head, separator, ...body] = rows;
   const isSeparator = separator && separator.every((cell) => /^:?-+:?$/.test(cell));
   return { head, rows: isSeparator ? body : rows.slice(1) };
@@ -96,7 +109,9 @@ function parseBlocks(content, file) {
     }
 
     if (trimmed.startsWith('```')) {
-      const lang = trimmed.slice(3).trim();
+      const info = trimmed.slice(3).trim();
+      const [lang, ...rest] = info.split(/\s+/);
+      const { attrs } = parseAttrs(rest.join(' '));
       const codeLines = [];
       i += 1;
       while (i < lines.length && !lines[i].trim().startsWith('```')) {
@@ -105,7 +120,7 @@ function parseBlocks(content, file) {
       }
       i += 1; // consume closing fence
       const text = codeLines.join('\n');
-      blocks.push(lang === 'mermaid' ? { t: 'mermaid', code: text, caption: undefined } : { t: 'code', text });
+      blocks.push(lang === 'mermaid' ? { t: 'mermaid', code: text, caption: attrs.caption } : { t: 'code', text });
       continue;
     }
 
@@ -126,6 +141,15 @@ function parseBlocks(content, file) {
       const bodyText = bodyLines.join('\n').trim();
       const paragraphs = splitParagraphs(bodyText);
 
+      const asYaml = () => {
+        try {
+          return load(bodyText) || {};
+        } catch (error) {
+          issue(file, `":::${name}" body is not valid YAML: ${error.message}`);
+          return {};
+        }
+      };
+
       if (name === 'callout') {
         const title = attrs.title || positional[0];
         if (!title) issue(file, '":::callout" is missing a title (add title="...").');
@@ -133,8 +157,32 @@ function parseBlocks(content, file) {
       } else if (name === 'gap') {
         const title = attrs.title || positional[0] || 'Not yet documented';
         blocks.push({ t: 'callout', title, body: paragraphs, tone: 'gap' });
+      } else if (name === 'defs') {
+        const { title, items } = asYaml();
+        blocks.push({ t: 'defs', items: items || [], title });
+      } else if (name === 'chain') {
+        const { caption, steps } = asYaml();
+        blocks.push({ t: 'chain', steps: steps || [], caption });
+      } else if (name === 'flow') {
+        const { caption, steps } = asYaml();
+        blocks.push({ t: 'flow', steps: steps || [], caption });
+      } else if (name === 'relationship') {
+        const { caption, nodes } = asYaml();
+        blocks.push({ t: 'relationship', nodes: nodes || [], caption });
+      } else if (name === 'cards') {
+        const { items } = asYaml();
+        blocks.push({ t: 'cards', items: items || [] });
+      } else if (name === 'accordions') {
+        const { items } = asYaml();
+        blocks.push({ t: 'accordions', items: items || [] });
+      } else if (name === 'figure') {
+        const { src, alt, caption } = asYaml();
+        blocks.push({ t: 'figure', src, alt, caption });
       } else {
-        issue(file, `Unknown directive ":::${name}". Supported so far: callout, gap.`);
+        issue(
+          file,
+          `Unknown directive ":::${name}". Supported: callout, gap, defs, chain, flow, relationship, cards, accordions, figure.`
+        );
       }
       continue;
     }
@@ -230,7 +278,7 @@ function compileFile(path, file) {
   }
 
   if (!data.id) issue(file, 'Missing required frontmatter field "id".');
-  if (!data.title) issue(file, 'Missing required frontmatter field "title".');
+  if (!data.title && !data.term) issue(file, 'Missing required frontmatter field "title" (or "term" for vocabulary entries).');
   if (!data.author) issue(file, 'Missing required frontmatter field "author". See CLAUDE.md — ask before guessing.');
   if (!data.added) issue(file, 'Missing required frontmatter field "added" (ISO date, e.g. 2026-09-21).');
   if (data.added && !/^\d{4}-\d{2}-\d{2}$/.test(String(data.added))) {
@@ -325,14 +373,18 @@ function compileAll() {
   }
 }
 
-const watchMode = process.argv.includes('--watch');
-compileAll();
+// Only compile when run directly (`node compile-content.mjs`) — importing it just for
+// `escapeAttr` (as migrate-to-md.mjs and verify scripts do) shouldn't trigger a full compile.
+if (process.argv[1] && fileURLToPath(import.meta.url) === process.argv[1]) {
+  const watchMode = process.argv.includes('--watch');
+  compileAll();
 
-if (watchMode) {
-  console.log('[compile-content] watching content-md/ for changes...');
-  watch(SOURCE_DIR, { recursive: true }, (_event, filename) => {
-    if (filename && filename.endsWith('.md')) {
-      compileAll();
-    }
-  });
+  if (watchMode) {
+    console.log('[compile-content] watching content-md/ for changes...');
+    watch(SOURCE_DIR, { recursive: true }, (_event, filename) => {
+      if (filename && filename.endsWith('.md')) {
+        compileAll();
+      }
+    });
+  }
 }

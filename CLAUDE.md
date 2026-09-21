@@ -102,26 +102,26 @@ Where two sources disagree, record both and flag the conflict in
 
 ## Adding content
 
-Content is data. Never put documentation prose in a component.
+Content is data: a Markdown file with YAML frontmatter, never documentation prose in a
+component. Every section now lives in `content-md/`, not as hand-authored JS.
 
-| Adding | File | Notes |
+| Adding | Folder | Notes |
 | --- | --- | --- |
-| A concept | `src/content/concepts.js` | |
-| A glossary term | `src/content/vocabulary.js` | `id` is prefixed `v-`; `kind` is `term`, `acronym` or `jargon` |
-| A workflow | `src/content/workflows.js` | `id` is prefixed `wf-` |
-| A screen | `src/content/ui.js` | `kind: 'screen'`, then fill `purpose`, `users`, `see`, `do`, `states` |
-| A decision | `content-md/decisions/*.md` | Markdown file, not JS — see `content-md/README.md`. Frontmatter needs `context`, `decision`, `why`, `alternatives` |
-| A start-here step | `src/content/gettingStarted.js` | `step` drives ordering and previous/next |
+| A concept | `content-md/concepts/` | |
+| A glossary term | `content-md/vocabulary/` | `id` is prefixed `v-`; `kind` is `term`, `acronym` or `jargon` |
+| A workflow | `content-md/workflows/` | `id` is prefixed `wf-` |
+| A screen | `content-md/ui/` | `kind: 'screen'`, then fill `purpose`, `users`, `see`, `do`, `states` |
+| A decision | `content-md/decisions/` | Frontmatter needs `context`, `decision`, `why`, `alternatives` |
+| A start-here step | `content-md/gettingStarted/` | `step` drives ordering and previous/next |
+| A team | `content-md/teams/` | |
 
 An entry gets its route, its place in navigation, its search indexing and its related-knowledge
 links automatically. Adding content is enough — do not add routes or components for it.
 
-**Decisions are being migrated to Markdown.** `content-md/decisions/*.md` is the pilot for a
-wider move away from hand-authored JS, so contributors can edit content without writing code.
-`scripts/compile-content.mjs` compiles those files into `src/content/generated/decisions.js` —
-run automatically by `npm run dev` / `npm run build`, or on demand with `npm run compile:content`.
-The rest of the sections in the table above are still plain JS for now; see `content-md/README.md`
-for the Markdown format and its authoring rules before adding another section to it.
+See `content-md/README.md` for the authoring format (frontmatter, Markdown-to-block mapping,
+the `:::directive` blocks). `scripts/compile-content.mjs` compiles every `.md` file into
+`src/content/generated/<section>.js`, run automatically by `npm run dev` / `npm run build`, or
+on demand with `npm run compile:content` (`npm run content:watch` recompiles on save).
 
 Blocks available from `src/content/blocks.js`: `p` `h` `h3` `list` `ordered` `table` `callout`
 `gap` `chain` `flow` `relationship` `figure` `defs` `accordions` `cards` `code`.
