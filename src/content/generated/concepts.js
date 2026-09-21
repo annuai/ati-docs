@@ -1774,5 +1774,165 @@ export const concepts = [
         "tone": "note"
       }
     ]
+  },
+  {
+    "id": "jtbd-framework",
+    "title": "Jobs-to-be-Done Framework",
+    "summary": "A research template for understanding what Ati Flow users actually need — filled in from support, CS and user interviews, not assumed.",
+    "simple": "A Jobs-to-be-Done map has five parts: the core job a user is trying to get done, the functional/emotional/social sides of that job, the 8 steps they walk through to do it, the forces that push them toward or away from a solution, and the outcomes that tell you whether it went well. This page is the empty map — the bracketed placeholders get replaced with real findings as interviews happen.",
+    "aliases": [
+      "JTBD",
+      "jobs to be done",
+      "user needs framework"
+    ],
+    "status": "draft",
+    "author": "Annuai",
+    "added": "2026-09-21",
+    "revisions": [
+      {
+        "date": "2026-09-21",
+        "author": "Annuai",
+        "note": "Created as an empty framework — no interviews have happened yet. Placeholders throughout are marked in [brackets] and should be replaced with real interview language, not assumed answers."
+      }
+    ],
+    "sources": [
+      "Annuai — Jobs-to-be-Done framework template, supplied in conversation, September 2026"
+    ],
+    "related": [
+      "open-questions",
+      "users",
+      "ati-flow"
+    ],
+    "blocks": [
+      {
+        "t": "h",
+        "text": "Why this page is empty"
+      },
+      {
+        "t": "p",
+        "text": "This is a framework, not a finding. None of the bracketed text below is a real answer about Ati Flow users — it's a placeholder showing what kind of statement goes there once support, CS and user interviews happen. Treat every `[bracket]` as a question to ask, not a fact to cite."
+      },
+      {
+        "t": "callout",
+        "title": "No interviews completed yet",
+        "body": [
+          "The Core Job Statement, the three job dimensions, the Job Map, and the Forces of Progress below are all unfilled. The first real content on this page should come from the Support and Customer Success interviews already planned — see [[open-questions]] for what's still unknown about Ati Flow's users and roles."
+        ],
+        "tone": "gap"
+      },
+      {
+        "t": "h",
+        "text": "The map"
+      },
+      {
+        "t": "mermaid",
+        "code": "flowchart TB\n    subgraph INPUTS[\"Research inputs\"]\n        direction LR\n        I1[\"Support interviews\"]\n        I2[\"Customer Success interviews\"]\n        I3[\"Direct user interviews\"]\n        I4[\"Product usage / support-ticket data\"]\n    end\n\n    CORE[\"Core Functional Job Statement<br/><i>When [situation/trigger],<br/>I want to [motivation/action],<br/>so I can [expected outcome]</i>\"]\n\n    INPUTS --> CORE\n    CORE --> FUNC\n    CORE --> EMO\n    CORE --> SOC\n\n    subgraph FUNC[\"Functional job\"]\n        F1[\"The practical task the user is<br/>trying to get done<br/>e.g. '[deploy Ati Flow for my team]'\"]\n    end\n\n    subgraph EMO[\"Emotional job\"]\n        E1[\"How the user wants to feel<br/>e.g. '[feel confident nothing will break]'\"]\n    end\n\n    subgraph SOC[\"Social job\"]\n        S1[\"How the user wants to be seen<br/>e.g. '[be seen as the person who set this up smoothly]'\"]\n    end\n\n    FUNC --> MAP\n    EMO --> MAP\n    SOC --> MAP\n\n    subgraph MAP[\"Job map — 8 universal steps\"]\n        direction LR\n        M1[\"1. Define\"] --> M2[\"2. Locate\"]\n        M2 --> M3[\"3. Prepare\"]\n        M3 --> M4[\"4. Confirm\"]\n        M4 --> M5[\"5. Execute\"]\n        M5 --> M6[\"6. Monitor\"]\n        M6 --> M7[\"7. Modify\"]\n        M7 --> M8[\"8. Conclude\"]\n    end\n\n    MAP --> FORCES\n\n    subgraph FORCES[\"Forces of progress\"]\n        direction LR\n        PUSH[\"Push<br/>dissatisfaction with<br/>current approach<br/>e.g. '[manual deployment steps<br/>are error-prone]'\"]\n        PULL[\"Pull<br/>attraction of<br/>Ati Flow<br/>e.g. '[promises faster setup]'\"]\n        ANXIETY[\"Anxiety<br/>fear of switching<br/>e.g. '[will this break<br/>our existing workflow?]'\"]\n        HABIT[\"Habit<br/>comfort with<br/>current tool<br/>e.g. '[team already knows<br/>the old process]'\"]\n    end\n\n    FORCES --> OUTCOMES\n\n    subgraph OUTCOMES[\"Desired outcomes — what to measure\"]\n        direction LR\n        O1[\"Minimize time to [complete first deployment]\"]\n        O2[\"Increase likelihood of [successful setup on first try]\"]\n        O3[\"Minimize [support tickets during onboarding]\"]\n        O4[\"Increase confidence in [ongoing use post-deployment]\"]\n    end",
+        "caption": "Jobs-to-be-Done framework for Ati Flow. Every bracketed node is a placeholder to be replaced with real interview findings — nothing here is a confirmed user need yet."
+      },
+      {
+        "t": "h",
+        "text": "The eight job-map steps, defined"
+      },
+      {
+        "t": "accordions",
+        "items": [
+          {
+            "title": "1. Define",
+            "body": [
+              {
+                "t": "p",
+                "text": "What does the user decide needs doing, and what triggers that decision? Unfilled — pending Support/CS interviews."
+              }
+            ]
+          },
+          {
+            "title": "2. Locate",
+            "body": [
+              {
+                "t": "p",
+                "text": "What does the user need to gather before they can start — information, access, people? Unfilled."
+              }
+            ]
+          },
+          {
+            "title": "3. Prepare",
+            "body": [
+              {
+                "t": "p",
+                "text": "How does the user set up the environment before executing the job? Unfilled."
+              }
+            ]
+          },
+          {
+            "title": "4. Confirm",
+            "body": [
+              {
+                "t": "p",
+                "text": "How does the user check they're ready to proceed? Unfilled."
+              }
+            ]
+          },
+          {
+            "title": "5. Execute",
+            "body": [
+              {
+                "t": "p",
+                "text": "What does the user actually do to complete the job? Unfilled."
+              }
+            ]
+          },
+          {
+            "title": "6. Monitor",
+            "body": [
+              {
+                "t": "p",
+                "text": "How does the user check it's working as expected? Unfilled."
+              }
+            ]
+          },
+          {
+            "title": "7. Modify",
+            "body": [
+              {
+                "t": "p",
+                "text": "What does the user adjust if something isn't right? Unfilled."
+              }
+            ]
+          },
+          {
+            "title": "8. Conclude",
+            "body": [
+              {
+                "t": "p",
+                "text": "How does the user know the job is finished? Unfilled."
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "t": "h",
+        "text": "How to fill this in"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**Core Job Statement first** — one sentence, in the user's own words from an interview, not paraphrased or assumed.",
+          "**Functional / Emotional / Social jobs** — pull straight from Support and CS interview notes: what users say they're trying to do, versus how they describe feeling about it.",
+          "**Job Map steps** — walk through what a user actually does today at each of the 8 steps, especially around first deployment. This should align with whatever the deployment-procedure documentation turns up.",
+          "**Forces of Progress** — Push and Pull drive adoption; Anxiety and Habit hold users back. Interview questions should be written to surface all four, not just satisfaction.",
+          "**Desired Outcomes** — restate findings as measurable statements (\"minimize/increase/avoid + metric + object\") so design-system and deployment work can be prioritized against them."
+        ],
+        "ordered": true
+      },
+      {
+        "t": "callout",
+        "title": "Update this page, don't replace it",
+        "body": [
+          "As interviews happen, replace bracketed placeholders in the diagram and accordion sections above with real quotes and findings. Log the source interview in this page's `revisions` and add it to `sources` in the frontmatter, the same way the rest of this docs set tracks provenance."
+        ],
+        "tone": "note"
+      }
+    ]
   }
 ];
