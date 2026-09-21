@@ -24,7 +24,7 @@ Four rules follow from that:
 2. **Nothing is invented.** Every entry names the source files it came from. Where the source
    material is silent, the page says *Not yet documented* instead of guessing.
 3. **Disagreements are preserved.** Where two sources contradict each other, both are recorded and
-   the conflict is flagged. See [Open questions](src/content/openQuestions.js) in the app, and
+   the conflict is flagged. See [Open questions](content-md/openQuestions/index.md) in the app, and
    [`docs/source-audit.md`](docs/source-audit.md).
 4. **Everything connects.** Related knowledge, breadcrumbs and inline links mean no page is a
    dead end.
@@ -41,50 +41,65 @@ what conflicts were found and where the material runs out. The original files ar
 
 ## Architecture
 
-React 18 + Vite, static, no backend. Routing by React Router; content as structured data.
+React 18 + Vite, static, no backend. Routing by React Router. **Content is Markdown, compiled at
+build time into the same structured objects the app has always rendered.**
 
 ```
 ati-documentation-system/
+├── content-md/                  THE KNOWLEDGE — one Markdown file per entry, one folder per section
+│   ├── README.md                The authoring format: frontmatter, blocks, directives
+│   ├── concepts/                Robot, fleet, zone, map, mission, trip, orchestration …
+│   ├── vocabulary/               156 terms, acronyms and jargon
+│   ├── workflows/                Material movement, dispatch, charging, exceptions, deployment
+│   ├── ui/                       Screens, components, patterns, states
+│   ├── teams/                    Who does what across the company
+│   ├── decisions/                Terminology, UX and product-principle decisions
+│   ├── atiFlow/                  Ati Flow overview, architecture, users
+│   ├── atiRobotics/              The company behind the product
+│   ├── gettingStarted/           The start-here learning path
+│   └── openQuestions/            What is still undecided
+├── scripts/
+│   ├── compile-content.mjs      Markdown → the objects src/content/generated/*.js exports
+│   ├── migrate-to-md.mjs        One-off: the JS → Markdown converter used to bootstrap this
+│   └── verify-migration.mjs     One-off: diffs generated output against the pre-migration JS
 ├── docs/
-│   └── source-audit.md         Audit of the pre-existing material
-├── old/                        Preserved source material (HTML docs + the Ati Flow prototype)
-├── public/assets/              Ati-Docs-Logo.svg, Ati-Flow-Logo.svg, ati-sherpa.png
+│   └── source-audit.md          Audit of the pre-existing material
+├── old/                         Preserved source material (HTML docs + the Ati Flow prototype)
+├── public/assets/               Ati-Docs-Logo.svg, Ati-Flow-Logo.svg, ati-sherpa.png
 ├── src/
-│   ├── content/                THE KNOWLEDGE — one file per section
-│   │   ├── blocks.js           Block primitives used by every content file
-│   │   ├── gettingStarted.js   The start-here learning path
-│   │   ├── product.js          Ati Robotics, Ati Flow, architecture, IA, roles
-│   │   ├── concepts.js         Robot, fleet, zone, map, mission, trip, orchestration …
-│   │   ├── vocabulary.js       Glossary, acronyms and jargon
-│   │   ├── workflows.js        Material movement, dispatch, charging, exceptions, deployment
-│   │   ├── ui.js               Screens, components, patterns, states
-│   │   ├── decisions.js        Terminology, UX and product-principle decisions
-│   │   ├── openQuestions.js    What is still undecided
-│   │   └── index.js            The registry: sections, lookups, related-entry resolution
+│   ├── content/
+│   │   ├── blocks.js            Block primitives used by the compiler and by BlockRenderer
+│   │   ├── *.js                 One file per section, each a two-line re-export —
+│   │   │                        e.g. `export { concepts } from './generated/concepts.js'`
+│   │   ├── generated/           Compiled output. Not hand-edited — regenerated from content-md/
+│   │   └── index.js             The registry: sections, lookups, related-entry resolution
 │   ├── data/
-│   │   ├── navigation.js       Sidebar, derived from the registry
-│   │   └── searchIndex.js      Local search index and scoring
+│   │   ├── authors.js           The registered-contributor list
+│   │   ├── navigation.js        Sidebar, derived from the registry
+│   │   └── searchIndex.js       Local search index and scoring
 │   ├── components/
-│   │   ├── layout/             AppShell, Sidebar, TopBar
-│   │   ├── navigation/         Search, Breadcrumbs
-│   │   ├── content/            BlockRenderer, InlineText, PageHeader, Callout,
-│   │   │                       SimpleExplanation, RelatedKnowledge, Table, Tag, Badge …
-│   │   ├── glossary/           GlossaryList, GlossaryCard
-│   │   └── workflows/          Workflow, WorkflowStep
-│   ├── templates/              ConceptPage, GlossaryPage, WorkflowPage,
-│   │                           UIScreenPage, DecisionPage, EntryLayout
-│   ├── pages/                  Home, Section, Entry, Vocabulary, Search, NotFound
-│   ├── styles/                 tokens.css, globals.css, components.css
-│   ├── App.jsx                 Routes
+│   │   ├── layout/               AppShell, Sidebar, TopBar
+│   │   ├── navigation/           Search, Breadcrumbs
+│   │   ├── content/              BlockRenderer, InlineText, PageHeader, Callout,
+│   │   │                         SimpleExplanation, RelatedKnowledge, Table, Tag, Badge …
+│   │   ├── glossary/             GlossaryList, GlossaryCard
+│   │   └── workflows/            Workflow, WorkflowStep
+│   ├── templates/                ConceptPage, GlossaryPage, WorkflowPage,
+│   │                             UIScreenPage, DecisionPage, EntryLayout
+│   ├── pages/                    Home, Section, Entry, Vocabulary, Search, NotFound
+│   ├── styles/                   tokens.css, globals.css, components.css
+│   ├── App.jsx                   Routes
 │   └── main.jsx
 ├── index.html
 ├── vite.config.js
 └── vercel.json
 ```
 
-### Content is data, not JSX
+### Markdown in, the same objects out
 
-No documentation text lives in a component. An entry is an object:
+Nothing about the rendering layer changed when content moved to Markdown — `BlockRenderer`,
+`InlineText`, the `[[link]]` resolver, `relatedEntries()` and the contributors page all still work
+on exactly the shape they always did:
 
 ```js
 {
@@ -100,20 +115,59 @@ No documentation text lives in a component. An entry is an object:
 }
 ```
 
-`src/content/index.js` normalises every entry, assigns its route, and builds the lookups. That means
-adding content is enough:
+The only thing that changed is how that object gets written. Instead of a JS object in
+`src/content/concepts.js`, it's now a Markdown file in `content-md/concepts/fleet.md`:
+
+```markdown
+---
+id: fleet
+title: Fleet
+summary: A coordinated group of robots operating within a deployment.
+status: current
+aliases: [fleet layer]
+sources: [old/ati-flow-glossary.html]
+related: [robot, orchestration, zone]
+---
+
+## Why it matters
+
+…
+
+- Point one
+- Point two
+```
+
+`scripts/compile-content.mjs` reads every `content-md/<section>/*.md` file, parses the frontmatter
+and body, and writes `src/content/generated/<section>.js` — run automatically before `npm run dev`
+and `npm run build`, or on demand with `npm run compile:content` (`npm run content:watch`
+recompiles as you save). `src/content/index.js` then normalises every entry, assigns its route, and
+builds the lookups exactly as before:
 
 ```
-Add a content object
+Add a Markdown file in content-md/<section>/
         ↓
-It gets a route            /concepts/fleet
+The compiler turns it into a plain object   src/content/generated/<section>.js
         ↓
-It appears in navigation   sidebar, section index
+It gets a route                             /concepts/fleet
         ↓
-It becomes searchable      title, aliases, summary, body
+It appears in navigation                    sidebar, section index
         ↓
-It appears as related      on every entry that links to it
+It becomes searchable                       title, aliases, summary, body
+        ↓
+It appears as related                       on every entry that links to it
 ```
+
+### Mistakes don't take the site down
+
+One contributor's typo shouldn't block everyone else, so the compiler never fails the build over a
+single bad file. A missing `author`, an unrecognised `status`, an unclosed `:::` block, a duplicate
+`id` — each is collected into a report printed to the terminal, and the affected entry is marked
+`needs-confirmation` (a visible badge) instead of looking falsely settled. A few common mistakes are
+corrected automatically rather than just flagged — an unquoted date (`added: 2026-09-16`, read by
+YAML as a date object instead of text) is silently normalised back to a string, with a warning
+explaining why.
+
+See [`content-md/README.md`](content-md/README.md) for the full authoring format.
 
 ### Routing
 
@@ -150,11 +204,11 @@ Press `/` or `⌘K` anywhere to focus the search field.
 
 ## Authorship
 
-Every entry records who added it and when:
+Every entry records who added it and when, in its frontmatter:
 
-```js
-author: 'Annuai',      // must be listed in src/data/authors.js
-added: '2026-09-16',   // ISO date
+```yaml
+author: Annuai      # must be listed in src/data/authors.js
+added: '2026-09-16'  # ISO date, quoted — see content-md/README.md for why
 ```
 
 This is deliberately **not** shown on the entries themselves — a byline on every page would compete
@@ -163,19 +217,21 @@ and date, filterable by contributor. That page is how any statement in the syste
 to a person.
 
 When an entry is substantially changed, the author stays as whoever introduced it and the change is
-appended to a `revisions` array:
+appended to a `revisions` list:
 
-```js
-revisions: [
-  { date: '2026-09-16', author: 'Annuai', note: 'What changed and why.' }
-]
+```yaml
+revisions:
+  - date: '2026-09-20'
+    author: Annuai
+    note: What changed and why.
 ```
 
 `/contributors` shows both: a revisions log, and the full list of entries with their original author
 and date.
 
 Contributors are registered in [`src/data/authors.js`](src/data/authors.js). Adding a new one means
-adding a line there first; an entry crediting an unregistered name logs a warning in development.
+adding a line there first; an entry crediting an unregistered name is flagged both at compile time
+(in the terminal) and in the browser's dev console.
 
 **When adding an entry, ask who is authoring it.** Never guess and never inherit the author of a
 neighbouring entry. [`CLAUDE.md`](CLAUDE.md) sets out the full protocol and is the file to read
@@ -183,28 +239,39 @@ before contributing.
 
 ## Adding documentation
 
+Every section is a folder in `content-md/`; every entry is one `.md` file in it, frontmatter plus
+Markdown body. Full format reference: [`content-md/README.md`](content-md/README.md). Quick
+examples per section:
+
 ### A concept
 
-Add an object to `src/content/concepts.js`:
+`content-md/concepts/staging.md`:
 
-```js
-{
-  id: 'staging',                       // unique across the whole system
-  title: 'Staging',
-  summary: 'One sentence.',
-  simple: 'The plain-language version. This is the important bit.',
-  status: 'draft',                     // current | draft | needs-confirmation | deprecated
-  aliases: ['staging area'],           // extra search terms
-  sources: ['old/amr-deployment-workflow.html'],
-  blocks: [
-    h('Why it matters'),
-    p('Links to other entries use [[fleet]] or [[fleet|a custom label]].'),
-    list(['Point one', 'Point two']),
-    callout('A heading', 'Something worth pulling out.'),
-    gap('What the sources do not say.')
-  ],
-  related: ['fleet', 'robot']
-}
+```markdown
+---
+id: staging                            # unique across the whole system
+title: Staging
+summary: One sentence.
+status: draft                          # current | draft | needs-confirmation | deprecated
+aliases: [staging area]                # extra search terms
+sources: [old/amr-deployment-workflow.html]
+related: [fleet, robot]
+---
+
+## Why it matters
+
+Links to other entries use [[fleet]] or [[fleet|a custom label]].
+
+- Point one
+- Point two
+
+:::callout title="A heading"
+Something worth pulling out.
+:::
+
+:::gap
+What the sources do not say.
+:::
 ```
 
 It is now at `/concepts/staging`, in the sidebar, in search, and on the related-knowledge row of
@@ -212,63 +279,62 @@ It is now at `/concepts/staging`, in the sidebar, in search, and on the related-
 
 ### A glossary term
 
-Add to `src/content/vocabulary.js`. Use `kind` to place it under Terms, Acronyms or Jargon:
+`content-md/vocabulary/v-wms.md`. Use `kind` to place it under Terms, Acronyms or Jargon:
 
-```js
-{
-  id: 'v-wms',                         // vocabulary ids are prefixed `v-`; the route drops it
-  term: 'WMS',
-  expansion: 'Warehouse Management System',
-  kind: 'acronym',                     // term | acronym | jargon
-  simple: 'Plain meaning.',
-  technical: 'The precise meaning.',
-  usedIn: ['Where it appears in Ati material'],
-  note: 'Anything a reader should be careful about.',
-  related: ['integrations'],
-  status: 'current',
-  sources: ['…']
-}
+```markdown
+---
+id: v-wms                              # vocabulary ids are prefixed v-; the route drops it
+term: WMS
+expansion: Warehouse Management System
+kind: acronym                          # term | acronym | jargon
+simple: Plain meaning.
+technical: The precise meaning.
+usedIn: [Where it appears in Ati material]
+note: Anything a reader should be careful about.
+related: [integrations]
+status: current
+sources: ['…']
+---
 ```
 
 ### A workflow
 
-Add to `src/content/workflows.js` and use the `flow()` block. Each step takes
-`{ title, note, points, tag, kind }`, where `kind` is `step` (default), `decision` or `outcome`.
+Add to `content-md/workflows/` and use the `:::flow` directive. Each step is `{title, note, kind?,
+tag?, points?}`, where `kind` is `step` (default), `decision` or `outcome` — see
+`content-md/README.md` for the exact YAML shape.
 
 ### A UI screen
 
-Add to `src/content/ui.js` with `kind: 'screen'` and fill `purpose`, `users`, `see`, `do`
-and `states`. The screen template renders those sections in order.
+Add to `content-md/ui/` with `kind: screen` and fill `purpose`, `users`, `see`, `do` and `states`
+in the frontmatter. The screen template renders those sections in order.
 
 ### A decision
 
-Add to `src/content/decisions.js` with `kind: 'decision'` and fill `context`, `decision`, `why`
-and `alternatives`. If the sources do not record the alternatives, say so rather than inventing them.
+Add to `content-md/decisions/` with `kind: decision` and fill `context`, `decision`, `why` and
+`alternatives`. If the sources do not record the alternatives, say so rather than inventing them.
 
 ### An image
 
-Put the file in `public/assets/`, then reference it from a content block:
+Put the file in `public/assets/`, then reference it with the `:::figure` directive:
 
-```js
-figure('/assets/my-diagram.png', 'Accessible description of the image.', 'Caption shown below it.')
+```markdown
+:::figure
+src: /assets/my-diagram.png
+alt: Accessible description of the image.
+caption: Caption shown below it.
+:::
 ```
 
 ### Available blocks
 
-`p` · `h` · `h3` · `list` · `ordered` · `table` · `callout` · `gap` · `chain` · `flow` ·
-`relationship` · `figure` · `defs` · `accordions` · `cards` · `code` — all from
-`src/content/blocks.js`.
+Most of a page is native Markdown — paragraphs, `## headings`, `### sub-headings`, `- lists`,
+`1. numbered lists`, pipe tables, and fenced code (` ```mermaid ` for a diagram). The blocks with no
+Markdown equivalent use a `:::name ... :::` container: `callout`, `gap`, `chain`, `flow`,
+`relationship`, `defs`, `accordions`, `cards`, `figure`. See
+[`content-md/README.md`](content-md/README.md) for each one's exact syntax.
 
-Inline markup inside any string: `**bold**`, `*italic*`, `` `code` ``, `[[entry-id]]` and
+Inline markup inside any text: `**bold**`, `*italic*`, `` `code` ``, `[[entry-id]]` and
 `[[entry-id|label]]`.
-
-### Markdown
-
-Content is plain JavaScript objects rather than Markdown files. That was deliberate for the first
-version: the object model carries `status`, `sources`, `aliases` and `related`, which is what makes
-navigation, search and cross-linking automatic. A Markdown loader can be added later without
-touching the UI — parse the files into the same entry shape and concatenate them into the arrays in
-`src/content/index.js`.
 
 ## Running locally
 
@@ -277,6 +343,9 @@ npm install
 npm run dev
 ```
 
+`npm run dev` compiles `content-md/` first, then starts Vite. If you're actively editing content,
+run `npm run content:watch` in a second terminal to recompile on every save.
+
 ## Production
 
 ```bash
@@ -284,7 +353,7 @@ npm run build
 npm run preview
 ```
 
-The build is a static bundle in `dist/`.
+`npm run build` also compiles `content-md/` first. The build is a static bundle in `dist/`.
 
 ## Deploying to Vercel
 
@@ -330,8 +399,8 @@ beneath it. The sidebar collapses to a keyboard-dismissable drawer below 832px.
 
 ## Conventions
 
-- **Status badges are for exceptions.** `current` shows nothing; `draft` and `needs-confirmation`
-  show a badge. If everything is badged, nothing is.
+- **Status badges are for exceptions.** `current` shows nothing; `draft`, `needs-confirmation` and
+  `deprecated` show a badge. If everything is badged, nothing is.
 - **Never write a fact without a source.** The `sources` field is how the next person knows what to
   re-check.
-- **Prefer a gap to a guess.** `gap('…')` is a first-class block for a reason.
+- **Prefer a gap to a guess.** `:::gap` is a first-class block for a reason.
