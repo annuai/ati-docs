@@ -186,6 +186,11 @@ export const atiFlow = [
         date: '2026-09-18',
         author: 'Annuai',
         note: 'Merged the separate "Information architecture" page into this one — the two were splitting one story (how the system is layered, and what that turns into on screen) across two pages. Nothing was removed: the diagrams, every feature group, and every open question below the fold are all still here, now read top to bottom as one page.'
+      },
+      {
+        date: '2026-09-21',
+        author: 'Annuai',
+        note: 'Replaced "AMR" with "Robot" throughout the team-supplied architecture diagram and its feature groups (Robot Configuration, Robot Manager, Robot API, the Robot HMI node), per [[d-robot-over-amr|the existing decision]] to keep AMR out of product-facing labels. The one exception is the literal quote of the prototype’s "AMR Trips" navigation item below — left as-is because it records what that screen actually says, not this page’s own terminology.'
       }
     ],
     sources: [S.architecture, S.overview, TEAM, S.ia, S.screens, S.prototype],
@@ -284,7 +289,7 @@ export const atiFlow = [
     subgraph CFG["Ati Flow Configurator — admin"]
         direction TB
         CFG1["Map Configuration"]
-        CFG2["AMR Configuration"]
+        CFG2["Robot Configuration"]
         CFG3["API Configuration"]
         CFG4["User and Role Configuration"]
         CFG5["Fleet Configuration"]
@@ -330,16 +335,16 @@ export const atiFlow = [
     FM(("Fleet Manager")):::hub
     AF --> FM
 
-    AMR(("AMR")):::hub
-    FM --> AMR
+    ROBOT(("Robot")):::hub
+    FM --> ROBOT
 
     subgraph HMI["HMI — on the robot"]
         direction TB
-        HMI1["Live Status of AMR"]
+        HMI1["Live Status of Robot"]
         HMI2["Operation"]
     end
 
-    AMR --> HMI
+    ROBOT --> HMI
 
     class CFG cfgGroup
     class SUP supGroup
@@ -365,15 +370,15 @@ export const atiFlow = [
           body: [
             defs([
               { term: 'Map Configuration', text: 'Map Manager — generate a new map, manage saved maps, edit saved maps, preview saved maps.' },
-              { term: 'AMR Configuration', text: 'AMR Manager — view the AMR list, add a new AMR, configure an AMR, manage the AMR list.' },
-              { term: 'API Configuration', text: 'API Connections — Fleet Manager connection, AMR API, ERP API.' },
+              { term: 'Robot Configuration', text: 'Robot Manager — view the robot list, add a new robot, configure a robot, manage the robot list.' },
+              { term: 'API Configuration', text: 'API Connections — Fleet Manager connection, Robot API, ERP API.' },
               {
                 term: 'User & Role Configuration',
                 text: 'User Configuration — view users, update permissions, add users, manage the user list. Assign Roles — view existing roles, manage roles, add new roles.'
               },
               {
                 term: 'Fleet Configuration',
-                text: 'View Existing Fleets — view AMRs, maps and triggers. Make New Fleets — assign AMRs, maps and triggers. Manage Fleets.'
+                text: 'View Existing Fleets — view robots, maps and triggers. Make New Fleets — assign robots, maps and triggers. Manage Fleets.'
               },
               { term: 'Traffic Management', text: 'Manage, add and edit traffic rules.' },
               {
@@ -437,7 +442,7 @@ export const atiFlow = [
               },
               {
                 term: 'Robot management, own zones',
-                text: 'Manage robots within the zones this Fleet Supervisor owns — narrower than a Configurator’s full AMR Configuration.'
+                text: 'Manage robots within the zones this Fleet Supervisor owns — narrower than a Configurator’s full Robot Configuration.'
               },
               {
                 term: 'View only, Maps and Workflows',
@@ -454,15 +459,15 @@ export const atiFlow = [
           ]
         },
         {
-          title: 'AMR — HMI, on the robot',
+          title: 'Robot — HMI, on the robot',
           tag: '2 groups',
           body: [
             defs([
               {
-                term: 'Live Status of AMR',
+                term: 'Live Status of Robot',
                 text: 'Wi-Fi connection, idle state, power on/off, moving state, Fleet Manager connection, trip assignment, obstacle detection, error state.'
               },
-              { term: 'Operation', text: 'Mode change, send to park, recover location, send to charging, AMR info, power on/off.' }
+              { term: 'Operation', text: 'Mode change, send to park, recover location, send to charging, robot info, power on/off.' }
             ])
           ]
         }
