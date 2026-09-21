@@ -1,7 +1,7 @@
 # AGENTS.md
 
 Working rules for the Ati Documentation System. Read this before changing anything in
-`src/content/`.
+`content-md/`.
 
 ## What this project is
 
@@ -12,11 +12,11 @@ The guiding principle is **make Ati understandable**. Plain language first, tech
 
 ## The authorship rule — read this first
 
-Every entry in `src/content/` carries two fields:
+Every entry's frontmatter in `content-md/` carries two fields:
 
-```js
-author: 'Annuai',      // must be a name listed in src/data/authors.js
-added: '2026-09-16',   // ISO date, the day it was written
+```yaml
+author: Annuai        # must be a name listed in src/data/authors.js
+added: '2026-09-16'    # ISO date, the day it was written — quote it, or YAML reads it as a date, not text
 ```
 
 **When you add or substantially rewrite an entry, ask who is authoring it. Never guess, never
@@ -45,14 +45,11 @@ Rules:
 5. **Editing an existing entry does not change its author.** The author is who introduced the
    knowledge. A substantial change is recorded as a revision instead:
 
-   ```js
-   revisions: [
-     {
-       date: '2026-09-16',
-       author: 'Annuai',
-       note: 'Rewritten. Ati is an OEM that builds both the robots and the orchestration software.'
-     }
-   ]
+   ```yaml
+   revisions:
+     - date: '2026-09-16'
+       author: Annuai
+       note: Rewritten. Ati is an OEM that builds both the robots and the orchestration software.
    ```
 
    Append, never overwrite — the list is a history. Log anything that changes what the page
@@ -67,25 +64,28 @@ Current contributors: **Annuai**, **Akankshya**, **Krishna**. More will be added
 
 Every entry also carries `sources`, and there are two kinds:
 
-```js
-sources: ['old/ati-flow-glossary.html']   // a file in this repository
-sources: [TEAM]                           // knowledge supplied directly by the Ati team
+```yaml
+sources: [old/ati-flow-glossary.html]           # a file in this repository
+sources: ['Ati team — noted September 2026']    # knowledge supplied directly by the Ati team
 ```
 
-`TEAM` is defined at the top of `src/content/vocabulary.js`. When knowledge arrives in conversation
-rather than from a file, cite it that way and add a line to the table in
+There is no shared `TEAM` constant to import here — each Markdown file is plain text, so write
+out who supplied the knowledge and when, literally, every time. When knowledge arrives in
+conversation rather than from a file, cite it that way and add a line to the table in
 `docs/source-audit.md` under *Knowledge added after the audit*.
 
 **Do not invent Ati-specific facts.** If the sources do not say, the page says so:
 
-```js
-gap('What Mule covers is not yet written down — whether it is the robot’s whole autonomy stack, or one layer within it.')
+```markdown
+:::gap
+What Mule covers is not yet written down — whether it is the robot's whole autonomy stack, or one layer within it.
+:::
 ```
 
 A recorded gap is a contribution. A plausible guess is a liability, because it gets repeated.
 
 Where two sources disagree, record both and flag the conflict in
-`src/content/openQuestions.js` rather than picking a winner.
+`content-md/openQuestions/index.md` rather than picking a winner.
 
 ## Writing conventions
 
@@ -102,19 +102,26 @@ Where two sources disagree, record both and flag the conflict in
 
 ## Adding content
 
-Content is data. Never put documentation prose in a component.
+Content is data: a Markdown file with YAML frontmatter, never documentation prose in a
+component. Every section now lives in `content-md/`, not as hand-authored JS.
 
-| Adding | File | Notes |
+| Adding | Folder | Notes |
 | --- | --- | --- |
-| A concept | `src/content/concepts.js` | |
-| A glossary term | `src/content/vocabulary.js` | `id` is prefixed `v-`; `kind` is `term`, `acronym` or `jargon` |
-| A workflow | `src/content/workflows.js` | `id` is prefixed `wf-` |
-| A screen | `src/content/ui.js` | `kind: 'screen'`, then fill `purpose`, `users`, `see`, `do`, `states` |
-| A decision | `src/content/decisions.js` | `kind: 'decision'`, then `context`, `decision`, `why`, `alternatives` |
-| A start-here step | `src/content/gettingStarted.js` | `step` drives ordering and previous/next |
+| A concept | `content-md/concepts/` | |
+| A glossary term | `content-md/vocabulary/` | `id` is prefixed `v-`; `kind` is `term`, `acronym` or `jargon` |
+| A workflow | `content-md/workflows/` | `id` is prefixed `wf-` |
+| A screen | `content-md/ui/` | `kind: 'screen'`, then fill `purpose`, `users`, `see`, `do`, `states` |
+| A decision | `content-md/decisions/` | Frontmatter needs `context`, `decision`, `why`, `alternatives` |
+| A start-here step | `content-md/gettingStarted/` | `step` drives ordering and previous/next |
+| A team | `content-md/teams/` | |
 
 An entry gets its route, its place in navigation, its search indexing and its related-knowledge
 links automatically. Adding content is enough — do not add routes or components for it.
+
+See `content-md/README.md` for the authoring format (frontmatter, Markdown-to-block mapping,
+the `:::directive` blocks). `scripts/compile-content.mjs` compiles every `.md` file into
+`src/content/generated/<section>.js`, run automatically by `npm run dev` / `npm run build`, or
+on demand with `npm run compile:content` (`npm run content:watch` recompiles on save).
 
 Blocks available from `src/content/blocks.js`: `p` `h` `h3` `list` `ordered` `table` `callout`
 `gap` `chain` `flow` `relationship` `figure` `defs` `accordions` `cards` `code`.
@@ -152,11 +159,17 @@ A new entry should not be an island. When adding one:
 ## Before finishing
 
 ```bash
-npm run build
+npm run compile:content   # or npm run build / npm run dev, which run this first
 ```
 
-Then check the dev server for console warnings — missing or unregistered authors are reported
-there. Fix them rather than shipping unattributed entries.
+Fix anything the compiler reports in the terminal — a missing source, an unrecognised status, a
+duplicate `id` — rather than shipping an entry marked `needs-confirmation` by accident. Then check
+the browser's dev console too: missing or unregistered authors are reported there separately.
+Fix both rather than shipping unattributed entries.
+
+**After adding a new vocabulary term or concept, ask before committing.** Do not run
+`git commit` on new `content-md/vocabulary/` or `content-md/concepts/` entries without the
+user's go-ahead first.
 
 ## What not to do
 
