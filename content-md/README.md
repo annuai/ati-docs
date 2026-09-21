@@ -108,7 +108,7 @@ What Mule covers beyond navigation is not yet written down.
 :::
 ```
 
-The rest (`chain`, `flow`, `relationship`, `defs`, `cards`, `accordions`, `figure`) hold
+The rest (`chain`, `flow`, `relationship`, `defs`, `cards`, `accordions`, `figure`, `lights`) hold
 structured data rather than prose, so their body is YAML instead of Markdown — the keys match
 the block's fields exactly. For example, a `chain`:
 
@@ -128,6 +128,29 @@ steps:
 `relationship` (`caption`, `nodes: [{label, to, note}]`), `cards`/`accordions` (`items: [...]`,
 an accordion item's `body` is itself a list of blocks) and `figure` (`src`, `alt`, `caption`) all
 follow the same pattern — YAML keys named after the block's own parameters in `blocks.js`.
+
+**Lights** — a table whose first column pairs an animated colour swatch with its label, for
+documenting physical indicator lights (e.g. a robot's status LEDs):
+
+```markdown
+:::lights
+items:
+  - label: Steady green
+    color: '#22c55e'
+    pattern: steady
+    sound: No sound
+    status: Idle, ready for a trip
+  - label: Fast-blinking red
+    color: '#ef4444'
+    pattern: pulse-fast
+    sound: Emergency tone
+    status: E-stop pressed
+:::
+```
+
+Each item's `pattern` is one of `steady`, `split` (two colours side by side, via `secondary`),
+`pulse-slow`, `pulse-fast`, `sweep-slow`, `sweep-fast`, or `off` — chosen to match how the source
+describes the light (e.g. "rolling", "fast blinking", "running"), never invented for effect.
 
 A Mermaid diagram can carry a caption via the fence's info string: ` ```mermaid caption="..." `.
 

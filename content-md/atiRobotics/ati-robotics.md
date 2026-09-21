@@ -20,6 +20,12 @@ revisions:
   - date: '2026-09-20'
     author: Annuai
     note: Added the Sherpa hardware line-up (Sherpa 10K, Pallet Mover, Lifter 500, Pivot, Mecha) from the products page and Product Day 2025, closing the gap this page previously recorded about undocumented hardware.
+  - date: '2026-09-21'
+    author: Annuai
+    note: Added Sherpa Tug to the hardware line-up table, from its user manual — the products page did not name it.
+  - date: '2026-09-21'
+    author: Annuai
+    note: Added Sherpa Flex Fork to the hardware line-up table, from its user manual — a distinct product from the Sherpa Pivot mono-fork attachment, not named on the products page.
 sources:
   - Ati team — noted September 2026
   - old/index.html
@@ -27,12 +33,16 @@ sources:
   - https://www.atirobotics.ai/company/
   - https://www.atirobotics.ai/products/
   - Ati team — Product Day 2025 product launch, supplied in conversation, September 2026
+  - 'drive-download-20260921T111708Z-1-001/Tugger/Tug_V 3.5/UM_Sherpa_Tug.pdf, supplied September 2026'
+  - 'drive-download-20260921T111708Z-1-001/UM_Sherpa_Flexfork_.pdf, supplied September 2026'
 related:
   - ati-flow
   - robot
   - orchestration
   - v-oem
   - v-sherpa
+  - v-sherpa-tug
+  - v-sherpa-flex-fork
   - engineering-documents
 order: 1
 ---
@@ -118,9 +128,11 @@ The Sherpa product family, as named on the company’s products page and shown a
 | --- | --- | --- | --- |
 | [[v-sherpa\|Sherpa XT Lite]] | Trolley tugger | 3,300 lb | Full-shift indoor/outdoor towing, swappable batteries |
 | [[v-sherpa-10k\|Sherpa 10K]] | Trolley tugger | 10,000 lb (4,600 kg) | Heavy trolley towing indoors and outdoors |
+| [[v-sherpa-tug\|Sherpa Tug]] | Trolley tugger | 1,500 kg, as a two-trolley train | Trolley towing where the towing capacity must hold up on ramps as well as flat floor |
 | [[v-sherpa-pallet-mover\|Sherpa Pallet Mover]] | Pallet handler | 3,300 lb | Autonomous pallet lifting for receiving, staging and line-side delivery |
 | [[v-sherpa-lifter-500\|Sherpa Lifter 500]] | Flexible material handler | 1,100 lb (500 kg) | Pallet and bin handling with modular top-module configurations |
 | [[v-sherpa-pivot\|Sherpa Pivot]] | Versatile material mover | 1,100 lb | Modular mono-fork and trailing-unit attachments; the mono-fork configuration was shown at Product Day 2025 moving carts with no manual hitching |
+| [[v-sherpa-flex-fork\|Sherpa Flex Fork]] | Autonomous trolley mover | 300 kg | Finds, aligns to and lifts a trolley on its own using a multi-sensor stack — a distinct product from the Sherpa Pivot mono-fork |
 | [[v-sherpa-mecha\|Sherpa Mecha]] | Industrial humanoid (research) | 12 kg today, 35 kg targeted | Wheeled dual-arm robot for tasks outside fixed-path AMR reach; open for partner pre-booking |
 
 The design tradeoffs across this range are described by the [[4s-framework|4S framework]] Ati uses internally: space, speed, safety and sturdiness.

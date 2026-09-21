@@ -263,10 +263,18 @@ export const workflows = [
     "status": "draft",
     "author": "Annuai",
     "added": "2026-09-16",
+    "revisions": [
+      {
+        "date": "2026-09-21",
+        "author": "Annuai",
+        "note": "Added the L0–L3 hardware support escalation path, confirmed identically across three Sherpa user manuals. Narrowed the closing gap to the parts still undocumented — taxonomy, alert model and severity scale."
+      }
+    ],
     "sources": [
       "old/amr-deployment-workflow.html",
       "old/prototype/",
-      "old/ati-flow-screens.html"
+      "old/ati-flow-screens.html",
+      "UM Sherpa Pivot.pdf, UM_Sherpa_Tug.pdf and UM_Sherpa_Flexfork_.pdf, supplied September 2026"
     ],
     "related": [
       "robot-states",
@@ -360,10 +368,48 @@ export const workflows = [
         ]
       },
       {
+        "t": "h",
+        "text": "Escalation path"
+      },
+      {
+        "t": "p",
+        "text": "When a robot itself has a problem the site can't resolve, the same four-level path appears identically across the Sherpa Tug, Pivot and Flex Fork manuals:"
+      },
+      {
+        "t": "table",
+        "head": [
+          "Level",
+          "Who",
+          "Response time"
+        ],
+        "rows": [
+          [
+            "L0",
+            "Support Desk (24×7)",
+            "Immediately"
+          ],
+          [
+            "L1",
+            "A named Service Manager",
+            "30 to 60 minutes"
+          ],
+          [
+            "L2",
+            "Head of Service and Support",
+            "N + 3 days (longer if spares are needed)"
+          ],
+          [
+            "L3",
+            "Chief Technical Officer",
+            "—"
+          ]
+        ]
+      },
+      {
         "t": "callout",
         "title": "Not yet documented",
         "body": [
-          "There is no documented exception taxonomy, alert model, severity scale or escalation path."
+          "There is no documented exception taxonomy, alert model or severity scale."
         ],
         "tone": "gap"
       }

@@ -12,6 +12,7 @@ related:
   - robot
   - ati-robotics
   - v-sherpa-10k
+  - v-sherpa-tug
   - v-sherpa-pallet-mover
   - v-sherpa-lifter-500
   - v-sherpa-pivot

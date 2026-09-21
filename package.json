@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "d3-force": "^3.0.0",
     "iconoir-react": "^7.12.1",
     "mermaid": "^12.0.0",
     "react": "^18.3.1",

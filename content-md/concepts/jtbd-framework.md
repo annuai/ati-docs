@@ -14,12 +14,20 @@ revisions:
   - date: '2026-09-21'
     author: Annuai
     note: Created as an empty framework — no interviews have happened yet. Placeholders throughout are marked in [brackets] and should be replaced with real interview language, not assumed answers.
+  - date: '2026-09-21'
+    author: Annuai
+    note: Split the single generic map into one map per Ati Flow user (Operator, Head of Operations, Configurator), using the tasks already documented in the user model. Fleet Supervisor is held back because that role itself is unconfirmed. Job-map steps that map to a documented task are filled in; everything about motivation, feeling and forces is still an interview-only placeholder — nothing here beyond the permission-matrix tasks is a confirmed finding.
+  - date: '2026-09-21'
+    author: Annuai
+    note: 'Corrected "Mission" to "Workflow" in the Configurator job map — Ati Flow''s product-facing term, per [[d-workflow-over-mission]] — and added a disambiguation callout naming Mission as the industry-standard word for the same thing.'
 sources:
   - Annuai — Jobs-to-be-Done framework template, supplied in conversation, September 2026
+  - content-md/atiFlow/users.md
 related:
   - open-questions
   - users
   - ati-flow
+  - d-workflow-over-mission
 order: 19
 ---
 
@@ -134,6 +142,76 @@ items:
     body:
       - t: p
         text: How does the user know the job is finished? Unfilled.
+:::
+
+## Which user, which job
+
+A job map tracks one job executor doing one job — mixing users into a single map muddies both the map and the eventual interview questions. Ati Flow has four documented users (see [[users]]), each with a different job rather than a different slice of the same job:
+
+| User | Scope | What they do today |
+| --- | --- | --- |
+| [[v-operator\|Operator]] | Floor level, one zone | Fleet Monitor for own zone, robot status, task queue, raises manual priority requests |
+| [[v-fleet-supervisor\|Fleet Supervisor]] | Zone-level oversight | Fleet Monitor across assigned zones with reassignment control, manages robots in those zones — **role not yet confirmed to exist**, see [[users]] |
+| [[v-head-of-operations\|Head of Operations]] | Whole site | Manages robots site-wide, views & approves Workflows and Maps, views Integrations status, manages users and roles |
+| [[v-solutions-architect\|Solutions Architect (Configurator)]] | Sets a new site up | Builds and annotates Maps, designs Workflows, configures Robots and Integrations, exclusive Debug access |
+
+Below is one job map per confirmed user. Only the steps that match a documented task are filled in; everything else — and every Core Job Statement, emotional job, social job and Force of Progress — is still `[bracketed]` because none of it has been said by a user in an interview yet.
+
+:::callout title="Workflow, not Mission"
+The wider robotics/AMR industry calls this a **Mission**; Ati Flow, as an orchestration product, currently calls the same thing a **Workflow** — no meaning difference. See [[d-workflow-over-mission]].
+:::
+
+:::accordions
+items:
+  - title: 'Operator — keep my zone running'
+    body:
+      - t: p
+        text: "Core functional job (draft, unconfirmed): [When a robot in my zone stops or my task queue backs up, I want to see what's happening and respond, so I can keep my zone running without escalating]"
+      - t: table
+        headers: ['Step', 'What is known']
+        rows:
+          - ['1. Define', 'Unfilled — pending interview']
+          - ['2. Locate', 'Unfilled']
+          - ['3. Prepare', 'Unfilled']
+          - ['4. Confirm', 'Unfilled']
+          - ['5. Execute', 'Raises a manual priority request, with the trade-off shown before confirming']
+          - ['6. Monitor', 'Watches Fleet Monitor for their own zone — robot status and task queue']
+          - ['7. Modify', 'Unfilled']
+          - ['8. Conclude', 'Unfilled']
+  - title: 'Head of Operations — keep the whole site accountable'
+    body:
+      - t: p
+        text: "Core functional job (draft, unconfirmed): [When something across the site needs approval or oversight, I want visibility and control across all zones, so I can keep the site accountable]"
+      - t: table
+        headers: ['Step', 'What is known']
+        rows:
+          - ['1. Define', 'Unfilled']
+          - ['2. Locate', 'Unfilled']
+          - ['3. Prepare', 'Unfilled']
+          - ['4. Confirm', 'Views and approves Workflows and Maps']
+          - ['5. Execute', 'Manages robots site-wide; manages users and roles']
+          - ['6. Monitor', 'Views Integrations status; is the escalation point above Fleet Supervisors']
+          - ['7. Modify', 'Unfilled']
+          - ['8. Conclude', 'Unfilled']
+  - title: 'Solutions Architect (Configurator) — take a site from zero to operational'
+    body:
+      - t: p
+        text: "Core functional job (draft, unconfirmed): [When a new site has no fleet running, I want to configure maps, workflows, robots and integrations, so I can take it from zero to operational]"
+      - t: table
+        headers: ['Step', 'What is known']
+        rows:
+          - ['1. Define', 'Unfilled']
+          - ['2. Locate', 'Unfilled']
+          - ['3. Prepare', 'Builds and annotates the map; designs workflows']
+          - ['4. Confirm', 'Uses Debug — the only role with access — to verify a configuration behaves correctly']
+          - ['5. Execute', 'Configures robots down to low-level parameters; wires up integrations and site configuration']
+          - ['6. Monitor', 'Unfilled']
+          - ['7. Modify', 'Unfilled']
+          - ['8. Conclude', 'Unfilled']
+:::
+
+:::gap title="Fleet Supervisor has no job map yet"
+Writing a job map for the Fleet Supervisor would assume the role exists. It doesn't, yet — see the open question in [[users]]. If the role is confirmed, its map goes here.
 :::
 
 ## How to fill this in

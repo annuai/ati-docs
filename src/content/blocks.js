@@ -51,3 +51,10 @@ export const accordions = (items) => ({ t: 'accordions', items });
 
 /** A grid of small cards. Each item: { title, text, tag, to } */
 export const cards = (items) => ({ t: 'cards', items });
+
+/**
+ * A table whose first column is an animated colour swatch instead of plain text — for
+ * documenting physical indicator lights. Each item: { label, color, secondary?, pattern, sound, status }.
+ * `pattern` is one of: steady, split, pulse-slow, pulse-fast, sweep-slow, sweep-fast, off.
+ */
+export const lights = (items, caption) => ({ t: 'lights', items, caption });

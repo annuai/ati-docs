@@ -11,10 +11,15 @@ aliases:
 status: draft
 author: Annuai
 added: '2026-09-16'
+revisions:
+  - date: '2026-09-21'
+    author: Annuai
+    note: Added the L0–L3 hardware support escalation path, confirmed identically across three Sherpa user manuals. Narrowed the closing gap to the parts still undocumented — taxonomy, alert model and severity scale.
 sources:
   - old/amr-deployment-workflow.html
   - old/prototype/
   - old/ati-flow-screens.html
+  - 'UM Sherpa Pivot.pdf, UM_Sherpa_Tug.pdf and UM_Sherpa_Flexfork_.pdf, supplied September 2026'
 related:
   - robot-states
   - traffic-control
@@ -57,6 +62,17 @@ steps:
     note: Operational intervention belongs in Fleet Monitor and Robots. Configuration belongs in Maps, Workflows and Setup. Low-level diagnosis belongs in Debug.
 :::
 
+## Escalation path
+
+When a robot itself has a problem the site can't resolve, the same four-level path appears identically across the Sherpa Tug, Pivot and Flex Fork manuals:
+
+| Level | Who | Response time |
+| --- | --- | --- |
+| L0 | Support Desk (24×7) | Immediately |
+| L1 | A named Service Manager | 30 to 60 minutes |
+| L2 | Head of Service and Support | N + 3 days (longer if spares are needed) |
+| L3 | Chief Technical Officer | — |
+
 :::gap
-There is no documented exception taxonomy, alert model, severity scale or escalation path.
+There is no documented exception taxonomy, alert model or severity scale.
 :::

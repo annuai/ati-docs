@@ -36,3 +36,5 @@ export const navigation = sections.map((section) => {
     children
   };
 });
+
+navigation.push({ id: 'map', title: 'Map', path: '/map', children: [] });

@@ -22,16 +22,34 @@ revisions:
   - date: '2026-09-18'
     author: Annuai
     note: Added the Industrial Design 1:1 finding that version 5.4 increased the number of steps needed for tasks compared to the previous version, and flagged the planned information-architecture mapping exercise as the way to pin down why.
+  - date: '2026-09-21'
+    author: Annuai
+    note: Added what Deployment Manager contains screen by screen, and the fact that its edits are reflected in Fleet Manager automatically, from the DM 5.0 Support Guide. Narrowed the remaining gap to the deployment-workflow mapping and the Solutions Architect relationship, which the guide does not cover.
 sources:
   - Ati team — noted September 2026
   - Operations Excellence lead — Industrial Design 1:1, September 2026
+  - 'drive-download-20260921T111727Z-1-001/FM-DM-5.0/DM_5.0_Support Guide.pdf, supplied September 2026'
 order: 10
 ---
 
+## What it covers
+
+Three sections, reached from the side navigation:
+
+- **Fleets** — create, rename or delete a fleet; assign a map to it (a map can only belong to one fleet at a time); and assign or unassign [[v-sherpa|Sherpa]] robots to it.
+- **Assets** — the inventory the Fleets section draws from: the map library, and every Sherpa robot together with the hardware ID and API key that identify it.
+- **Users & Permissions** — add, edit or delete users and roles, and toggle exactly which Fleets, Map, Users, Sherpa and Summon Button actions each one is allowed.
+
+Deleting a fleet, a Sherpa or a user is restricted to the Support role and cannot be undone.
+
+## How it relates to Fleet Manager
+
+A change made in Deployment Manager is reflected in [[v-fleet-manager|Fleet Manager]] automatically — a new or deleted fleet, a Sherpa assignment, and a user's access and permissions all appear on the Fleet Manager side without a separate sync step.
+
 :::gap
-What Deployment Manager contains screen by screen, and how it maps onto the nine stages of the [[wf-deployment|deployment workflow]], is not documented. Nor is its relationship to the [[v-solutions-architect|Solutions Architect]], the [[users|user]] who sets a new site up — the two describe closely related work.
+How Deployment Manager maps onto the nine stages of the [[wf-deployment|deployment workflow]], and how it relates to the [[v-solutions-architect|Solutions Architect]], the [[users|user]] who sets a new site up, is still not documented — the two describe closely related work.
 :::
 
 :::gap
-Testing found that version 5.4 unexpectedly increased the number of steps required to perform tasks that an earlier version did in fewer. No screen-by-screen information architecture exists yet to show why — mapping one out for both Deployment Manager and Fleet Manager is a stated next step.
+Testing found that version 5.4 unexpectedly increased the number of steps required to perform tasks that an earlier version did in fewer. Whether that increase shows up in the flows described above has not been checked.
 :::

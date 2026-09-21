@@ -178,10 +178,13 @@ function parseBlocks(content, file) {
       } else if (name === 'figure') {
         const { src, alt, caption } = asYaml();
         blocks.push({ t: 'figure', src, alt, caption });
+      } else if (name === 'lights') {
+        const { items, caption } = asYaml();
+        blocks.push({ t: 'lights', items: items || [], caption });
       } else {
         issue(
           file,
-          `Unknown directive ":::${name}". Supported: callout, gap, defs, chain, flow, relationship, cards, accordions, figure.`
+          `Unknown directive ":::${name}". Supported: callout, gap, defs, chain, flow, relationship, cards, accordions, figure, lights.`
         );
       }
       continue;

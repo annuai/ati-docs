@@ -22,6 +22,7 @@ related:
   - ui-fleet-monitor
   - wf-exceptions
   - open-questions
+  - indicator-lights
 order: 14
 ---
 
@@ -46,3 +47,5 @@ Only some states appear in the sources, and they come from different places. The
 - What is the authoritative source for robot availability?
 
 One design principle is relevant here: expose the operational decision a user needs rather than reproducing every internal robot state. Low-level state belongs in [[ui-debug|Debug]]. See [[d-expose-the-decision]].
+
+Before any dashboard is involved, a robot reports a version of its own state directly — see [[indicator-lights|indicator lights and sounds]].

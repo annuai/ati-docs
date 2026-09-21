@@ -7,6 +7,7 @@ import { VocabularyPage } from './pages/VocabularyPage.jsx';
 import { SearchPage } from './pages/SearchPage.jsx';
 import { StandalonePage } from './pages/StandalonePage.jsx';
 import { ContributorsPage } from './pages/ContributorsPage.jsx';
+import { MapPage } from './pages/MapPage.jsx';
 import { NotFoundPage } from './pages/NotFoundPage.jsx';
 
 /*
@@ -25,6 +26,7 @@ export function App() {
         <Route path="/open-questions" element={<StandalonePage sectionId="open-questions" />} />
         <Route path="/ati-robotics" element={<StandalonePage sectionId="ati-robotics" />} />
         <Route path="/contributors" element={<ContributorsPage />} />
+        <Route path="/map" element={<MapPage />} />
         <Route path="/getting-started" element={<Navigate to="/start" replace />} />
         <Route path="/:sectionId" element={<SectionPage />} />
         <Route path="/:sectionId/:slug" element={<EntryPage />} />

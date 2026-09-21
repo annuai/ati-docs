@@ -3,6 +3,7 @@ import { Callout } from './Callout.jsx';
 import { Definition } from './Definition.jsx';
 import { ImageBlock } from './ImageBlock.jsx';
 import { Table } from './Table.jsx';
+import { LightsTable } from './LightsTable.jsx';
 import { CodeBlock } from './CodeBlock.jsx';
 import { Accordion } from './Accordion.jsx';
 import { ContentCard } from './ContentCard.jsx';
@@ -17,7 +18,7 @@ import { MermaidBlock } from './MermaidBlock.jsx';
   has to know the helpers in `src/content/blocks.js`.
 */
 
-const WIDE = new Set(['table', 'chain', 'flow', 'figure', 'cards', 'relationship', 'mermaid']);
+const WIDE = new Set(['table', 'chain', 'flow', 'figure', 'cards', 'relationship', 'mermaid', 'lights']);
 
 function Block({ block }) {
   switch (block.t) {
@@ -49,6 +50,9 @@ function Block({ block }) {
 
     case 'table':
       return <Table head={block.head} rows={block.rows} caption={block.caption} />;
+
+    case 'lights':
+      return <LightsTable items={block.items} caption={block.caption} />;
 
     case 'callout':
       return <Callout title={block.title} tone={block.tone} body={block.body} />;

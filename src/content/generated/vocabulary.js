@@ -322,18 +322,52 @@ export const vocabulary = [
         "date": "2026-09-18",
         "author": "Annuai",
         "note": "Added the Industrial Design 1:1 finding that version 5.4 increased the number of steps needed for tasks compared to the previous version, and flagged the planned information-architecture mapping exercise as the way to pin down why."
+      },
+      {
+        "date": "2026-09-21",
+        "author": "Annuai",
+        "note": "Added what Deployment Manager contains screen by screen, and the fact that its edits are reflected in Fleet Manager automatically, from the DM 5.0 Support Guide. Narrowed the remaining gap to the deployment-workflow mapping and the Solutions Architect relationship, which the guide does not cover."
       }
     ],
     "sources": [
       "Ati team — noted September 2026",
-      "Operations Excellence lead — Industrial Design 1:1, September 2026"
+      "Operations Excellence lead — Industrial Design 1:1, September 2026",
+      "drive-download-20260921T111727Z-1-001/FM-DM-5.0/DM_5.0_Support Guide.pdf, supplied September 2026"
     ],
     "blocks": [
+      {
+        "t": "h",
+        "text": "What it covers"
+      },
+      {
+        "t": "p",
+        "text": "Three sections, reached from the side navigation:"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**Fleets** — create, rename or delete a fleet; assign a map to it (a map can only belong to one fleet at a time); and assign or unassign [[v-sherpa|Sherpa]] robots to it.",
+          "**Assets** — the inventory the Fleets section draws from: the map library, and every Sherpa robot together with the hardware ID and API key that identify it.",
+          "**Users & Permissions** — add, edit or delete users and roles, and toggle exactly which Fleets, Map, Users, Sherpa and Summon Button actions each one is allowed."
+        ]
+      },
+      {
+        "t": "p",
+        "text": "Deleting a fleet, a Sherpa or a user is restricted to the Support role and cannot be undone."
+      },
+      {
+        "t": "h",
+        "text": "How it relates to Fleet Manager"
+      },
+      {
+        "t": "p",
+        "text": "A change made in Deployment Manager is reflected in [[v-fleet-manager|Fleet Manager]] automatically — a new or deleted fleet, a Sherpa assignment, and a user's access and permissions all appear on the Fleet Manager side without a separate sync step."
+      },
       {
         "t": "callout",
         "title": "Not yet documented",
         "body": [
-          "What Deployment Manager contains screen by screen, and how it maps onto the nine stages of the [[wf-deployment|deployment workflow]], is not documented. Nor is its relationship to the [[v-solutions-architect|Solutions Architect]], the [[users|user]] who sets a new site up — the two describe closely related work."
+          "How Deployment Manager maps onto the nine stages of the [[wf-deployment|deployment workflow]], and how it relates to the [[v-solutions-architect|Solutions Architect]], the [[users|user]] who sets a new site up, is still not documented — the two describe closely related work."
         ],
         "tone": "gap"
       },
@@ -341,7 +375,7 @@ export const vocabulary = [
         "t": "callout",
         "title": "Not yet documented",
         "body": [
-          "Testing found that version 5.4 unexpectedly increased the number of steps required to perform tasks that an earlier version did in fewer. No screen-by-screen information architecture exists yet to show why — mapping one out for both Deployment Manager and Fleet Manager is a stated next step."
+          "Testing found that version 5.4 unexpectedly increased the number of steps required to perform tasks that an earlier version did in fewer. Whether that increase shows up in the flows described above has not been checked."
         ],
         "tone": "gap"
       }
@@ -619,23 +653,66 @@ export const vocabulary = [
     "term": "MTS",
     "expansion": "Material Tracking System",
     "kind": "acronym",
-    "simple": "The system used to track material as it moves through a site.",
-    "technical": "Named in conversation as the system responsible for material tracking. What it tracks a material against — a station, a container, a workflow — and how it relates to [[v-master-data|Master Data]] and [[material-flow|material flow]] has not yet been detailed.",
+    "simple": "The system used to track material and containers as they move through a site.",
+    "technical": "A web application with two modules — Order Request, for creating and tracking a request to move a material or a container between a pickup and a drop station, and Manage Staging Area, for setting the status of each staging cell. How it relates to [[v-master-data|Master Data]] and [[material-flow|material flow]] beyond the SKUs it lets a user order is not detailed.",
     "usedIn": [
-      "Material tracking"
+      "Material tracking",
+      "Warehouse operators, material handlers, production supervisors and logistics coordinators, per its own user guide"
     ],
     "related": [
       "v-master-data",
       "material-flow",
-      "v-material-station-mapping"
+      "v-material-station-mapping",
+      "v-staging-area",
+      "v-sku"
     ],
-    "status": "needs-confirmation",
+    "status": "current",
     "author": "Annuai",
     "added": "2026-09-18",
-    "sources": [
-      "Ati team — org structure and internal tooling, supplied in conversation, September 2026"
+    "revisions": [
+      {
+        "date": "2026-09-21",
+        "author": "Annuai",
+        "note": "Replaced the gap with what MTS actually does, from its user guide — the Order Request and Manage Staging Area modules, and the staging-cell state model."
+      }
     ],
-    "blocks": []
+    "sources": [
+      "Ati team — org structure and internal tooling, supplied in conversation, September 2026",
+      "drive-download-20260921T111852Z-1-001/MTS_User_Guide_1.0.pdf, supplied September 2026"
+    ],
+    "blocks": [
+      {
+        "t": "h",
+        "text": "What it does"
+      },
+      {
+        "t": "p",
+        "text": "Two modules:"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**Order Request** — create a request to move a [[v-sku|SKU]] (a material, with a quantity) or a container between a pickup and drop [[v-station|station]], optionally taking back an empty container from a previous order at the same time. Each request becomes a [[trip|trip]] with its own booking time, start time, ETA and end time.",
+          "**Manage Staging Area** — set the status of each cell in a [[v-staging-area|staging area]]: **Blocked** (unavailable — no requests can be sent to it), **Reserved** (assigned to an ongoing request, unavailable until that trip finishes), or **Active** (available, and either **Empty** or **Filled** with a container, or with a SKU and quantity)."
+        ]
+      },
+      {
+        "t": "callout",
+        "title": "Not yet documented",
+        "body": [
+          "The guide's own title page calls this \"Material Tracking System\"; its introduction and definitions call it \"Material Transport System.\" Which is correct has not been confirmed."
+        ],
+        "tone": "gap"
+      },
+      {
+        "t": "callout",
+        "title": "Not yet documented",
+        "body": [
+          "How MTS relates to [[v-master-data|Master Data]] and [[material-flow|material flow]] beyond the SKUs it lets a user order is not detailed."
+        ],
+        "tone": "gap"
+      }
+    ]
   },
   {
     "id": "v-mhe",
@@ -3146,7 +3223,7 @@ export const vocabulary = [
     "expansion": "Application Programming Interface",
     "kind": "acronym",
     "simple": "A defined way for one piece of software to communicate with another.",
-    "technical": "A documented interface that specifies how software systems can request data, send commands, or exchange information.",
+    "technical": "A documented interface that specifies how software systems can request data, send commands, or exchange information. Ati-FM exposes one: a REST API, authenticated with a bearer API key issued at registration, that lets a customer's own manufacturing automation system book, schedule and cancel a robot trip and get its status, without going through the FM dashboard UI.",
     "usedIn": [
       "Integrations",
       "ERP/WMS/MES connectivity",
@@ -3156,15 +3233,53 @@ export const vocabulary = [
       "v-webhook",
       "v-event",
       "v-message",
-      "v-vda-5050"
+      "v-vda-5050",
+      "v-sanjaya"
     ],
     "status": "current",
     "author": "Annuai",
     "added": "2026-09-17",
-    "sources": [
-      "Ati team — noted September 2026"
+    "revisions": [
+      {
+        "date": "2026-09-21",
+        "author": "Annuai",
+        "note": "Added the Ati-FM Partner API — REST, bearer-token auth, trip booking/scheduling/cancellation — from its own integration guide. Previously this entry had no Ati-specific content at all."
+      }
     ],
-    "blocks": []
+    "sources": [
+      "Ati team — noted September 2026",
+      "FM_Dashboard_Partner_API_Documentation_V1.pdf, supplied September 2026"
+    ],
+    "blocks": [
+      {
+        "t": "h",
+        "text": "Ati-FM's own API"
+      },
+      {
+        "t": "p",
+        "text": "A REST API, documented for partners integrating a manufacturing automation system (MAS) with Ati-FM. A registered client authenticates with a bearer API key, then can:"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**Book a trip** — a route (list of stations), and optionally which [[v-sherpa|Sherpa]] type should run it and what task (e.g. lift/unlift) it should do at each stop",
+          "**Schedule a trip** — a repeating or non-stop milk run, on a start/end time and a repeat interval",
+          "**Cancel a trip** — booked, ongoing, or (as a fallback) forced off a disconnected Sherpa"
+        ]
+      },
+      {
+        "t": "p",
+        "text": "Trips booked through the API appear on the ordinary FM dashboard alongside ones booked by an operator — it is another way in, not a separate system."
+      },
+      {
+        "t": "callout",
+        "title": "Not yet documented",
+        "body": [
+          "Whether this is the same API [[v-vda-5050|VDA 5050]] compliance relies on, or a separate integration surface, is not documented."
+        ],
+        "tone": "gap"
+      }
+    ]
   },
   {
     "id": "v-webhook",
@@ -4029,6 +4144,7 @@ export const vocabulary = [
       "robot",
       "ati-robotics",
       "v-sherpa-10k",
+      "v-sherpa-tug",
       "v-sherpa-pallet-mover",
       "v-sherpa-lifter-500",
       "v-sherpa-pivot",
@@ -4128,22 +4244,32 @@ export const vocabulary = [
       "Sherpa Mono Fork"
     ],
     "simple": "A modular material mover whose attachments change what it does — including a mono-fork configuration for moving carts with no manual hitching.",
-    "technical": "An AMR rated for a 1,100 lb payload at up to 1.5 m/s, using natural navigation, built around modular mono-fork and trailing-unit attachments. ISO 3691-4 compliant. The mono-fork configuration, shown publicly at Product Day 2025, moves small carts between staging areas without a person hitching or unhitching them, using a camera on the staging area so the robot picks up the correct trolley without being told which one.",
+    "technical": "An AMR rated for a 500 kg payload at up to 1.5 m/s, 1486×578×1087mm, with a 0.5m turning radius. Uses a swappable 48V NMC battery (8-hour run time, ~2-hour charge), and a 3D LiDAR, depth camera, IMU and wheel encoder for navigation and obstacle detection. ISO 3691-4 compliance is claimed on the products page but not confirmed by the user manual. The mono-fork configuration, shown publicly at Product Day 2025, moves small carts between staging areas without a person hitching or unhitching them, using a camera on the staging area so the robot picks up the correct trolley without being told which one — the user manual describes a related but distinct trolley hitch/unhitch control on the manual-mode (PS4) controller, used for recovery rather than everyday operation.",
     "note": "A first customer deployment (Chennai) was announced as expected within a couple of months of Product Day 2025 — not yet confirmed as complete.",
     "usedIn": [
       "Supermarket-style staging-area automation"
     ],
     "related": [
       "v-sherpa",
+      "v-sherpa-flex-fork",
+      "indicator-lights",
       "robot",
       "ati-robotics"
     ],
     "status": "current",
     "author": "Annuai",
     "added": "2026-09-20",
+    "revisions": [
+      {
+        "date": "2026-09-21",
+        "author": "Annuai",
+        "note": "Added the exact dimensions, battery and sensor specs from the user manual, which corroborate the products-page payload and speed figures. Flagged that ISO 3691-4 compliance is not mentioned in the manual."
+      }
+    ],
     "sources": [
       "https://www.atirobotics.ai/products/",
-      "Ati team — Product Day 2025 product launch, supplied in conversation, September 2026"
+      "Ati team — Product Day 2025 product launch, supplied in conversation, September 2026",
+      "drive-download-20260921T111708Z-1-001/UM Sherpa Pivot.pdf, supplied September 2026"
     ],
     "blocks": []
   },
@@ -4195,5 +4321,83 @@ export const vocabulary = [
       "Ati team — Product Day 2025 product launch, supplied in conversation, September 2026"
     ],
     "blocks": []
+  },
+  {
+    "id": "v-sherpa-tug",
+    "term": "Sherpa Tug",
+    "kind": "term",
+    "simple": "A trolley-tugging AMR that pulls a two-trolley train — up to 1.5 tonnes on the flat, less on a ramp.",
+    "technical": "An AMR rated for a 1,500 kg towing payload (as a two-trolley train) at up to 1.5 m/s, 600×1150×950mm, 260kg ego-weight, 2.2m turning radius. Uses a swappable 48V NMC battery (8-hour run time, ~2-hour charge), and a 3D LiDAR, depth camera, IMU and wheel encoder. Towing capacity drops sharply with gradient — from 1,500kg on the flat to 280kg at a 6° slope — so an indoor-outdoor route with ramps needs civil work to reduce the slope to pull a higher payload.",
+    "usedIn": [
+      "Trolley towing in manufacturing and warehouse workflows, as a two-trolley train"
+    ],
+    "related": [
+      "v-sherpa",
+      "indicator-lights",
+      "robot",
+      "ati-robotics"
+    ],
+    "status": "current",
+    "author": "Annuai",
+    "added": "2026-09-21",
+    "sources": [
+      "drive-download-20260921T111708Z-1-001/Tugger/Tug_V 3.5/UM_Sherpa_Tug.pdf, supplied September 2026"
+    ],
+    "blocks": []
+  },
+  {
+    "id": "v-sherpa-flex-fork",
+    "term": "Sherpa Flex Fork",
+    "kind": "term",
+    "simple": "An AMR that finds a trolley on its own, slides its forks underneath, lifts it and carries it away — no hitching, no barcode telling it which trolley to take.",
+    "technical": "An AMR rated for a 300 kg payload at up to 1.2 m/s, 1284×1209×538mm, with in-place turning and a 796mm fork. Detects and aligns to a trolley using a sensor stack (one 2D LiDAR below the fork, two 3D LiDARs, two depth cameras) claimed 99% accurate, auto-correcting for a trolley offset of up to 6°. Uses a swappable 58.8V-max NMC battery (8-hour run time, ~2-hour charge) carried on its own dedicated trolley rather than by hand.",
+    "note": "Distinct from the mono-fork attachment on [[v-sherpa-pivot|Sherpa Pivot]] — that is a configuration of a modular base robot shown at Product Day 2025; this is a separate, dedicated product with its own manual. Whether the two use the same underlying trolley-detection approach is not documented.",
+    "usedIn": [
+      "Autonomous trolley pick-up and delivery in manufacturing and warehouse workflows"
+    ],
+    "related": [
+      "v-sherpa-pivot",
+      "v-sherpa",
+      "indicator-lights",
+      "robot",
+      "ati-robotics"
+    ],
+    "status": "current",
+    "author": "Annuai",
+    "added": "2026-09-21",
+    "sources": [
+      "drive-download-20260921T111708Z-1-001/UM_Sherpa_Flexfork_.pdf, supplied September 2026"
+    ],
+    "blocks": []
+  },
+  {
+    "id": "v-sanjaya",
+    "term": "Sanjaya",
+    "kind": "jargon",
+    "simple": "A companion system to Fleet Manager for advanced analytics on a Sherpa fleet.",
+    "technical": "Named in Sherpa user manuals as a system for advanced analytics, alongside Fleet Manager, that a Sherpa's Android tablet connects to. What it covers beyond analytics, and how it relates to Fleet Manager operationally, is not detailed in the sources reviewed so far.",
+    "usedIn": [
+      "Sherpa fleet analytics"
+    ],
+    "related": [
+      "v-fleet-manager",
+      "v-api"
+    ],
+    "status": "needs-confirmation",
+    "author": "Annuai",
+    "added": "2026-09-21",
+    "sources": [
+      "UM Sherpa Pivot.pdf and UM_Sherpa_Tug.pdf, supplied September 2026"
+    ],
+    "blocks": [
+      {
+        "t": "callout",
+        "title": "Not yet documented",
+        "body": [
+          "What Sanjaya covers beyond \"advanced analytics,\" and how it relates to Fleet Manager, is not documented."
+        ],
+        "tone": "gap"
+      }
+    ]
   }
 ];
