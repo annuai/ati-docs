@@ -69,7 +69,7 @@ items:
   - term: '[[v-head-of-operations|Supervisor (Head of Operations)]] — across the site'
     text: Accountable for every zone, and the escalation point above the Fleet Supervisors. Manages robots site-wide, views and approves Workflows and Maps, sees Integrations status, and manages users and roles.
   - term: '[[v-solutions-architect|Solutions Architect (Configurator)]] — sets everything up'
-    text: 'The person who makes a new site work at all: building and annotating the [[map|maps]], designing missions, configuring robots down to their low-level parameters, wiring up integrations, and site configuration. Full edit on Maps and Workflows, full setup on Robots, full configuration on Integrations and Setup & Config, and the only role with Debug access — used to verify a configuration behaves correctly rather than for daily operations. Also called the **Configurator** — the wording is not final.'
+    text: 'The person who makes a new site work at all: building and annotating the [[map|maps]], designing workflows, configuring robots down to their low-level parameters, wiring up integrations, and site configuration. Full edit on Maps and Workflows, full setup on Robots, full configuration on Integrations and Setup & Config, and the only role with Debug access — used to verify a configuration behaves correctly rather than for daily operations. Also called the **Configurator** — the wording is not final.'
 :::
 
 ## Two different axes
@@ -116,7 +116,7 @@ This does not add a fifth user. Solutions Architect / Configurator names what th
 The setup work spans most of the [[configuration-layers|configuration layers]]:
 
 - [[map|Maps]] — building the map of the site and annotating it with positions, zones and traffic rules
-- [[missions-and-actions|Missions]] — the actions and transport behaviour robots will run
+- [[missions-and-actions|Workflows]] — the actions and transport behaviour robots will run
 - [[robot|Robots]] — setup including low-level parameters
 - [[integrations|Integrations]] and site configuration
 - [[ui-debug|Debug]] — the only role with access
@@ -149,13 +149,13 @@ items:
         items:
           - Maps, Workflows, Integrations, Setup, Debug — entirely hidden
           - Other zones’ traffic or task queues
-          - Any configuration language — zones, missions and master data are invisible here
+          - Any configuration language — zones, workflows and master data are invisible here
   - title: Fleet Supervisor
     body:
       - t: list
         items:
           - Integrations, Setup & Config, Debug — entirely hidden
-          - Editing missions or map zones — that is a Configurator task
+          - Editing workflows or map zones — that is a Configurator task
           - Zones outside their own assignment
   - title: Supervisor (Head of Operations)
     body:
@@ -163,7 +163,7 @@ items:
         items:
           - Debug — entirely hidden
           - Low-level robot parameters such as drive tuning and safety calibration
-          - Writing mission logic or drawing map zones from scratch
+          - Writing workflow logic or drawing map zones from scratch
   - title: Solutions Architect (Configurator)
     body:
       - t: list

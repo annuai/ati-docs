@@ -15,7 +15,7 @@ sources:
   - old/ati-flow-architecture.html
 context: |
   A fleet product can easily become one screen that shows everything: live robots, the map
-  editor, mission logic and raw diagnostics side by side. Each of those serves a different
+  editor, workflow logic and raw diagnostics side by side. Each of those serves a different
   question and a different person.
 decision: |
   Organise the product around three layers — **operations** (what is happening now),
@@ -23,7 +23,7 @@ decision: |
   way) — and keep each on its own surfaces.
 why: |
   It keeps each surface answerable. An operator handling a blocked robot should not be reading
-  mission logic, and a configurator verifying a route should not be triaging a queue.
+  workflow logic, and a configurator verifying a route should not be triaging a queue.
 alternatives:
   - 'Not recorded in the source material.'
 related: ['ati-flow', 'ui-patterns', 'configuration-layers', 'd-debug-is-configurator-only']

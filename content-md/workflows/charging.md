@@ -35,7 +35,7 @@ order: 3
 steps:
   - title: A robot becomes idle
     note: It has finished its work and nothing is queued for it.
-  - title: Is it locked into a user-defined mission?
+  - title: Is it locked into a user-defined workflow?
     kind: decision
     note: Fleet management does not touch robots that are. Automatic idle behaviour applies only to robots that are free.
   - title: The fleet sends it to a charger or a staging position

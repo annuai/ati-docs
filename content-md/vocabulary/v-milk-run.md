@@ -5,7 +5,7 @@ kind: jargon
 simple: A fixed round trip with several stops, like a delivery round.
 technical: A fixed-loop transport pattern with multiple stops.
 usedIn:
-  - Mission design, as one of three mission patterns
+  - Workflow design, as one of three workflow patterns
 related:
   - missions-and-actions
   - v-taxi

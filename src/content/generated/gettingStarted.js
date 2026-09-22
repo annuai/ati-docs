@@ -407,7 +407,7 @@ export const gettingStarted = [
             "body": [
               {
                 "t": "p",
-                "text": "The current documentation does not establish that. *Taxi* is explicitly used as a mission pattern meaning on-demand, point-to-point transport. See [[v-taxi-mode]]."
+                "text": "The current documentation does not establish that. *Taxi* is explicitly used as a workflow pattern meaning on-demand, point-to-point transport. See [[v-taxi-mode]]."
               }
             ]
           },

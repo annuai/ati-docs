@@ -63,7 +63,7 @@ items:
 
 An [[v-oem|OEM]] manufactures what it sells rather than reselling or integrating someone else’s equipment. For Ati that means the fleet is not software from one vendor wrapped around robots from another — the machine and the system that commands it are built by the same company.
 
-It also explains the shape of this documentation. Robot-level configuration, the [[map|map]] and the [[missions-and-actions|mission]] logic are all Ati’s concern, which is why [[configuration-layers]] runs from drive parameters all the way up to business-system integration.
+It also explains the shape of this documentation. Robot-level configuration, the [[map|map]] and the [[missions-and-actions|workflow]] logic are all Ati’s concern, which is why [[configuration-layers]] runs from drive parameters all the way up to business-system integration.
 
 ## A partner, not a box seller
 

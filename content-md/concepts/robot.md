@@ -50,7 +50,7 @@ Configuration that belongs to an individual robot, set during infrastructure set
 - Payload profile and drive parameters
 
 :::callout title="Robot configuration is not map configuration"
-These per-robot settings are deliberately kept separate from [[map]] and [[missions-and-actions|mission]] configuration, which come later in the deployment and describe the environment and the work rather than the machine.
+These per-robot settings are deliberately kept separate from [[map]] and [[missions-and-actions|workflow]] configuration, which come later in the deployment and describe the environment and the work rather than the machine.
 :::
 
 ## What you see about a robot

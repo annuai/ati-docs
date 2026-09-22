@@ -25,7 +25,7 @@ order: 18
 | Space | Fitting into tight factory aisles and turns | [[v-sherpa\|Sherpa XT Lite]] |
 | Speed | Completing tasks fast enough to match or beat manual material handling | Sherpa tugger range |
 | Safety | Detecting obstacles, people and edge cases reliably, even where a customer has not explicitly asked for it | All Sherpa robots |
-| Sturdy | Running consistently, mission after mission, without breaking down | [[v-sherpa-10k\|Sherpa 10K]] and pallet handling |
+| Sturdy | Running consistently, trip after trip, without breaking down | [[v-sherpa-10k\|Sherpa 10K]] and pallet handling |
 
 ## Why it matters
 

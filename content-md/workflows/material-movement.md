@@ -30,7 +30,7 @@ steps:
     note: Production demand, material availability, a line schedule or an inventory condition creates the reason for movement.
     tag: Business layer
   - title: A request arrives
-    note: An external system triggers a mission through an API hook, or a person raises the request directly.
+    note: An external system triggers a workflow through an API hook, or a person raises the request directly.
     tag: Integration layer
   - title: Orchestration turns it into work
     note: The configured workflow and the incoming request become executable work.
@@ -51,7 +51,7 @@ steps:
 ## What decides which robot goes
 
 - Task allocation logic — which robot is idle or nearby
-- Priority, which can be designed into the mission, applied by fleet aging rules, computed from business data, or raised manually by an operator
+- Priority, which can be designed into the workflow, applied by fleet aging rules, computed from business data, or raised manually by an operator
 - Traffic arbitration, once more than one robot wants the same route
 
 :::gap

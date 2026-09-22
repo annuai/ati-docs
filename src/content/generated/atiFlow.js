@@ -286,7 +286,7 @@ export const atiFlow = [
           },
           {
             "title": "Workflows",
-            "text": "Mission and action design, patterns, priority rules, and the Workflow Builder.",
+            "text": "Workflow and action design, patterns, priority rules, and the Workflow Builder.",
             "tag": "Configuration",
             "to": "/ati-flow/workflows"
           },
@@ -821,7 +821,7 @@ export const atiFlow = [
           ],
           [
             "[[ui-workflows|Workflows]]",
-            "Mission and action design, mission patterns, priority rules"
+            "Workflow and action design, workflow patterns, priority rules"
           ],
           [
             "[[ui-fleet-monitor|Fleet Monitor]]",
@@ -953,7 +953,7 @@ export const atiFlow = [
           },
           {
             "term": "[[v-solutions-architect|Solutions Architect (Configurator)]] — sets everything up",
-            "text": "The person who makes a new site work at all: building and annotating the [[map|maps]], designing missions, configuring robots down to their low-level parameters, wiring up integrations, and site configuration. Full edit on Maps and Workflows, full setup on Robots, full configuration on Integrations and Setup & Config, and the only role with Debug access — used to verify a configuration behaves correctly rather than for daily operations. Also called the **Configurator** — the wording is not final."
+            "text": "The person who makes a new site work at all: building and annotating the [[map|maps]], designing workflows, configuring robots down to their low-level parameters, wiring up integrations, and site configuration. Full edit on Maps and Workflows, full setup on Robots, full configuration on Integrations and Setup & Config, and the only role with Debug access — used to verify a configuration behaves correctly rather than for daily operations. Also called the **Configurator** — the wording is not final."
           }
         ]
       },
@@ -1029,7 +1029,7 @@ export const atiFlow = [
         "t": "list",
         "items": [
           "[[map|Maps]] — building the map of the site and annotating it with positions, zones and traffic rules",
-          "[[missions-and-actions|Missions]] — the actions and transport behaviour robots will run",
+          "[[missions-and-actions|Workflows]] — the actions and transport behaviour robots will run",
           "[[robot|Robots]] — setup including low-level parameters",
           "[[integrations|Integrations]] and site configuration",
           "[[ui-debug|Debug]] — the only role with access"
@@ -1127,7 +1127,7 @@ export const atiFlow = [
                 "items": [
                   "Maps, Workflows, Integrations, Setup, Debug — entirely hidden",
                   "Other zones’ traffic or task queues",
-                  "Any configuration language — zones, missions and master data are invisible here"
+                  "Any configuration language — zones, workflows and master data are invisible here"
                 ]
               }
             ]
@@ -1139,7 +1139,7 @@ export const atiFlow = [
                 "t": "list",
                 "items": [
                   "Integrations, Setup & Config, Debug — entirely hidden",
-                  "Editing missions or map zones — that is a Configurator task",
+                  "Editing workflows or map zones — that is a Configurator task",
                   "Zones outside their own assignment"
                 ]
               }
@@ -1153,7 +1153,7 @@ export const atiFlow = [
                 "items": [
                   "Debug — entirely hidden",
                   "Low-level robot parameters such as drive tuning and safety calibration",
-                  "Writing mission logic or drawing map zones from scratch"
+                  "Writing workflow logic or drawing map zones from scratch"
                 ]
               }
             ]

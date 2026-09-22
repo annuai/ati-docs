@@ -15,12 +15,12 @@ sources:
   - old/ati-flow-architecture.html
 context: |
   Both maps and workflows are configuration, both are edited by the same role, and both feed the
-  same missions. A reasonable product could merge them.
+  same [[trip|trips]]. A reasonable product could merge them.
 decision: 'Keep them apart. **Maps** describe the spatial environment and movement rules; **Workflows** describe actions and transport behaviour.'
 why: |
   They answer two of the four product primitives — *where can the robot move* versus *what
   sequence of actions should happen* — and they change at different rates. Map and zone
-  corrections are the first thing adjusted after go-live; mission logic is refined on a
+  corrections are the first thing adjusted after go-live; workflow logic is refined on a
   different rhythm.
 alternatives:
   - 'Not recorded in the source material.'

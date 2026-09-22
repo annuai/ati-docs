@@ -76,7 +76,7 @@ export const concepts = [
         "t": "callout",
         "title": "Robot configuration is not map configuration",
         "body": [
-          "These per-robot settings are deliberately kept separate from [[map]] and [[missions-and-actions|mission]] configuration, which come later in the deployment and describe the environment and the work rather than the machine."
+          "These per-robot settings are deliberately kept separate from [[map]] and [[missions-and-actions|workflow]] configuration, which come later in the deployment and describe the environment and the work rather than the machine."
         ],
         "tone": "note"
       },
@@ -154,7 +154,7 @@ export const concepts = [
       },
       {
         "t": "p",
-        "text": "One robot following one route is a machine. Several robots sharing corridors, stations and charging docks is a traffic problem. The fleet layer is where that problem is solved: it turns individual [[missions-and-actions|missions]] into a working group."
+        "text": "One robot following one route is a machine. Several robots sharing corridors, stations and charging docks is a traffic problem. The fleet layer is where that problem is solved: it turns individual [[missions-and-actions|workflows]] into a working group."
       },
       {
         "t": "h",
@@ -169,7 +169,7 @@ export const concepts = [
         "items": [
           "**Task allocation** — how an incoming request gets assigned to a specific idle or nearby robot",
           "**Traffic arbitration** at shared resources such as gates and exclusion zones — this is where contention and deadlock actually get tested",
-          "**Charging and idle behaviour** — idle robots are typically sent to charging stations and staging positions automatically, without touching robots locked into a user-defined mission",
+          "**Charging and idle behaviour** — idle robots are typically sent to charging stations and staging positions automatically, without touching robots locked into a user-defined workflow",
           "**Priority and aging rules**, where manual escalation needs to be supported"
         ]
       },
@@ -648,14 +648,15 @@ export const concepts = [
   },
   {
     "id": "missions-and-actions",
-    "title": "Missions and actions",
-    "summary": "How transport behaviour is composed, from single actions up to repeatable mission patterns.",
-    "simple": "An action is one thing a robot can do, like go to a position or dock. A mission is a sequence of those actions that gets a real job done.",
+    "title": "Actions and workflow design",
+    "summary": "How transport behaviour is composed, from single actions up to a repeatable workflow pattern.",
+    "simple": "An action is one thing a robot can do, like go to a position or dock. A workflow is a sequence of those actions that gets a real job done.",
     "aliases": [
       "mission",
       "mission design",
       "action",
-      "sub-mission"
+      "sub-mission",
+      "sub-workflow"
     ],
     "status": "current",
     "author": "Annuai",
@@ -665,6 +666,11 @@ export const concepts = [
         "date": "2026-09-18",
         "author": "Annuai",
         "note": "Added that \"Mission\" is the standard industry term for what Ati Flow, as an orchestration product, currently calls a Workflow — the same concept, not two different ones. See [[d-workflow-over-mission]]."
+      },
+      {
+        "date": "2026-09-22",
+        "author": "Annuai",
+        "note": "Reworded the page to use \"workflow\" and \"sub-workflow\" throughout, in line with [[d-workflow-over-mission]] — previously the body used \"mission\" as if it were Ati Flow's own term, with only one disclaimer callout. Renamed the title from \"Missions and actions\"; the id and aliases are unchanged so existing links and searches for \"mission\" still resolve here."
       }
     ],
     "sources": [
@@ -697,7 +703,7 @@ export const concepts = [
       },
       {
         "t": "p",
-        "text": "Missions are where the annotated [[map]] becomes actual transport behaviour. They are the unit a [[fleet]] allocates and a [[robot]] executes."
+        "text": "Workflows are where the annotated [[map]] becomes actual transport behaviour. A workflow is the unit a [[fleet]] allocates and a [[robot]] executes."
       },
       {
         "t": "h",
@@ -715,18 +721,18 @@ export const concepts = [
             "note": "go to position · dock · undock · wait · trigger I/O · request access to a resource"
           },
           {
-            "label": "Sub-mission",
+            "label": "Sub-workflow",
             "note": "a reusable pattern such as \"go to charging station\", built once instead of duplicated"
           },
           {
-            "label": "Mission",
-            "note": "an executable transport behaviour composed from actions and sub-missions"
+            "label": "Workflow",
+            "note": "an executable transport behaviour composed from actions and sub-workflows"
           }
         ]
       },
       {
         "t": "h",
-        "text": "Mission patterns"
+        "text": "Workflow patterns"
       },
       {
         "t": "p",
@@ -759,7 +765,7 @@ export const concepts = [
       },
       {
         "t": "callout",
-        "title": "\"Taxi\" is a mission pattern, not a robot mode",
+        "title": "\"Taxi\" is a workflow pattern, not a robot mode",
         "body": [
           "The glossary is explicit: *taxi mode* is not established as an industry term in this material, and should not be assumed to mean maintenance, teleoperation or manual driving. See [[v-taxi-mode]]."
         ],
@@ -771,14 +777,14 @@ export const concepts = [
       },
       {
         "t": "p",
-        "text": "Priority and interrupt behaviour is designed into the mission: whether it can be preempted, and where in its route preemption is safe. Real request patterns after go-live often show that a mission built for average conditions does not hold at peak load."
+        "text": "Priority and interrupt behaviour is designed into the workflow: whether it can be preempted, and where in its route preemption is safe. Real request patterns after go-live often show that a workflow built for average conditions does not hold at peak load."
       }
     ]
   },
   {
     "id": "workflow",
     "title": "Workflow",
-    "summary": "The configured logic for transport behaviour — what should happen, expressed as missions and actions.",
+    "summary": "The configured logic for transport behaviour — what should happen, expressed as workflows and actions.",
     "simple": "A workflow is the recipe. It says which steps make up a job, in what order, and how important that job is.",
     "aliases": [
       "workflows",
@@ -850,8 +856,8 @@ export const concepts = [
       {
         "t": "list",
         "items": [
-          "[[missions-and-actions|Action and sub-mission design]] — the steps composed into the workflow itself",
-          "Mission patterns — taxi, milk run, bus",
+          "[[missions-and-actions|Action and sub-workflow design]] — the steps composed into the workflow itself",
+          "Workflow patterns — taxi, milk run, bus",
           "Priority rules — how urgent a job is and whether it can be interrupted"
         ]
       },
@@ -1198,7 +1204,7 @@ export const concepts = [
       {
         "t": "list",
         "items": [
-          "Site assessment begins by asking what material moves where, how often, and under what deadline pressure. That answer becomes the basis for mission and priority logic later.",
+          "Site assessment begins by asking what material moves where, how often, and under what deadline pressure. That answer becomes the basis for workflow and priority logic later.",
           "Payload types and the handling method — top-load, tugger/cart, lift, or conveyor interface — are established at the same stage.",
           "Demand can come from business data: due dates, line schedules and stock levels can compute priority implicitly rather than relying on manual escalation.",
           "The prototype navigation includes **Staging Area** and **WIP Inventory**, and its content head offers a *Search Material* control."
@@ -1287,7 +1293,7 @@ export const concepts = [
           },
           {
             "term": "Request access to a resource",
-            "text": "One of the atomic actions a mission can contain, which is how a mission participates in arbitration."
+            "text": "One of the atomic actions a workflow can contain, which is how a workflow participates in arbitration."
           }
         ]
       },
@@ -1465,9 +1471,9 @@ export const concepts = [
       {
         "t": "list",
         "items": [
-          "**API hooks** so an external system — an ERP such as SAP — can trigger a mission and receive status or completion updates back",
+          "**API hooks** so an external system — an ERP such as SAP — can trigger a workflow and receive status or completion updates back",
           "**Implicit priority** computed from business data: due dates, line schedules, stock levels — rather than relying purely on manual escalation",
-          "**Master data alignment**: explicitly defining what is configured at this layer versus what belongs to map or mission configuration"
+          "**Master data alignment**: explicitly defining what is configured at this layer versus what belongs to map or workflow configuration"
         ]
       },
       {
@@ -1495,7 +1501,7 @@ export const concepts = [
   {
     "id": "configuration-layers",
     "title": "Configuration layers",
-    "summary": "Which settings belong to the robot, the map, the mission, the fleet, or the business system.",
+    "summary": "Which settings belong to the robot, the map, the workflow, the fleet, or the business system.",
     "simple": "Almost every confusing question about Ati Flow is really the same question: where is this configured? There are five answers, and they are set in order.",
     "aliases": [
       "what is configured where",
@@ -1523,7 +1529,7 @@ export const concepts = [
       },
       {
         "t": "p",
-        "text": "The deployment material returns to this point three separate times — robot configuration is *conceptually distinct* from map and mission configuration, and master data alignment is named as a common source of cross-team confusion. Knowing which layer owns a setting is most of the battle."
+        "text": "The deployment material returns to this point three separate times — robot configuration is *conceptually distinct* from map and workflow configuration, and master data alignment is named as a common source of cross-team confusion. Knowing which layer owns a setting is most of the battle."
       },
       {
         "t": "h",
@@ -1553,9 +1559,9 @@ export const concepts = [
             "Map annotation"
           ],
           [
-            "Mission",
-            "Actions, sub-missions, mission patterns, priority and interrupt behaviour",
-            "Mission design"
+            "Workflow",
+            "Actions, sub-workflows, workflow patterns, priority and interrupt behaviour",
+            "Workflow design"
           ],
           [
             "Fleet",
@@ -1573,7 +1579,7 @@ export const concepts = [
         "t": "callout",
         "title": "Order matters",
         "body": [
-          "Each layer depends on the one above it. You cannot annotate a map that does not exist, and you cannot design a mission without positions to move between. The [[wf-deployment|deployment workflow]] runs in exactly this order."
+          "Each layer depends on the one above it. You cannot annotate a map that does not exist, and you cannot design a workflow without positions to move between. The [[wf-deployment|deployment workflow]] runs in exactly this order."
         ],
         "tone": "note"
       },
@@ -1757,7 +1763,7 @@ export const concepts = [
           ],
           [
             "Sturdy",
-            "Running consistently, mission after mission, without breaking down",
+            "Running consistently, trip after trip, without breaking down",
             "[[v-sherpa-10k|Sherpa 10K]] and pallet handling"
           ]
         ]

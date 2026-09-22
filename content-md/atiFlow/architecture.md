@@ -342,7 +342,7 @@ The table below is what the earlier documentation (and the separate Ati Flow pro
 | Page | Covers |
 | --- | --- |
 | [[ui-maps\|Maps]] | SLAM mapping, positions, zones, traffic and gate rules |
-| [[ui-workflows\|Workflows]] | Mission and action design, mission patterns, priority rules |
+| [[ui-workflows\|Workflows]] | Workflow and action design, workflow patterns, priority rules |
 | [[ui-fleet-monitor\|Fleet Monitor]] | Live, zone-based view of robots, tasks and traffic |
 | [[ui-robots\|Robots]] | Robot setup — add, edit, delete, name, assign to zone |
 | [[ui-integrations\|Integrations]] | ERP connections, master data mapping, sync logs |

@@ -29,13 +29,13 @@ steps:
     note: From an integration, a configured schedule, or a person.
   - title: Is a robot available?
     kind: decision
-    note: Robots in maintenance are removed from normal dispatch. Robots locked into a user-defined mission are not interrupted by automatic fleet behaviour.
+    note: Robots in maintenance are removed from normal dispatch. Robots locked into a user-defined workflow are not interrupted by automatic fleet behaviour.
   - title: Allocation picks a robot
     note: An idle or nearby robot is selected.
   - title: Traffic arbitration applies
     kind: decision
     note: Where the route crosses gates or exclusion zones, access is arbitrated before the robot proceeds.
-  - title: The robot runs the mission
+  - title: The robot runs the workflow
     kind: outcome
     note: Progress becomes visible in the live view as a trip with a next station.
 :::

@@ -147,7 +147,7 @@ items:
     tag: Configuration
     to: /ati-flow/maps
   - title: Workflows
-    text: Mission and action design, patterns, priority rules, and the Workflow Builder.
+    text: Workflow and action design, patterns, priority rules, and the Workflow Builder.
     tag: Configuration
     to: /ati-flow/workflows
   - title: Integrations

@@ -30,7 +30,7 @@ order: 143
 
 ## What setting up involves
 
-Everything needed to take a site from having no fleet to running one: building and annotating the [[map]], designing [[missions-and-actions|missions]], configuring [[robot|robots]] down to their low-level parameters, wiring up [[integrations]], and site configuration. He is also the only user with [[ui-debug|Debug]] access.
+Everything needed to take a site from having no fleet to running one: building and annotating the [[map]], designing [[missions-and-actions|workflows]], configuring [[robot|robots]] down to their low-level parameters, wiring up [[integrations]], and site configuration. He is also the only user with [[ui-debug|Debug]] access.
 
 :::gap
 How this user relates to [[v-deployment-manager|Deployment Manager]] — the tool Ati support engineers use to configure and deploy robots — is not established, although the two describe closely related work.

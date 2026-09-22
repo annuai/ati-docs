@@ -34,6 +34,9 @@ revisions:
   - date: '2026-09-18'
     author: Annuai
     note: Renamed from "AMR deployment" to "Site deployment" and merged in the separate "Configuration" page, which had become a confusing, near-duplicate condensed version of the same nine-stage order. Its only unique content — the "who has configuration authority" paragraph and its pointer to Configuration layers — is now a section here, and the standalone Configuration page has been retired. Former titles kept as aliases.
+  - date: '2026-09-22'
+    author: Annuai
+    note: Switched "mission" to "workflow" throughout this stage-by-stage detail, per [[d-workflow-over-mission]] — stage 5 was still titled "Mission design" and several stages referred to "mission logic" and "mission configuration" as if that were Ati Flow's own term.
 related:
   - configuration-layers
   - map
@@ -71,8 +74,8 @@ steps:
   - title: 4. Map annotation
     note: Positions, zones, traffic rules
     tag: Build
-  - title: 5. Mission design
-    note: Actions, priority, mission types
+  - title: 5. Workflow design
+    note: Actions, priority, workflow types
     tag: Build
   - title: 6. Fleet management
     note: Task allocation, traffic, charging
@@ -108,7 +111,7 @@ items:
         text: Before any hardware moves, this phase establishes what the deployment actually needs to solve. It is the [[v-solutioning|solutioning]] work of defining the solution and routes for a specific project before detailed design begins.
       - t: list
         items:
-          - What material moves where, how often, and under what deadline pressure — this becomes the basis for mission and priority logic later
+          - What material moves where, how often, and under what deadline pressure — this becomes the basis for workflow and priority logic later
           - 'Floor layout: aisle widths, ramps, doorways, blind corners, areas with heavy pedestrian or forklift traffic'
           - Where charging infrastructure and staging areas will physically live
           - Network coverage requirements across the full operating area
@@ -128,7 +131,7 @@ items:
           - Set up the [[v-fleet-controller|fleet controller]] or server, on-premise or cloud, that robots and any orchestration layer will talk to
           - 'Configure each robot: network credentials, robot ID, safety parameters (max speed, footprint, sensor calibration), payload profile and drive parameters'
       - t: p
-        text: This is also where robot configuration is set at the robot level — worth keeping conceptually distinct from map and mission configuration, which come later. See [[configuration-layers]].
+        text: This is also where robot configuration is set at the robot level — worth keeping conceptually distinct from map and workflow configuration, which come later. See [[configuration-layers]].
   - title: Stage 3 — Mapping (SLAM)
     tag: Build
     body:
@@ -154,27 +157,27 @@ items:
           - '**Forbidden and preferred zones:** areas to avoid entirely versus areas to bias routing toward'
       - t: p
         text: If fleets are mixed, this is also where zone access gets differentiated by robot type.
-  - title: Stage 5 — Mission design
+  - title: Stage 5 — Workflow design
     tag: Build
     body:
       - t: p
         text: Composing the annotated map into actual transport behaviour. See [[missions-and-actions]].
       - t: list
         items:
-          - Build atomic actions first — go to position, dock, undock, wait, trigger I/O, request access to a resource — then compose missions from them
-          - Design reusable sub-missions for common patterns, such as "go to charging station", rather than duplicating logic across missions
-          - 'Choose the mission pattern per use case: **taxi** (on-demand, point-to-point), **milk run** (fixed loop, multiple stops), or **bus** (scheduled repeating route)'
-          - Bake in priority and interrupt behaviour where needed — whether a mission can be preempted, and where in its route that is safe
+          - Build atomic actions first — go to position, dock, undock, wait, trigger I/O, request access to a resource — then compose workflows from them
+          - Design reusable sub-workflows for common patterns, such as "go to charging station", rather than duplicating logic across workflows
+          - 'Choose the workflow pattern per use case: **taxi** (on-demand, point-to-point), **milk run** (fixed loop, multiple stops), or **bus** (scheduled repeating route)'
+          - Bake in priority and interrupt behaviour where needed — whether a workflow can be preempted, and where in its route that is safe
   - title: Stage 6 — Fleet management
     tag: Build
     body:
       - t: p
-        text: The multi-robot coordination layer that turns individual missions into a working [[fleet]].
+        text: The multi-robot coordination layer that turns individual workflows into a working [[fleet]].
       - t: list
         items:
           - 'Task allocation logic: how an incoming request gets assigned to a specific idle or nearby robot'
           - Traffic arbitration at shared resources — the gates and exclusion zones from stage 4 — where contention and deadlock actually get tested
-          - 'Charging and idle behaviour: idle robots are typically sent to charging stations and staging positions automatically, without touching robots locked into a user-defined mission'
+          - 'Charging and idle behaviour: idle robots are typically sent to charging stations and staging positions automatically, without touching robots locked into a user-defined workflow'
           - Priority and aging rules, if manual escalation needs to be supported
   - title: Stage 7 — ERP integration
     tag: Deploy
@@ -183,9 +186,9 @@ items:
         text: Connecting the fleet to the business systems that actually drive demand. See [[integrations]].
       - t: list
         items:
-          - API hooks so an external system — an ERP such as SAP — can trigger a mission and receive status or completion updates back
+          - API hooks so an external system — an ERP such as SAP — can trigger a workflow and receive status or completion updates back
           - Implicit priority computed from business data — due dates, line schedules, stock levels — rather than relying purely on manual escalation
-          - 'Master data alignment: explicitly defining what is configured at this layer versus what belongs to map or mission configuration, since this is a common source of cross-team confusion'
+          - 'Master data alignment: explicitly defining what is configured at this layer versus what belongs to map or workflow configuration, since this is a common source of cross-team confusion'
   - title: Stage 8 — Testing and validation
     tag: Deploy
     body:
@@ -193,7 +196,7 @@ items:
         text: Proving the system works before it is handed over, and deliberately probing the cases that do not show up in a quick walkthrough.
       - t: list
         items:
-          - Test each mission manually on the floor before handing anything to the fleet or orchestration layer — final handover only happens after floor-testing confirms expected behaviour
+          - Test each workflow manually on the floor before handing anything to the fleet or orchestration layer — final handover only happens after floor-testing confirms expected behaviour
           - 'Test edge cases deliberately: two robots approaching the same gate simultaneously, a station occupied on arrival, a manual priority escalation mid-cycle'
           - A dedicated validation pass, ahead of solutioning teams even touching the feature, is common practice for new capabilities before site release
   - title: Stage 9 — Go-live and iteration
@@ -208,7 +211,7 @@ items:
           - '**Baseline capture:** record normal cycle times, blocked-robot frequency and battery consumption early, so later drift can be told apart from normal variance'
           - '**Issue triage:** issue frequency, often ranging from daily to weekly depending on severity, and automated blocked-robot alerts help pinpoint which routes or zones need correction first'
           - '**Map and zone corrections:** usually the first thing adjusted once real traffic patterns are visible — this loops directly back to stage 4'
-          - '**Mission logic refinement:** real request patterns often reveal that a mission built for average conditions does not hold at peak load, or that a demand-driven pattern should really be a fixed loop instead'
+          - '**Workflow logic refinement:** real request patterns often reveal that a workflow built for average conditions does not hold at peak load, or that a demand-driven pattern should really be a fixed loop instead'
           - '**Recovery and edge cases:** localization failures, station conflicts and priority misuse tend to surface here rather than in testing, simply because weeks of real operation cannot be fully simulated'
           - '**Operator and supervisor feedback:** the people running the floor daily surface friction points — an override that is too many clicks away, an alert threshold miscalibrated for that line — that dashboards alone will not show'
 :::
@@ -220,7 +223,7 @@ items:
   - term: Stage 9 → stage 4
     text: Map and zone corrections, once real traffic patterns are visible.
   - term: Stage 9 → stage 5
-    text: Mission logic refinement, once real request patterns are visible.
+    text: Workflow logic refinement, once real request patterns are visible.
 :::
 
 ## How this actually happens today
@@ -283,7 +286,7 @@ for logical grouping"]
 - **5. Design workflows** — not confirmed as the actual next step, but the best current guess. [[workflow|Workflows]] are then mapped to the right stations, using **Machine name** and [[processing-zone|Processing Area]] for logical grouping — see [[v-machine]] and [[v-material-station-mapping]].
 
 :::gap
-Step 5 onward is the least confirmed part of this sequence: whether "design workflows" is genuinely the next step, and exactly how mission/workflow creation, fleet configuration and go-live follow it, is not yet documented at this level of detail. Nor is it confirmed how step 4 here relates to the already-documented Processing Area / material configuration flow.
+Step 5 onward is the least confirmed part of this sequence: whether "design workflows" is genuinely the next step, and exactly how workflow creation, fleet configuration and go-live follow it, is not yet documented at this level of detail. Nor is it confirmed how step 4 here relates to the already-documented Processing Area / material configuration flow.
 :::
 
 ## Where the time and money actually go

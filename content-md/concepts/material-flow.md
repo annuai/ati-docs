@@ -39,7 +39,7 @@ Material flow is the outcome the product is measured against. The architecture p
 
 ## What the sources establish
 
-- Site assessment begins by asking what material moves where, how often, and under what deadline pressure. That answer becomes the basis for mission and priority logic later.
+- Site assessment begins by asking what material moves where, how often, and under what deadline pressure. That answer becomes the basis for workflow and priority logic later.
 - Payload types and the handling method — top-load, tugger/cart, lift, or conveyor interface — are established at the same stage.
 - Demand can come from business data: due dates, line schedules and stock levels can compute priority implicitly rather than relying on manual escalation.
 - The prototype navigation includes **Staging Area** and **WIP Inventory**, and its content head offers a *Search Material* control.

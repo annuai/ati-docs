@@ -39,7 +39,7 @@ items:
   - term: Exclusion zones
     text: Sections — single-lane or alternating-direction — where multi-robot access has to be arbitrated. Kept deliberately separate from behavioural zones, which only change how a robot drives.
   - term: Request access to a resource
-    text: One of the atomic actions a mission can contain, which is how a mission participates in arbitration.
+    text: One of the atomic actions a workflow can contain, which is how a workflow participates in arbitration.
 :::
 
 ## VISA — first in, first served

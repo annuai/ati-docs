@@ -21,7 +21,7 @@ decision: |
 why: |
   The source material frames this as attention rather than trust: each role card carries an
   explicit "not bothered with" list. An Operator is described as not seeing any configuration
-  language at all — zones, missions and master data are invisible, not greyed out.
+  language at all — zones, workflows and master data are invisible, not greyed out.
 alternatives:
   - 'Show everything read-only — keeps one mental model of the product, but exposes configuration vocabulary to people who never act on it.'
 related: ['users', 'ui-states', 'd-debug-is-configurator-only']

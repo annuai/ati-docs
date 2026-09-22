@@ -1,7 +1,7 @@
 ---
 id: workflow
 title: Workflow
-summary: The configured logic for transport behaviour — what should happen, expressed as missions and actions.
+summary: The configured logic for transport behaviour — what should happen, expressed as workflows and actions.
 simple: A workflow is the recipe. It says which steps make up a job, in what order, and how important that job is.
 aliases:
   - workflows
@@ -50,8 +50,8 @@ Of the four product primitives, the workflow answers: *what sequence of actions 
 
 ## What it contains
 
-- [[missions-and-actions|Action and sub-mission design]] — the steps composed into the workflow itself
-- Mission patterns — taxi, milk run, bus
+- [[missions-and-actions|Action and sub-workflow design]] — the steps composed into the workflow itself
+- Workflow patterns — taxi, milk run, bus
 - Priority rules — how urgent a job is and whether it can be interrupted
 
 ## Who touches it

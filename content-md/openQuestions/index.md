@@ -57,6 +57,9 @@ revisions:
   - date: '2026-09-18'
     author: Annuai
     note: 'Closed the question of how System Integrator relates to the four-user model: confirmed to be the same person as the Solutions Architect (Configurator), naming the typical third-party employer relationship rather than a fifth persona. Narrowed the remaining open question to whether "IT / production planner" is a third job title for the same role.'
+  - date: '2026-09-22'
+    author: Annuai
+    note: Added the substantive reason for preferring "Workflow" over "Mission" to the resolved item below — Mission reads as point-to-point, Workflow can cover a longer sequence with steps in between — and audited the rest of this documentation to stop using "Mission" as if it were Ati Flow's own term. See [[d-workflow-over-mission]].
 related:
   - users
   - robot-states
@@ -111,7 +114,7 @@ Documentation that guesses is worse than documentation that admits a gap, becaus
 
 - [[v-map-creation|Mapping]] is currently done by manually driving the robot with a PlayStation controller. Could this be automated, and if so, how?
 - What exactly is involved in adding materials to Ati Flow, and how does that step relate to the already-documented [[processing-zone|Processing Area]] / material configuration flow?
-- What happens after materials are added to Ati Flow — at minimum, mission and workflow creation, fleet configuration and go-live still have to happen somewhere — is not yet documented at this level of detail. See [[wf-deployment]].
+- What happens after materials are added to Ati Flow — at minimum, workflow creation, fleet configuration and go-live still have to happen somewhere — is not yet documented at this level of detail. See [[wf-deployment]].
 - How does this concrete, tool-level sequence (Deployment Manager → mapping → route creation → materials) map onto the documented nine-stage deployment workflow? The two have not been formally reconciled.
 
 ## Questions raised by an internal design/architecture review
@@ -147,7 +150,7 @@ Documentation that guesses is worse than documentation that admits a gap, becaus
 - **Ati Robotics as a company** — nothing beyond one sentence of product positioning.
 - **Robot hardware** — no specifications, variants or capacities. See [[ati-robotics]].
 - **The material model** — no definition of a material or a load, and no detailed model of a container’s contents. See [[material-flow]].
-- **The data model** — how fleets, zones, trips, tasks and missions relate as records.
+- **The data model** — how fleets, zones, trips, tasks and workflows relate as records.
 - **Interface states** — loading, empty, error and offline are undesigned. See [[ui-states]].
 - **Six of seven screens** — scoped in one line each, with no layout or field detail.
 
@@ -156,7 +159,7 @@ Documentation that guesses is worse than documentation that admits a gap, becaus
 - **Processing Area, Processing Zone, Process Area, Process Zone** — confirmed to be the same entity by Suryajit (Product Manager), 18 September 2026. Processing Area is now the standard term. See [[d-processing-area-terminology]] and [[processing-zone|Processing Area]].
 - **Trip and Task** — confirmed to name the same thing, with no conceptual difference. Ati currently uses Trip. See [[trip]].
 - **Fleet Monitor and Live Fleet Status** — confirmed to be the same screen under two names. Fleet Monitor is the documented, standard name going forward; Live Fleet Status / Live Status is the current prototype label. See [[ui-fleet-monitor]].
-- **Mission and Workflow** — confirmed to name the same thing. Mission is the wider industry term; Ati Flow currently calls it Workflow because it is an orchestration product. See [[d-workflow-over-mission]].
+- **Mission and Workflow** — confirmed to name the same thing. Mission is the wider industry term; Ati Flow currently calls it Workflow because it is an orchestration product, and because Workflow better fits a sequence that can involve several steps rather than just a point-to-point trip. See [[d-workflow-over-mission]]. This documentation now uses "Workflow" throughout rather than mentioning "Mission" more than once per page.
 - **System Integrator and Solutions Architect (Configurator)** — confirmed to be the same person and the same permission role. System Integrator names who they typically work for — a third-party company delivering deployment services to the client, rather than an Ati employee; Solutions Architect / Configurator names what they do in the product. Not a fifth user. See [[v-system-integrator]].
 
 ## How to close one

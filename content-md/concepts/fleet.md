@@ -35,7 +35,7 @@ order: 2
 
 ## Why it matters
 
-One robot following one route is a machine. Several robots sharing corridors, stations and charging docks is a traffic problem. The fleet layer is where that problem is solved: it turns individual [[missions-and-actions|missions]] into a working group.
+One robot following one route is a machine. Several robots sharing corridors, stations and charging docks is a traffic problem. The fleet layer is where that problem is solved: it turns individual [[missions-and-actions|workflows]] into a working group.
 
 ## How it works
 
@@ -43,7 +43,7 @@ Fleet management covers four kinds of decision:
 
 - **Task allocation** — how an incoming request gets assigned to a specific idle or nearby robot
 - **Traffic arbitration** at shared resources such as gates and exclusion zones — this is where contention and deadlock actually get tested
-- **Charging and idle behaviour** — idle robots are typically sent to charging stations and staging positions automatically, without touching robots locked into a user-defined mission
+- **Charging and idle behaviour** — idle robots are typically sent to charging stations and staging positions automatically, without touching robots locked into a user-defined workflow
 - **Priority and aging rules**, where manual escalation needs to be supported
 
 :::callout title="A fleet is one of four primitives"

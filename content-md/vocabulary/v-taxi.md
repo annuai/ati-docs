@@ -5,7 +5,7 @@ kind: jargon
 simple: 'A one-off trip: something is needed somewhere, and a robot goes and does it.'
 technical: An on-demand, point-to-point transport pattern.
 usedIn:
-  - Mission design, as one of three mission patterns
+  - Workflow design, as one of three workflow patterns
 related:
   - missions-and-actions
   - v-milk-run

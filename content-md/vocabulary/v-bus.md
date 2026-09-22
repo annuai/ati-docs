@@ -5,7 +5,7 @@ kind: jargon
 simple: A route that runs on a timetable whether or not anyone asked for it.
 technical: A scheduled, repeating transport route.
 usedIn:
-  - Mission design, as one of three mission patterns
+  - Workflow design, as one of three workflow patterns
 related:
   - missions-and-actions
   - v-taxi

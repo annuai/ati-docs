@@ -67,11 +67,18 @@ export const decisions = [
     "sources": [
       "Ati team — terminology directive, supplied in conversation, September 2026"
     ],
+    "revisions": [
+      {
+        "date": "2026-09-22",
+        "author": "Annuai",
+        "note": "Added the substantive reason behind the call: Mission reads as point-to-point, while Workflow can cover a longer sequence with steps in between. Tightened \"mention Mission once\" to make clear it should not otherwise appear as product terminology, and audited the rest of this documentation to match."
+      }
+    ],
     "context": "**Mission** is the standard word used across the robotics and AMR industry for a composed sequence of robot actions that gets a job done. Ati Flow is an orchestration product, and its Workflows surface uses **Workflow** for that same idea.",
     "decision": "Use **Workflow** as the product-facing term. Mission and Workflow are the same concept, with no meaning difference — this is not a distinction to preserve in new content.",
-    "why": "Ati Flow is orchestration software, and \"Workflow\" fits that framing better than the more industry/robotics-flavoured \"Mission\". This is a current call, not a permanent one: it may be worth revisiting as the product and its terminology mature.",
+    "why": "Ati Flow is orchestration software, and \"Workflow\" fits that framing better than the more industry/robotics-flavoured \"Mission\". It is also a better fit for what the product actually does: \"Mission\" reads as point-to-point — one robot, one job, A to B and back — while a Workflow can be a longer sequence with several steps in between, not just a single there-and-back trip. This is a current call, not a permanent one: it may be worth revisiting as the product and its terminology mature.",
     "alternatives": [
-      "Use **Mission** throughout, matching general industry usage — rejected for now since it reads as less native to an orchestration product.",
+      "Use **Mission** throughout, matching general industry usage — rejected for now since it reads as less native to an orchestration product, and reads as more point-to-point than what a Workflow can actually cover.",
       "Use both interchangeably — rejected: this is exactly the kind of split naming that has caused confusion elsewhere in this documentation (see [[d-robot-over-amr]], [[d-processing-area-terminology]])."
     ],
     "related": [
@@ -85,13 +92,21 @@ export const decisions = [
         "t": "callout",
         "title": "How to apply it",
         "body": [
-          "Write *Workflow* in interface labels and documentation headings. Mention *Mission* once, to name it as the industry-standard term, and link to [[v-mission]] or [[missions-and-actions]]."
+          "Write *Workflow* everywhere in this documentation — including cases that would read naturally as \"mission\" elsewhere. Mention *Mission* only to name it once as the industry-standard term, and link to [[v-mission]] or [[missions-and-actions]]."
         ],
         "tone": "note"
       },
       {
         "t": "p",
         "text": "This may need revisiting: if Ati Flow’s positioning shifts, or if \"Mission\" turns out to communicate better to a new audience, this call should be reopened rather than treated as settled forever."
+      },
+      {
+        "t": "callout",
+        "title": "Re-confirmed, not yet final",
+        "body": [
+          "This call is being re-confirmed rather than reopened: an audit on 2026-09-22 replaced remaining product-facing uses of \"Mission\" across this documentation with \"Workflow\", on the same terms as this decision. Treat the outcome as current working practice, still open to revisiting."
+        ],
+        "tone": "gap"
       }
     ]
   },
@@ -156,9 +171,9 @@ export const decisions = [
       "old/ati-flow-screens.html",
       "old/ati-flow-architecture.html"
     ],
-    "context": "A fleet product can easily become one screen that shows everything: live robots, the map editor, mission logic and raw diagnostics side by side. Each of those serves a different question and a different person.",
+    "context": "A fleet product can easily become one screen that shows everything: live robots, the map editor, workflow logic and raw diagnostics side by side. Each of those serves a different question and a different person.",
     "decision": "Organise the product around three layers — **operations** (what is happening now), **configuration** (what should happen) and **diagnostics** (why is the robot behaving this way) — and keep each on its own surfaces.",
-    "why": "It keeps each surface answerable. An operator handling a blocked robot should not be reading mission logic, and a configurator verifying a route should not be triaging a queue.",
+    "why": "It keeps each surface answerable. An operator handling a blocked robot should not be reading workflow logic, and a configurator verifying a route should not be triaging a queue.",
     "alternatives": [
       "Not recorded in the source material."
     ],
@@ -256,7 +271,7 @@ export const decisions = [
     ],
     "context": "Four roles use the same product with very different responsibilities, from a single-zone operator to a site-wide configurator.",
     "decision": "Hide whole surfaces from roles that do not need them. The permission matrix uses **Hidden**, not *read-only* or *disabled*, for Maps, Workflows, Integrations, Setup and Debug at the Operator level.",
-    "why": "The source material frames this as attention rather than trust: each role card carries an explicit \"not bothered with\" list. An Operator is described as not seeing any configuration language at all — zones, missions and master data are invisible, not greyed out.",
+    "why": "The source material frames this as attention rather than trust: each role card carries an explicit \"not bothered with\" list. An Operator is described as not seeing any configuration language at all — zones, workflows and master data are invisible, not greyed out.",
     "alternatives": [
       "Show everything read-only — keeps one mental model of the product, but exposes configuration vocabulary to people who never act on it."
     ],
@@ -329,9 +344,9 @@ export const decisions = [
       "old/amr-software-ia-roles.html",
       "old/ati-flow-architecture.html"
     ],
-    "context": "Both maps and workflows are configuration, both are edited by the same role, and both feed the same missions. A reasonable product could merge them.",
+    "context": "Both maps and workflows are configuration, both are edited by the same role, and both feed the same [[trip|trips]]. A reasonable product could merge them.",
     "decision": "Keep them apart. **Maps** describe the spatial environment and movement rules; **Workflows** describe actions and transport behaviour.",
-    "why": "They answer two of the four product primitives — *where can the robot move* versus *what sequence of actions should happen* — and they change at different rates. Map and zone corrections are the first thing adjusted after go-live; mission logic is refined on a different rhythm.",
+    "why": "They answer two of the four product primitives — *where can the robot move* versus *what sequence of actions should happen* — and they change at different rates. Map and zone corrections are the first thing adjusted after go-live; workflow logic is refined on a different rhythm.",
     "alternatives": [
       "Not recorded in the source material."
     ],

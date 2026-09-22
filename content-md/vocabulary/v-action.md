@@ -3,7 +3,7 @@ id: v-action
 term: Action
 kind: term
 simple: One single thing a robot can be told to do.
-technical: 'The atomic unit missions are composed from: go to position, dock, undock, wait, trigger I/O, request access to a resource.'
+technical: 'The atomic unit workflows are composed from: go to position, dock, undock, wait, trigger I/O, request access to a resource.'
 usedIn:
   - Deployment stage 5
   - The Workflows surface

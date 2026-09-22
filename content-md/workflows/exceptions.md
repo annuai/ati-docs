@@ -35,8 +35,8 @@ order: 4
 | --- | --- | --- |
 | A robot is blocked | Red status pill and a pulsing halo in the live view; automated blocked-robot alerts after go-live | Operationally first, then by correcting the map or zone |
 | Two robots reach the same gate at once | Deliberately tested during validation | [[traffic-control\|Traffic arbitration]] in the fleet layer |
-| A station is occupied on arrival | Deliberately tested during validation | Mission and fleet logic |
-| A manual priority escalation mid-cycle | Deliberately tested during validation | Priority and interrupt behaviour designed into the mission |
+| A station is occupied on arrival | Deliberately tested during validation | Workflow and fleet logic |
+| A manual priority escalation mid-cycle | Deliberately tested during validation | Priority and interrupt behaviour designed into the workflow |
 | Localization failure | Surfaces after go-live rather than in testing | Map correction, robot diagnostics |
 | Priority misuse | Surfaces after go-live rather than in testing | Priority rules and operator training |
 

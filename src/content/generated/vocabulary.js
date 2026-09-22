@@ -412,7 +412,7 @@ export const vocabulary = [
     "expansion": "Enterprise Resource Planning",
     "kind": "acronym",
     "simple": "The factory’s core business system. It knows what is being produced, when it is due, and what stock exists.",
-    "technical": "The external business system Ati Flow integrates with. SAP is the example named in the deployment material. Integration covers API hooks to trigger a mission and receive status back, implicit priority from business data, and master data alignment.",
+    "technical": "The external business system Ati Flow integrates with. SAP is the example named in the deployment material. Integration covers API hooks to trigger a workflow and receive status back, implicit priority from business data, and master data alignment.",
     "usedIn": [
       "Deployment stage 7",
       "The Integrations surface",
@@ -630,7 +630,7 @@ export const vocabulary = [
     "term": "Master data",
     "kind": "term",
     "simple": "The shared reference information both the business system and Ati Flow have to agree on.",
-    "technical": "Master data alignment means explicitly defining what is configured at the integration layer versus what belongs to map or mission configuration. Named as a common source of cross-team confusion.",
+    "technical": "Master data alignment means explicitly defining what is configured at the integration layer versus what belongs to map or workflow configuration. Named as a common source of cross-team confusion.",
     "usedIn": [
       "Deployment stage 7",
       "The Integrations surface"
@@ -1499,7 +1499,7 @@ export const vocabulary = [
     "term": "Dock",
     "kind": "term",
     "simple": "The charging point a robot drives into when its battery is low.",
-    "technical": "Charging docks are placed during infrastructure setup — ideally distributed rather than centralized, and sized against peak-hour demand versus charge time. Docking is also one of the atomic mission actions.",
+    "technical": "Charging docks are placed during infrastructure setup — ideally distributed rather than centralized, and sized against peak-hour demand versus charge time. Docking is also one of the atomic workflow actions.",
     "usedIn": [
       "Deployment stages 2, 4 and 5",
       "Setup & Config"
@@ -2511,7 +2511,7 @@ export const vocabulary = [
     "term": "Priority",
     "kind": "term",
     "simple": "How urgent a job is, and therefore what gets done first.",
-    "technical": "Priority appears three ways: designed into a mission along with interrupt behaviour, applied by the fleet through priority and aging rules, and computed implicitly from business data such as due dates, line schedules and stock levels.",
+    "technical": "Priority appears three ways: designed into a workflow along with interrupt behaviour, applied by the fleet through priority and aging rules, and computed implicitly from business data such as due dates, line schedules and stock levels.",
     "usedIn": [
       "Deployment stages 5, 6 and 7",
       "The Workflows surface"
@@ -2877,7 +2877,7 @@ export const vocabulary = [
     "term": "Action",
     "kind": "term",
     "simple": "One single thing a robot can be told to do.",
-    "technical": "The atomic unit missions are composed from: go to position, dock, undock, wait, trigger I/O, request access to a resource.",
+    "technical": "The atomic unit workflows are composed from: go to position, dock, undock, wait, trigger I/O, request access to a resource.",
     "usedIn": [
       "Deployment stage 5",
       "The Workflows surface"
@@ -2899,20 +2899,31 @@ export const vocabulary = [
     "id": "v-sub-mission",
     "term": "Sub-mission",
     "kind": "term",
-    "simple": "A small reusable piece of a mission, written once and used in many places.",
-    "technical": "A reusable pattern for a common sequence — \"go to charging station\" is the example given — used instead of duplicating logic across missions.",
+    "simple": "A small reusable piece of a workflow, written once and used in many places. Ati Flow calls this a sub-workflow.",
+    "technical": "A reusable pattern for a common sequence — \"go to charging station\" is the example given — used instead of duplicating logic across workflows. Same concept as sub-workflow, the term this documentation uses. See [[d-workflow-over-mission]].",
+    "note": "Not a distinction to preserve in new content — call this a sub-workflow.",
     "usedIn": [
       "Deployment stage 5"
     ],
     "related": [
       "missions-and-actions",
-      "v-mission"
+      "v-mission",
+      "workflow",
+      "d-workflow-over-mission"
     ],
     "status": "current",
     "author": "Annuai",
     "added": "2026-09-16",
+    "revisions": [
+      {
+        "date": "2026-09-22",
+        "author": "Annuai",
+        "note": "Tied this entry to \"sub-workflow\" explicitly, matching the reasoning in [[d-workflow-over-mission]] — previously this page only used \"mission\" language with no link to the product's own term."
+      }
+    ],
     "sources": [
-      "old/amr-deployment-workflow.html"
+      "old/amr-deployment-workflow.html",
+      "Ati team — terminology directive, supplied in conversation, September 2026"
     ],
     "blocks": []
   },
@@ -2923,7 +2934,7 @@ export const vocabulary = [
     "simple": "A one-off trip: something is needed somewhere, and a robot goes and does it.",
     "technical": "An on-demand, point-to-point transport pattern.",
     "usedIn": [
-      "Mission design, as one of three mission patterns"
+      "Workflow design, as one of three workflow patterns"
     ],
     "related": [
       "missions-and-actions",
@@ -2947,7 +2958,7 @@ export const vocabulary = [
     "simple": "A fixed round trip with several stops, like a delivery round.",
     "technical": "A fixed-loop transport pattern with multiple stops.",
     "usedIn": [
-      "Mission design, as one of three mission patterns"
+      "Workflow design, as one of three workflow patterns"
     ],
     "related": [
       "missions-and-actions",
@@ -2970,7 +2981,7 @@ export const vocabulary = [
     "simple": "A route that runs on a timetable whether or not anyone asked for it.",
     "technical": "A scheduled, repeating transport route.",
     "usedIn": [
-      "Mission design, as one of three mission patterns"
+      "Workflow design, as one of three workflow patterns"
     ],
     "related": [
       "missions-and-actions",
@@ -2995,7 +3006,7 @@ export const vocabulary = [
     "usedIn": [
       "Raised as an open question in the FAQ"
     ],
-    "note": "Distinct from [[v-taxi|Taxi]], which *is* defined, as a mission pattern.",
+    "note": "Distinct from [[v-taxi|Taxi]], which *is* defined, as a workflow pattern.",
     "related": [
       "v-taxi",
       "open-questions"
@@ -3942,7 +3953,7 @@ export const vocabulary = [
       },
       {
         "t": "p",
-        "text": "Everything needed to take a site from having no fleet to running one: building and annotating the [[map]], designing [[missions-and-actions|missions]], configuring [[robot|robots]] down to their low-level parameters, wiring up [[integrations]], and site configuration. He is also the only user with [[ui-debug|Debug]] access."
+        "text": "Everything needed to take a site from having no fleet to running one: building and annotating the [[map]], designing [[missions-and-actions|workflows]], configuring [[robot|robots]] down to their low-level parameters, wiring up [[integrations]], and site configuration. He is also the only user with [[ui-debug|Debug]] access."
       },
       {
         "t": "callout",

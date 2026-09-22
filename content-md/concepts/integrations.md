@@ -35,9 +35,9 @@ Without an integration, every movement has to be requested by a person. With one
 
 ## What it covers
 
-- **API hooks** so an external system — an ERP such as SAP — can trigger a mission and receive status or completion updates back
+- **API hooks** so an external system — an ERP such as SAP — can trigger a workflow and receive status or completion updates back
 - **Implicit priority** computed from business data: due dates, line schedules, stock levels — rather than relying purely on manual escalation
-- **Master data alignment**: explicitly defining what is configured at this layer versus what belongs to map or mission configuration
+- **Master data alignment**: explicitly defining what is configured at this layer versus what belongs to map or workflow configuration
 
 :::callout title="A known source of confusion"
 The deployment material calls master data alignment out by name as a common source of cross-team confusion. See [[configuration-layers]] for where each kind of configuration belongs.

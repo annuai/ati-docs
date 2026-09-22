@@ -96,7 +96,7 @@ export const atiRobotics = [
       },
       {
         "t": "p",
-        "text": "It also explains the shape of this documentation. Robot-level configuration, the [[map|map]] and the [[missions-and-actions|mission]] logic are all Ati’s concern, which is why [[configuration-layers]] runs from drive parameters all the way up to business-system integration."
+        "text": "It also explains the shape of this documentation. Robot-level configuration, the [[map|map]] and the [[missions-and-actions|workflow]] logic are all Ati’s concern, which is why [[configuration-layers]] runs from drive parameters all the way up to business-system integration."
       },
       {
         "t": "h",

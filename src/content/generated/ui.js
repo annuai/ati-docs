@@ -240,7 +240,7 @@ export const ui = [
     "slug": "workflows",
     "kind": "screen",
     "title": "Workflows",
-    "summary": "Mission and action design, workflow logic, mission patterns, and priority rules.",
+    "summary": "Workflow and action design, workflow logic, workflow patterns, and priority rules.",
     "simple": "Where you describe the job a robot does, step by step — including the movement, decisions and integrations that make up the job.",
     "status": "current",
     "author": "Annuai",
@@ -265,15 +265,15 @@ export const ui = [
       "**Configurator** — full edit"
     ],
     "see": [
-      "Missions and the actions they are composed from",
-      "Mission patterns — taxi, milk run, bus",
+      "Workflows and the actions they are composed from",
+      "Workflow patterns — taxi, milk run, bus",
       "Priority rules",
       "The [[ui-workflow-builder|Workflow Builder]] node library"
     ],
     "do": [
-      "Build atomic actions and compose missions from them",
-      "Design reusable sub-missions",
-      "Set mission pattern, priority and interrupt behaviour",
+      "Build atomic actions and compose workflows from them",
+      "Design reusable sub-workflows",
+      "Set workflow pattern, priority and interrupt behaviour",
       "Build a workflow from the available nodes",
       "Approve a workflow (Head of Operations)"
     ],
