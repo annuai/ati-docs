@@ -20,6 +20,7 @@ sources:
   - Ati team — the current, on-the-ground deployment sequence, supplied in conversation, September 2026
   - Internal design/architecture review meeting, transcript supplied in conversation, September 2026
   - Ati team — terminology directive, supplied in conversation, September 2026
+  - 'Ati support engineer — Deployment Manager/Fleet Manager walkthrough, transcript supplied in conversation, September 2026'
 revisions:
   - date: '2026-09-16'
     author: Annuai
@@ -60,6 +61,9 @@ revisions:
   - date: '2026-09-22'
     author: Annuai
     note: Added the substantive reason for preferring "Workflow" over "Mission" to the resolved item below — Mission reads as point-to-point, Workflow can cover a longer sequence with steps in between — and audited the rest of this documentation to stop using "Mission" as if it were Ati Flow's own term. See [[d-workflow-over-mission]].
+  - date: '2026-09-22'
+    author: Annuai
+    note: Added that the full list of map zone types is undocumented even inside Ati (from an internal DM/FM walkthrough), and flagged the "V5" waypoint format against Deployment Manager's own version 5.4 as a naming clash worth avoiding, not a confirmed connection.
 related:
   - users
   - robot-states
@@ -76,6 +80,8 @@ related:
   - v-map-creation
   - v-system-integrator
   - v-mhe
+  - map-annotation
+  - v-waypoint-version
 order: 1
 ---
 
@@ -130,6 +136,7 @@ Documentation that guesses is worse than documentation that admits a gap, becaus
 - What is the authoritative source for robot availability?
 - What is the relationship between [[fleet|Fleet]], [[processing-zone|Processing Area]] and geographical [[zone|Zone]] in the actual data model?
 - Which actions can an Operator and a Fleet Supervisor perform directly on a robot?
+- What is the full list of map zone types, and what rule does each one carry? An Ati support engineer, asked directly, said this is undocumented even inside the company. See [[map-annotation]].
 
 ## Contradictions found in this folder
 
@@ -144,6 +151,7 @@ Documentation that guesses is worse than documentation that admits a gap, becaus
 | Machine vs "consumption point" | This documentation uses [[v-machine\|Machine]], the PRD-backed term. The Industrial Design 1:1 flagged that some software surfaces instead say "consumption point" — jargon that creates a steep learning curve for non-technical users. Whether the two name the same thing has not been confirmed. |
 | Roles and modes | Four roles are documented. The prototype exposes a single "Supervisor Mode" selector with no role switching. See [[users\|Users and permissions]]. |
 | The word "workflow" | A configured product object on one page, a human deployment process on another. See [[workflow]]. |
+| "V5" waypoints vs Deployment Manager 5.4 | [[v-waypoint-version\|Waypoint version]] "V5" (a map/routing format) and Deployment Manager's software version 5.4 sound alike but nothing confirms they are related — recorded as a naming clash to avoid, not as a connection. |
 
 ## Subjects with no source at all
 

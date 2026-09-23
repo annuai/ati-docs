@@ -590,13 +590,29 @@ export const concepts = [
     "added": "2026-09-16",
     "sources": [
       "old/ati-flow-glossary.html",
-      "old/amr-deployment-workflow.html"
+      "old/amr-deployment-workflow.html",
+      "Ati support engineer — Deployment Manager/Fleet Manager walkthrough, transcript supplied in conversation, September 2026"
+    ],
+    "revisions": [
+      {
+        "date": "2026-09-22",
+        "author": "Annuai",
+        "note": "Added how a station and a route actually get placed and configured — customer walkthrough plus test-driving, the fixed dispatch/in-place/orientation tags a station carries, and that routes are one-way and hand-drawn rather than automatically bidirectional. Also flagged that the full list of zone types is undocumented even inside Ati."
+      },
+      {
+        "date": "2026-09-23",
+        "author": "Annuai",
+        "note": "Clarified that the one-way, hand-drawn route description above only applies to P2P Routing (V2) maps — a Dynamic Routing (V5) map routes stations automatically over hand-drawn lanes instead. See [[v-waypoint-version]]."
+      }
     ],
     "related": [
       "map",
       "zone",
       "traffic-control",
-      "ui-maps"
+      "ui-maps",
+      "v-dispatch",
+      "v-deployment-manager",
+      "v-waypoint-version"
     ],
     "blocks": [
       {
@@ -643,6 +659,39 @@ export const concepts = [
           "Annotation is done on the [[ui-maps|Maps]] surface, which the role model gives to the Solutions Architect (Configurator) to edit and to everyone else to view."
         ],
         "tone": "note"
+      },
+      {
+        "t": "h",
+        "text": "How a station and a route actually get placed"
+      },
+      {
+        "t": "p",
+        "text": "A customer walks the site with the deployment team and points out where each stop should be — the exact coordinates are then set relative to the manual run already recorded for [[v-map-creation|mapping]], and fine-tuned by test-driving between stations to check clearance and turning space."
+      },
+      {
+        "t": "p",
+        "text": "Each station also carries a fixed set of tags, set once at this stage:"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**[[v-dispatch|Dispatch]]** — not required, optional (with a timeout), or required. See [[v-dispatch]] for the station-versus-trip limitation this creates.",
+          "**In-place turn** — whether the robot rotates on the spot at that station, and clockwise or anticlockwise.",
+          "**Orientation** — which way the robot faces on arrival, forward or reverse; relevant wherever a pallet or trolley has to be approached from a specific side.",
+          "Naming tags such as charging or parking station, which identify the station's purpose but carry no behaviour of their own beyond that."
+        ]
+      },
+      {
+        "t": "p",
+        "text": "On a [[v-waypoint-version|P2P Routing (V2)]] map, routes are one-way and drawn explicitly between two stations. A route from A to B does not imply a route from B to A — the reverse direction has to be added separately, and a [[v-fleet-manager|Fleet Manager]] trip request fails outright if no route exists in the direction requested. A [[v-waypoint-version|Dynamic Routing (V5)]] map works differently: broad lanes are drawn instead, and the routing engine finds its own way between stations in either direction."
+      },
+      {
+        "t": "callout",
+        "title": "The full list of zone types is undocumented, even internally",
+        "body": [
+          "Beyond the zone categories named above, more zone types exist — a \"wheel zone,\" a \"traffic gate,\" and others added whenever a new feature needs one. Asked directly, an Ati support engineer said there is no canonical documentation of them: \"no one knows... no one is working on this... there are some Excel sheets.\" Treat any zone-type list in this documentation as partial until the team that owns each feature documents its own zone."
+        ],
+        "tone": "gap"
       }
     ]
   },
@@ -2532,6 +2581,350 @@ export const concepts = [
           "Whether this indicator-light table and its sounds are the same across the rest of the [[ati-robotics|Sherpa hardware line-up]] — the 10K, Pallet Mover, Lifter 500 and Mecha — has not been confirmed; only the Pivot, Tug and Flex Fork manuals were reviewed."
         ],
         "tone": "gap"
+      }
+    ]
+  },
+  {
+    "id": "frenet-frame-path-planning",
+    "title": "Frenet frame path planning",
+    "summary": "A way of planning a robot's path by measuring position along and sideways from a reference line, instead of in raw map coordinates.",
+    "simple": "Instead of tracking \"where exactly on the map is the robot,\" this splits the question in two simpler ones — \"how far along the planned route is it\" and \"how far off to the side of it.\" Planning a path gets much easier once movement along the route and movement across it are worked out separately.",
+    "aliases": [
+      "Frenet algorithm",
+      "Frenet-Serret frame",
+      "Frenet coordinates",
+      "Frenet planner"
+    ],
+    "status": "current",
+    "author": "Annuai",
+    "added": "2026-09-23",
+    "sources": [
+      "Public robotics reference — Frenet frame trajectory planning, general autonomy/path-planning literature (see Robotics Knowledgebase, roboticsknowledgebase.com/wiki/planning/frenet-frame-planning)",
+      "Ati team — noted September 2026"
+    ],
+    "related": [
+      "v-waypoint-version",
+      "v-path-planning",
+      "v-trajectory",
+      "v-obstacle-avoidance"
+    ],
+    "blocks": [
+      {
+        "t": "h",
+        "text": "Why measure this way at all"
+      },
+      {
+        "t": "p",
+        "text": "A robot's raw position is an (x, y) point on the map. That's accurate, but not very useful for planning: to know whether the robot is drifting off its intended route, or whether it's about to reach the next turn, the raw coordinates have to be compared against the whole shape of the route every time. The Frenet frame sidesteps this by picking a reference line — the intended path — and describing everything relative to it instead of to the map's fixed grid."
+      },
+      {
+        "t": "h",
+        "text": "The two numbers that replace (x, y)"
+      },
+      {
+        "t": "defs",
+        "items": [
+          {
+            "term": "s — longitudinal position",
+            "text": "How far along the reference line the robot has travelled, measured as arc length from the start of the route."
+          },
+          {
+            "term": "d — lateral offset",
+            "text": "How far the robot sits to the side of the reference line at that point, positive to one side and negative to the other."
+          }
+        ]
+      },
+      {
+        "t": "p",
+        "text": "Together, (s, d) locate the robot exactly as well as (x, y) does — but they decouple the two things a path planner actually needs to reason about separately: progress along the route, and drift across it. Staying centred on the route is just \"keep d close to zero,\" regardless of how much the route itself curves on the underlying map."
+      },
+      {
+        "t": "h",
+        "text": "Why this helps path planning"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**Curvature stops being a complication.** Following a curving corridor in raw (x, y) coordinates means constantly accounting for the corridor's shape. In Frenet coordinates the reference line's curvature is already absorbed into the frame itself, so a planner can reason about \"stay near the centre\" and \"keep moving forward\" as separate, mostly-straight-line problems.",
+          "**Obstacles and other agents are easy to compare.** Two robots — or a robot and an obstacle — projected into the same Frenet frame can be compared directly by their `s` values to see who is ahead of whom, and by their `d` values to see how much lateral separation exists. That's a simpler test than comparing arbitrary points in map coordinates.",
+          "**It suits routes that are drawn broadly rather than exactly.** It works best where a reference path already exists to measure against — which fits [[v-waypoint-version|Dynamic Routing (V5)]]'s broad, hand-drawn lanes: the lane is the reference line, and the planner's job becomes finding a smooth (s, d) trajectory along it that reaches the target station, rather than following one exact pre-computed vector."
+        ]
+      },
+      {
+        "t": "callout",
+        "title": "Not yet documented",
+        "body": [
+          "Ati's own implementation details — which parts of the routing engine use a Frenet-frame planner, and how it interacts with [[v-obstacle-avoidance|obstacle avoidance]] and the fleet's [[traffic-control|traffic control]] layer — are not documented here. The description above is the general algorithm as published in the wider autonomy and robotics literature, not an Ati-specific account of its implementation."
+        ],
+        "tone": "gap"
+      }
+    ]
+  },
+  {
+    "id": "v5-waypoint-routing",
+    "title": "How a V5 (Dynamic Routing) map is built",
+    "summary": "Nodes, lanes, on-lane/off-lane stations, and the park/unpark maneuvers that connect them — the vocabulary and configuration behind a Dynamic Routing map.",
+    "simple": "A Dynamic Routing map is a network of drawn lanes with stations attached to them. Getting a robot in and out of a station cleanly is a small, configurable manoeuvre — and this page is the full vocabulary for it.",
+    "aliases": [
+      "V5 map",
+      "terminal line",
+      "node",
+      "lane",
+      "park and unpark",
+      "maneuver"
+    ],
+    "status": "current",
+    "author": "Annuai",
+    "added": "2026-09-23",
+    "sources": [
+      "Ati team — \"V5 Waypoints Deployment Walkthrough\" internal Deployment Manager guide, supplied September 2026"
+    ],
+    "related": [
+      "v-waypoint-version",
+      "v-on-lane-off-lane",
+      "v-deployment-manager",
+      "map-annotation",
+      "v-sherpa-tug",
+      "v-sherpa-pallet-mover"
+    ],
+    "blocks": [
+      {
+        "t": "h",
+        "text": "What a V5 map is made of"
+      },
+      {
+        "t": "p",
+        "text": "A V5 map is a set of **nodes** connected by **lanes**. A node is a single point on the map — the junction where lanes start, end, or cross, and the attachment point every station gets. A lane is a path a robot may drive along, drawn between two nodes; Deployment Manager itself calls this a **terminal line**. Each lane carries three properties:"
+      },
+      {
+        "t": "table",
+        "head": [
+          "Property",
+          "What it does"
+        ],
+        "rows": [
+          [
+            "Moving direction / lane direction",
+            "Whether robots can travel both ways on the lane, or one-way only. Default is one-way."
+          ],
+          [
+            "Heading direction",
+            "Which way the robot faces while moving on the lane — forward, reverse, or both. Default is both."
+          ],
+          [
+            "Weight",
+            "How costly the lane is to travel; the planner always picks the lowest-total-weight path. Defaults to the lane's length."
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "Splitting a lane at a point drops a new node there and produces two lanes in its place (e.g. splitting `lane_3` gives `lane_3_1` and `lane_3_2` either side of the new node) — this is how a junction gets created."
+      },
+      {
+        "t": "h",
+        "text": "On-lane vs off-lane stations"
+      },
+      {
+        "t": "p",
+        "text": "Every station is set to one of two orientations, and it is described as the most important configuration choice when placing a station, because all of the parking/unparking behaviour below depends on it:"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**On-lane** — the station sits directly on the lane. The robot drives straight onto it; there is nothing to configure for parking or unparking.",
+          "**Off-lane** — the station sits away from the lane, reached through a node. The robot leaves the lane (a parking manoeuvre) to enter the station, and mirrors that manoeuvre to unpark and rejoin the lane."
+        ]
+      },
+      {
+        "t": "callout",
+        "title": "Off-lane only",
+        "body": [
+          "Payload detection and docking only happen on off-lane stations."
+        ],
+        "tone": "note"
+      },
+      {
+        "t": "h",
+        "text": "Parking and unparking"
+      },
+      {
+        "t": "p",
+        "text": "**Parking** is the robot entering a station from a lane. **Unparking** is the robot exiting a station and rejoining a lane. Both only exist for off-lane stations — an on-lane station has no separate parking step, the robot simply drives up and stops."
+      },
+      {
+        "t": "h",
+        "text": "Core route"
+      },
+      {
+        "t": "p",
+        "text": "The core route connects the start station's node to the end station's node through the lane graph, always choosing the lowest-weight path. An on-lane station's route is just the core route; an off-lane station's route is unparking → core route → parking."
+      },
+      {
+        "t": "h",
+        "text": "Configuring a node: PARK and UNPARK"
+      },
+      {
+        "t": "p",
+        "text": "Every node placed on the map can be toggled independently for two roles — **PARK** (arriving at the station) and **UNPARK** (leaving it) — and a node can carry both. A station can also have separate nodes dedicated to park and unpark."
+      },
+      {
+        "t": "list",
+        "items": [
+          "**PARK** splits into **Pick** (the robot is arriving to lift a load) and **Drop** (arriving for any other reason — no task, or dropping a load).",
+          "**UNPARK** splits into **Laden** (the robot is already carrying a load as it leaves) and **Unladen** (leaving empty)."
+        ]
+      },
+      {
+        "t": "p",
+        "text": "Each of the four — Pick, Drop, Laden, Unladen — gets its own **maneuver**, **maneuver direction**, and tuning **parameters**, so a station can be approached or departed differently depending on what the robot is doing."
+      },
+      {
+        "t": "h",
+        "text": "Maneuver types"
+      },
+      {
+        "t": "defs",
+        "items": [
+          {
+            "term": "one_shot_turn (default)",
+            "text": "The robot moves along a smooth curve to enter or exit the station — no separate stop-and-rotate step."
+          },
+          {
+            "term": "inplace",
+            "text": "A stop-and-rotate manoeuvre. The robot reaches the node, rotates on the spot until aligned with the station, then drives straight in (or straight out, if unparking). There is no turn involved."
+          },
+          {
+            "term": "lanechange / reverse_lanechange",
+            "text": "Manoeuvre variants for changing lane to reach or leave a station."
+          },
+          {
+            "term": "three_point_turn / three_point_lanechange",
+            "text": "Three-point-turn variants of the plain turn and lane-change manoeuvres."
+          },
+          {
+            "term": "None",
+            "text": "No manoeuvre — the parameters below don't apply."
+          }
+        ]
+      },
+      {
+        "t": "h",
+        "text": "Maneuver parameters"
+      },
+      {
+        "t": "p",
+        "text": "Up to four parameters tune a manoeuvre; only two are explained in the source walkthrough:"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**inlane_dist** — how far along the lane, measured from the station's node, the manoeuvre's curve starts. A larger value starts the curve earlier for a wider turn; a smaller value gives a tighter turn. Defaults to 1m.",
+          "**perpendicular_dist** — how far from the lane, perpendicular to it, the manoeuvre ends (when parking) or starts (when unparking) — for example, the distance at which a robot stops to run payload detection before finishing the approach.",
+          "**Inlane extension** and **Perpendicular extension** are also configurable, but what each one adjusts is not explained in the source."
+        ]
+      },
+      {
+        "t": "p",
+        "text": "Both `inlane_dist` and `perpendicular_dist` accept **negative** values, which flips the manoeuvre to the opposite side of the station — approaching or leaving from behind instead of from the front. This is how a station that must be approached from two different sides (see below) is configured."
+      },
+      {
+        "t": "callout",
+        "title": "Not yet documented",
+        "body": [
+          "What \"Inlane extension\" and \"Perpendicular extension\" adjust is not documented in the source walkthrough."
+        ],
+        "tone": "gap"
+      },
+      {
+        "t": "h",
+        "text": "Multi-node stations"
+      },
+      {
+        "t": "p",
+        "text": "A station is not limited to one node. Any number of nodes can be added, one per lane, each acting as its own entry/exit point with its own park/unpark tags and maneuver configuration. This is how a station that has to be approached from two different sides is built — for example, a trolley station where the robot picks up the trolley from the front (entering through one lane, PARK only) but has to back the trolley in from behind when dropping it off (leaving through a different lane, UNPARK only)."
+      },
+      {
+        "t": "h",
+        "text": "Upgrading a V4 map to V5"
+      },
+      {
+        "t": "p",
+        "text": "An existing V4 map does not need to be rebuilt from scratch. In Deployment Manager, V4 maps are listed tagged **Dynamic Routing (Deprecated)**; choosing **Upgrade to Dynamic Routing** from the map's menu creates a separate, named V5 copy — carrying over the layout, lanes and stations — while leaving the original V4 map untouched."
+      },
+      {
+        "t": "h",
+        "text": "Configuration required to run V5"
+      },
+      {
+        "t": "list",
+        "items": [
+          "`control_module.route_application` must be set to `v5_wps` (rather than `v2_wps`) so the robot plans trips with the V5 router instead of the older V2 planner.",
+          "The router reads the map from `graph_object_v5.json`, the file Deployment Manager exports when a V5 map is saved. If a site reports \"map not found\" errors after switching to V5, check this file exists and was exported from a V5 map rather than an older format.",
+          "Which Sherpa application a robot runs decides which router(s) it can use:"
+        ]
+      },
+      {
+        "t": "table",
+        "head": [
+          "Sherpa application",
+          "Vehicles",
+          "What it does",
+          "Compatible routers"
+        ],
+        "rows": [
+          [
+            "`trolley_ops`",
+            "Tug-V.x, XTLite, XT, 5tonner, Lifter, Pivot / Flextug, Lifter500",
+            "Load is manually hitched; no auto-pick required",
+            "v2_wps, v5_wps"
+          ],
+          [
+            "`auto_unhitch_trolley_ops`",
+            "XT / XTLite / Tugs",
+            "Tugging with auto-unhitching at a station",
+            "v2_wps, v5_wps"
+          ],
+          [
+            "`pallet_ops`",
+            "Monofork / Flexfork, PalletMover Lifter-500",
+            "Detecting and picking the payload is required",
+            "v5_wps"
+          ],
+          [
+            "`auto_hitch_ops`",
+            "5tonner_autohitch",
+            "Detecting the payload and its accessories (e.g. a QR code), then picking it",
+            "v5_wps"
+          ]
+        ]
+      },
+      {
+        "t": "p",
+        "text": "A few further settings are configured on the robot itself rather than in Deployment Manager (under `control.dynamic_router` / `control.common`):"
+      },
+      {
+        "t": "list",
+        "items": [
+          "`max_turn_radius` / `min_turn_radius` — the robot fits a turn to `max_turn_radius` where possible, otherwise a value between the two.",
+          "`default_parking_maneuver` / `default_unparking_maneuver` — which manoeuvre an off-lane station uses when none is set in Deployment Manager.",
+          "`station_dist_thresh` / `station_theta_thresh` — how close the robot has to be to a station, in distance and orientation, to be considered \"recovered\" onto it."
+        ]
+      },
+      {
+        "t": "h",
+        "text": "Deployment checklist"
+      },
+      {
+        "t": "list",
+        "items": [
+          "`control_module.route_application` is set to `v5_wps`.",
+          "Map files include `graph_object_v5.json`, present on the robot.",
+          "Each station's orientation (on-lane / off-lane) matches where it physically sits.",
+          "Off-lane stations have at least one node tagged for park and one tagged for unpark.",
+          "Every pair of stations that will be used in production has been previewed with **Simulate Route**.",
+          "The robot has been run once in simulation for the trips it will actually make."
+        ]
       }
     ]
   }

@@ -1,0 +1,81 @@
+ATI FLOW RESEARCH — AFFINITY MAP FOR FIGJAM
+Source: content-md/openQuestions/index.md — 42 sourced observations, 6 suggested clusters.
+
+HOW TO PASTE THIS INTO FIGJAM
+1. Open a FigJam file, empty canvas.
+2. For each cluster below: first copy just its ONE-LINE HEADER (the "===" line) and paste it onto the canvas by itself — FigJam turns a single pasted line into one sticky note; drag it to the top of an empty area and treat it as the cluster's title card (optionally recolor it, e.g. grey, to mark it as a header).
+3. Then select all the note lines under that header (everything between it and the next "===" header) and paste them together just below/around the title card — FigJam converts a multi-line paste into one sticky note per line, auto-arranged in a grid. Drag that grid under its header.
+4. Repeat per cluster, spacing each group apart on the canvas so the six clusters read as six visual zones.
+5. Each note ends with "— [source]" in brackets — keep that in the paste; it's useful context on the sticky itself. If you'd rather have clean stickies with no source text, strip the "— [source]" suffix from each line before pasting.
+
+============================================================
+=== CLUSTER 1: NAMING & TERMINOLOGY CLASHES ===
+Same thing, different words — or same word, different things.
+============================================================
+Solutions Architect or Configurator — both names used for the fourth user, unresolved. — [Team-raised]
+"Map" means one thing to autonomy engineers (localisation substrate) and another to Solutions Architects (floor plan + routes) — deliberate overload, still unresolved. — [Team-raised]
+Is "consumption point" (used in some software surfaces) the same entity as Machine / Consumption Unit? — [Industrial Design 1:1]
+Names one word apart, easy to confuse: Fleet Manager / Deployment Manager (software), Fleet Supervisor / Supervisor (people), Fleet Monitor (screen), Supervisor Mode (control). — [Contradiction log]
+Fleet Manager (separate system Ati Flow replaces) vs. Fleet Monitor (a page inside Ati Flow) — one word apart, how much of Fleet Manager remains unabsorbed (Route Ops is one known gap) is undocumented. — [Contradiction log]
+"Workflow" is a configured product object on one page and a human deployment process on another. — [Contradiction log]
+
+============================================================
+=== CLUSTER 2: COMPETING INFORMATION ARCHITECTURES ===
+Three different ways of carving up the product, none reconciled.
+============================================================
+Screen-based UI section (Maps, Workflows, Fleet Monitor, Robots, Integrations, Setup & Config, Debug) vs. team-supplied role-based architecture (Configurator, Supervisor, Operator) — no entry reconciles the two. — [Team-raised]
+What frontend functionality actually depends on Fleet? Could Robot -> Map assignment represent the same outcome more directly? — [System-understanding mtg, 18 Sep]
+Three unreconciled information architectures: docs-based (Maps/Workflows/...), prototype nav (Dashboard/Live Status/...), team role-based (Configurator/Supervisor/Operator/...). — [Contradiction log]
+
+============================================================
+=== CLUSTER 3: ROLE & PERMISSION AMBIGUITY ===
+Who does what, and whether personas are distinct people.
+============================================================
+Is a Fleet Supervisor required at all? Operators already handle robots with issues. — [Team-raised]
+Fleet Supervisor's permission table grants zone-wide reassignment + Maps/Workflows view — more than the role's own narrative describes. — [Team-raised]
+How does Solutions Architect relate to Deployment Manager, the tool support engineers use to configure/deploy robots? — [Team-raised]
+Fleet Supervisor is absent from both team architecture diagrams; its branch in the new IA is reconstructed, unconfirmed. — [Team-raised]
+Is the merged "Operator" (Request + Dispatch) in the new architecture the same person as the floor-level, zone-scoped "Operator" in the four-user model? — [Team-raised]
+What information should Operators see vs. Deployment/Configuration users in the redesigned configuration experience? — [System-understanding mtg, 18 Sep]
+"IT and production planners do the configuration" was named alongside System Integrator — third job title for the same role, or a different one? — [Design/architecture review]
+Which actions can an Operator vs. a Fleet Supervisor perform directly on a robot? — [Source material gap]
+Fleet Supervisor's own page disagrees with itself: narrative narrows it to issue-handling; permission matrix gives zone-wide access. — [Contradiction log]
+Four roles are documented, but the prototype exposes a single "Supervisor Mode" selector with no role switching. — [Contradiction log]
+
+============================================================
+=== CLUSTER 4: WORKFLOW-CREATION MECHANICS ===
+Open questions about how workflow configuration should actually behave.
+============================================================
+Can the same material/material group map to multiple Stations? How should pickup/drop selection work during workflow creation? — [System-understanding mtg, 18 Sep]
+What Machine dependency is technically required when creating a Workflow — can it be removed from the user-facing configuration? — [System-understanding mtg, 18 Sep]
+Do Production Unit and Consumption Unit need to stay explicit user-facing tags, or can that be derived from the workflow itself? — [System-understanding mtg, 18 Sep]
+
+============================================================
+=== CLUSTER 5: DEPLOYMENT SEQUENCE VS. DOCUMENTED PROCESS ===
+The real, on-the-ground steps don't yet map onto the nine-stage workflow.
+============================================================
+Why did Deployment Manager 5.4 increase the number of steps for tasks the previous version did in fewer? — [Industrial Design 1:1]
+Mapping is currently done by manually driving the robot with a PlayStation controller — could this be automated? — [On-the-ground deployment sequence]
+What exactly is involved in adding materials to Ati Flow, and how does that relate to the documented Processing Area flow? — [On-the-ground deployment sequence]
+What happens after materials are added — workflow creation, fleet configuration, go-live — isn't documented at this level of detail. — [On-the-ground deployment sequence]
+How does the concrete tool-level sequence (Deployment Manager -> mapping -> route creation -> materials) map onto the documented nine-stage deployment workflow? — [On-the-ground deployment sequence]
+
+============================================================
+=== CLUSTER 6: ENTIRELY UNDOCUMENTED TERRITORY ===
+No source exists yet — these are gaps, not disagreements.
+============================================================
+How does VISA relate to gates and exclusion zones — implementation of them, or separate mechanism? — [Team-raised]
+How much of Fleet Manager has Ati Flow already absorbed, and on what timeline? — [Team-raised]
+Which client-specific configurations should become universal Ati Flow behaviour rather than one-off customisation? — [System-understanding mtg, 18 Sep]
+What exact robot states exist in the production system? — [Source material gap]
+Is Maintenance a fleet-visible state, a robot-local state, or both? — [Source material gap]
+What exactly does "taxi mode" enable or disable? — [Source material gap]
+Which safety mechanisms stay active during manual/teleoperated movement? — [Source material gap]
+What is the authoritative source for robot availability? — [Source material gap]
+What is the relationship between Fleet, Processing Area and geographical Zone in the actual data model? — [Source material gap]
+Ati Robotics as a company — nothing documented beyond one sentence of positioning. — [No source at all]
+Robot hardware — no specifications, variants or capacities documented. — [No source at all]
+The material model — no definition of a material/load, no detail on container contents. — [No source at all]
+The data model — how fleets, zones, trips, tasks and missions relate as records — undocumented. — [No source at all]
+Interface states — loading, empty, error, offline — undesigned. — [No source at all]
+Six of seven screens are scoped in one line each, no layout or field detail. — [No source at all]

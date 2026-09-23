@@ -1,0 +1,81 @@
+<svg viewBox="0 0 900 460" xmlns="http://www.w3.org/2000/svg" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrowP2P" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#7fc2b6" />
+    </marker>
+    <marker id="arrowDyn" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#c98fd6" />
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="900" height="460" fill="#ffffff" />
+
+  <text x="225" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#173c34">P2P Routing (V2)</text>
+  <text x="225" y="56" text-anchor="middle" font-size="13" fill="#5c6b66">Every trip is a separate, hand-drawn one-way arrow</text>
+
+  <text x="675" y="34" text-anchor="middle" font-size="20" font-weight="700" fill="#4a2350">Dynamic Routing (V5)</text>
+  <text x="675" y="56" text-anchor="middle" font-size="13" fill="#5c6b66">Broad lanes are drawn once; the engine routes between stations</text>
+
+  <line x1="450" y1="20" x2="450" y2="440" stroke="#e2e8e5" stroke-width="2" />
+
+  <!-- LEFT: P2P Routing (V2) -->
+  <g>
+    <!-- one-way arrows, offset pairs to show separate reverse routes -->
+    <path d="M 110,140 C 150,100 210,90 250,110" fill="none" stroke="#7fc2b6" stroke-width="2.5" marker-end="url(#arrowP2P)" />
+    <path d="M 245,125 C 205,110 150,120 118,155" fill="none" stroke="#7fc2b6" stroke-width="2.5" marker-end="url(#arrowP2P)" />
+
+    <path d="M 270,130 C 310,160 330,190 340,215" fill="none" stroke="#7fc2b6" stroke-width="2.5" marker-end="url(#arrowP2P)" />
+    <path d="M 335,235 C 300,260 240,275 205,278" fill="none" stroke="#7fc2b6" stroke-width="2.5" marker-end="url(#arrowP2P)" />
+    <path d="M 180,270 C 140,255 105,235 90,215" fill="none" stroke="#7fc2b6" stroke-width="2.5" marker-end="url(#arrowP2P)" />
+    <path d="M 85,195 C 90,160 95,145 100,140" fill="none" stroke="#7fc2b6" stroke-width="2.5" marker-end="url(#arrowP2P)" />
+    <path d="M 200,255 C 230,210 260,170 275,140" fill="none" stroke="#c9d3cf" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#arrowP2P)" />
+
+    <circle cx="100" cy="130" r="16" fill="#eaf5f2" stroke="#7fc2b6" stroke-width="2" />
+    <circle cx="260" cy="110" r="16" fill="#eaf5f2" stroke="#7fc2b6" stroke-width="2" />
+    <circle cx="345" cy="225" r="16" fill="#eaf5f2" stroke="#7fc2b6" stroke-width="2" />
+    <circle cx="195" cy="285" r="16" fill="#eaf5f2" stroke="#7fc2b6" stroke-width="2" />
+    <circle cx="78" cy="205" r="16" fill="#eaf5f2" stroke="#7fc2b6" stroke-width="2" />
+
+    <text x="100" y="135" text-anchor="middle" font-size="12" font-weight="700" fill="#173c34">A</text>
+    <text x="260" y="115" text-anchor="middle" font-size="12" font-weight="700" fill="#173c34">B</text>
+    <text x="345" y="230" text-anchor="middle" font-size="12" font-weight="700" fill="#173c34">C</text>
+    <text x="195" y="290" text-anchor="middle" font-size="12" font-weight="700" fill="#173c34">D</text>
+    <text x="78" y="210" text-anchor="middle" font-size="12" font-weight="700" fill="#173c34">E</text>
+
+    <text x="225" y="330" text-anchor="middle" font-size="12" fill="#5c6b66">A→B and B→A are two separate arrows —</text>
+    <text x="225" y="348" text-anchor="middle" font-size="12" fill="#5c6b66">drawing only one means the reverse trip doesn't exist.</text>
+    <text x="225" y="374" text-anchor="middle" font-size="12" fill="#9aa39f">Dashed: a direct D→B route that would need its own arrow too.</text>
+  </g>
+
+  <!-- RIGHT: Dynamic Routing (V5) -->
+  <g>
+    <!-- broad lanes, thick, undirected -->
+    <path d="M 560,120 L 700,95 L 790,190 L 660,290 L 540,225 Z"
+          fill="none" stroke="#e3c3ea" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" />
+
+    <!-- off-lane station connector -->
+    <line x1="770" y1="150" x2="815" y2="120" stroke="#c9a8d1" stroke-width="2" stroke-dasharray="4 3" />
+
+    <!-- auto-routed path between two stations that share no direct hand-drawn arrow -->
+    <path d="M 540,225 C 610,235 700,235 760,150" fill="none" stroke="#c98fd6" stroke-width="2.5" stroke-dasharray="2 5" marker-end="url(#arrowDyn)" />
+
+    <circle cx="560" cy="120" r="16" fill="#f9eefb" stroke="#c98fd6" stroke-width="2" />
+    <circle cx="700" cy="95" r="16" fill="#f9eefb" stroke="#c98fd6" stroke-width="2" />
+    <circle cx="815" cy="120" r="16" fill="#f9eefb" stroke="#c98fd6" stroke-width="2" stroke-dasharray="3 2" />
+    <circle cx="660" cy="290" r="16" fill="#f9eefb" stroke="#c98fd6" stroke-width="2" />
+    <circle cx="540" cy="225" r="16" fill="#f9eefb" stroke="#c98fd6" stroke-width="2" />
+
+    <text x="560" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#4a2350">A</text>
+    <text x="700" y="100" text-anchor="middle" font-size="12" font-weight="700" fill="#4a2350">B</text>
+    <text x="815" y="125" text-anchor="middle" font-size="12" font-weight="700" fill="#4a2350">C</text>
+    <text x="660" y="295" text-anchor="middle" font-size="12" font-weight="700" fill="#4a2350">D</text>
+    <text x="540" y="230" text-anchor="middle" font-size="12" font-weight="700" fill="#4a2350">E</text>
+
+    <text x="828" y="118" font-size="11" fill="#5c6b66">off-lane</text>
+    <text x="560" y="145" font-size="11" fill="#5c6b66">on-lane</text>
+
+    <text x="675" y="330" text-anchor="middle" font-size="12" fill="#5c6b66">Only the broad lanes (thick) are hand-drawn.</text>
+    <text x="675" y="348" text-anchor="middle" font-size="12" fill="#5c6b66">The routing engine finds its own way from E to C —</text>
+    <text x="675" y="366" text-anchor="middle" font-size="12" fill="#5c6b66">and back again — without a separate reverse arrow.</text>
+  </g>
+</svg>
