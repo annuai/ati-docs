@@ -239,11 +239,20 @@ export const concepts = [
       "old/ati-flow-glossary.html",
       "old/amr-software-ia-roles.html",
       "old/amr-deployment-workflow.html",
-      "old/prototype/"
+      "old/prototype/",
+      "Ati team — internal \"Zones\" reference document (map zone types and parameters), supplied September 2026"
+    ],
+    "revisions": [
+      {
+        "date": "2026-09-23",
+        "author": "Annuai",
+        "note": "Linked the behavioural-zone definition to the new [[zone-types]] entry, which documents the specific zone types the map editor supports."
+      }
     ],
     "related": [
       "processing-zone",
       "map-annotation",
+      "zone-types",
       "traffic-control",
       "users"
     ],
@@ -273,7 +282,7 @@ export const concepts = [
           },
           {
             "term": "Behavioural zone",
-            "text": "An area that changes how a robot behaves whenever it is inside — a speed-limited zone, a ramp zone, a docking zone. Always active based on location, like a school zone."
+            "text": "An area that changes how a robot behaves whenever it is inside — a speed-limited zone, a ramp zone, a docking zone. Always active based on location, like a school zone. See [[zone-types]] for the specific, named zone types the map editor supports."
           },
           {
             "term": "Exclusion zone",
@@ -591,7 +600,9 @@ export const concepts = [
     "sources": [
       "old/ati-flow-glossary.html",
       "old/amr-deployment-workflow.html",
-      "Ati support engineer — Deployment Manager/Fleet Manager walkthrough, transcript supplied in conversation, September 2026"
+      "Ati support engineer — Deployment Manager/Fleet Manager walkthrough, transcript supplied in conversation, September 2026",
+      "Ati team — internal \"Zones\" reference document (map zone types and parameters), supplied September 2026",
+      "Ati team — Deployment Manager zone-type selector, screenshot supplied September 2026"
     ],
     "revisions": [
       {
@@ -603,11 +614,22 @@ export const concepts = [
         "date": "2026-09-23",
         "author": "Annuai",
         "note": "Clarified that the one-way, hand-drawn route description above only applies to P2P Routing (V2) maps — a Dynamic Routing (V5) map routes stations automatically over hand-drawn lanes instead. See [[v-waypoint-version]]."
+      },
+      {
+        "date": "2026-09-23",
+        "author": "Annuai",
+        "note": "Linked to the new [[zone-types]] entry, which documents nine specific named zone types and narrows — without fully closing — the open question of whether the full list of map zone types is known."
+      },
+      {
+        "date": "2026-09-23",
+        "author": "Annuai",
+        "note": "Updated with the map editor's own zone-type selector (17 zone types) — the full current list is now confirmed, even though 8 of the 17 still have no documented behaviour. See [[zone-types]]."
       }
     ],
     "related": [
       "map",
       "zone",
+      "zone-types",
       "traffic-control",
       "ui-maps",
       "v-dispatch",
@@ -636,7 +658,7 @@ export const concepts = [
           },
           {
             "term": "Behavioural zones",
-            "text": "Speed-limited zones, ramp zones and docking zones. Always active based on location, like a school zone."
+            "text": "Speed-limited zones, ramp zones and docking zones. Always active based on location, like a school zone. See [[zone-types]] for the specific, named zone types the map editor supports."
           },
           {
             "term": "Traffic control — gates and exclusion zones",
@@ -687,9 +709,9 @@ export const concepts = [
       },
       {
         "t": "callout",
-        "title": "The full list of zone types is undocumented, even internally",
+        "title": "The full list of zone types is now confirmed — what most of them do is not",
         "body": [
-          "Beyond the zone categories named above, more zone types exist — a \"wheel zone,\" a \"traffic gate,\" and others added whenever a new feature needs one. Asked directly, an Ati support engineer said there is no canonical documentation of them: \"no one knows... no one is working on this... there are some Excel sheets.\" Treat any zone-type list in this documentation as partial until the team that owns each feature documents its own zone."
+          "The map editor's own zone-type selector lists 17 zone types, all now named at [[zone-types]]. Only 9 have a documented behaviour; the other 8 — including a \"wheel pose zone\", likely the \"wheel zone\" an Ati support engineer mentioned when asked directly about undocumented zone types — are confirmed to exist but have no written description of what they do. That engineer's broader caution still stands: new zone types get added whenever a feature needs one, so even this confirmed list can grow."
         ],
         "tone": "gap"
       }
@@ -2925,6 +2947,180 @@ export const concepts = [
           "Every pair of stations that will be used in production has been previewed with **Simulate Route**.",
           "The robot has been run once in simulation for the trips it will actually make."
         ]
+      }
+    ]
+  },
+  {
+    "id": "zone-types",
+    "title": "Map zone types",
+    "summary": "The specific behaviours a drawn zone can add to the map — speed changes, obstacle-distance overrides, collision shapes and more.",
+    "simple": "A zone is a shape drawn on the map. Which \"type\" it's given decides what it actually does — slow the robot down, change how close it can get to something, or turn a safety check off.",
+    "aliases": [
+      "ramp zone",
+      "low speed zone",
+      "variable stop distance zone",
+      "3D collision detection zone",
+      "variable padding zone",
+      "conveyor wall zone",
+      "no payload safety zone",
+      "traffic intersection zone",
+      "special camera zone",
+      "no-go zone",
+      "table pickup zone",
+      "wheel pose zone",
+      "docking zone",
+      "zebra crossing zone",
+      "special lidar 2D zone",
+      "smart door zone"
+    ],
+    "status": "needs-confirmation",
+    "author": "Annuai",
+    "added": "2026-09-23",
+    "sources": [
+      "Ati team — internal \"Zones\" reference document (map zone types and parameters), supplied September 2026",
+      "Ati team — Deployment Manager zone-type selector, screenshot supplied September 2026"
+    ],
+    "related": [
+      "map-annotation",
+      "zone",
+      "v-behavioural-zone",
+      "v-obstacle-avoidance",
+      "v-forbidden-zone",
+      "v-exclusion-zone",
+      "traffic-control"
+    ],
+    "blocks": [
+      {
+        "t": "h",
+        "text": "Why this page exists"
+      },
+      {
+        "t": "p",
+        "text": "[[map-annotation|Map annotation]] already covers zones at a general level — behavioural zones, traffic control, forbidden and preferred areas. This page is the specific, named list of zone types the map editor actually supports, and what each one does to the robot's behaviour while it's inside."
+      },
+      {
+        "t": "p",
+        "text": "Every zone below is drawn as a shape on the map (a polygon or a rectangle) and carries its own settings on top of that shape."
+      },
+      {
+        "t": "callout",
+        "title": "The current, complete list — from the editor itself",
+        "body": [
+          "The map editor's own zone-type selector lists **17 zone types**. Only **9** of them have a documented behaviour, from an internal zones reference document — the other **8** are confirmed to exist, by name, straight from the product, but nothing is written down yet about what they actually do."
+        ],
+        "tone": "note"
+      },
+      {
+        "t": "h",
+        "text": "Documented zone types"
+      },
+      {
+        "t": "h3",
+        "text": "Ramp zone"
+      },
+      {
+        "t": "p",
+        "text": "Slows the robot down automatically while it's on an incline. Drawing the zone only needs one extra piece of information beyond its outline: which compass direction points uphill. The system compares the robot's current heading against that uphill direction to work out whether it's heading up, heading down, or currently on flat ground outside any ramp — and reduces the robot to a fixed, slow \"creep\" speed whenever it's on a slope in either direction."
+      },
+      {
+        "t": "h3",
+        "text": "Low speed zone"
+      },
+      {
+        "t": "p",
+        "text": "Caps the robot's speed inside a marked area — an assembly area, for example. It's drawn with one setting: a speed multiplier, so a value of \"half speed\" simply halves whatever speed the robot would otherwise be driving at. This behaviour can be switched off across a whole site, and a site-wide default speed multiplier is used for any low speed zone that doesn't specify its own."
+      },
+      {
+        "t": "h3",
+        "text": "Variable stop distance zone"
+      },
+      {
+        "t": "p",
+        "text": "Changes how close the robot lets an obstacle get before it slows down and stops — useful somewhere like a loading dock, where the robot needs to approach closer than its normal safety margin would otherwise allow. Two distances are set: how close the robot gets before it stops completely, and a further distance at which it starts slowing down. Between those two points its speed decreases smoothly rather than dropping suddenly. Like the low speed zone, this can be switched off site-wide, with site-wide default distances used otherwise."
+      },
+      {
+        "t": "h3",
+        "text": "3D collision detection zone"
+      },
+      {
+        "t": "p",
+        "text": "Describes a physical object on the floor — a platform, a fixture — by its real shape and height, rather than treating it as a flat obstacle. Each object gets its own footprint outline and a vertical range: how far off the ground it starts and ends. A 20cm-tall platform sitting on the floor, for example, would span from ground level up to 20cm. This lets the robot's collision checking reason about objects with real height, rather than assuming everything on the map is the same."
+      },
+      {
+        "t": "h3",
+        "text": "Variable padding zone"
+      },
+      {
+        "t": "p",
+        "text": "Overrides how much safety clearance the robot keeps around itself while inside the zone — built for narrow aisles or tight spaces where the robot's normal clearance would otherwise stop it from fitting through at all. The zone sets a clearance distance for each side of the robot (left, right, front, rear), and can optionally set a different — usually smaller — set of clearances for when the robot is carrying a payload. It can also be restricted to only apply when the robot is travelling in a particular direction, automatically swapping the left/right clearances if the robot passes through the other way. This has to be switched on for the site before it takes effect."
+      },
+      {
+        "t": "h3",
+        "text": "Conveyor wall zone"
+      },
+      {
+        "t": "p",
+        "text": "A more specialised version of the 3D collision idea, purpose-built for safely detecting a conveyor's edge so the robot can dock against it or pass by it. It carries the same shape-and-height description as a 3D collision zone, plus its own sensor-tuning settings — in plain terms: how tightly nearby sensor readings need to cluster together to be treated as \"one object\" (rather than noise or several separate things), a minimum size below which a detected cluster is ignored as noise, and extra safety clearance applied specifically when checking the robot against the conveyor."
+      },
+      {
+        "t": "h3",
+        "text": "No payload safety zone"
+      },
+      {
+        "t": "p",
+        "text": "Turns off the robot's \"is something on my lifter\" safety check while inside the zone. This exists for cases where a robot has to set a load down onto another fixture — a rack, for instance — where that fixture would otherwise be mistaken by the sensor for a dropped or misaligned payload."
+      },
+      {
+        "t": "h3",
+        "text": "Traffic intersection zone and obstacle avoidance zone"
+      },
+      {
+        "t": "p",
+        "text": "Both of these are named zone types with no behaviour described in the reference document."
+      },
+      {
+        "t": "list",
+        "items": [
+          "**Obstacle avoidance zone** is very likely the same rectangular, per-zone mechanism already documented at [[v-obstacle-avoidance|Obstacle avoidance]] — where the robot only steers around an obstacle inside a configured zone, and simply stops for one outside it.",
+          "**Traffic intersection zone** is not confirmed to be the same thing as the gates, exclusion zones or VISA arbitration already documented under [[traffic-control|Traffic control]], though it plausibly overlaps with that mechanism."
+        ]
+      },
+      {
+        "t": "h",
+        "text": "Named in the editor, not yet documented"
+      },
+      {
+        "t": "p",
+        "text": "Eight further zone types appear in the map editor's own selector with no description anywhere in Ati's material of what they do:"
+      },
+      {
+        "t": "list",
+        "items": [
+          "**Special camera zone**",
+          "**No-go zone** — possibly the same thing as the already-documented [[v-forbidden-zone|Forbidden zone]], but the two names are not confirmed to refer to the same mechanism.",
+          "**Table pickup zone**",
+          "**Wheel pose zone** — likely the \"wheel zone\" already flagged, under an approximate name, as an example of an undocumented zone type elsewhere in this documentation. See [[map-annotation]].",
+          "**Docking zone** — a \"docking zone\" is already mentioned in passing as an example of a behavioural zone; whether that's this same, formally-named zone type is not confirmed.",
+          "**Zebra crossing zone**",
+          "**Special LiDAR 2D zone**",
+          "**Smart door zone**"
+        ]
+      },
+      {
+        "t": "callout",
+        "title": "What these eight actually do is not documented",
+        "body": [
+          "All eight are confirmed, current zone types — they appear in the map editor's own zone-type selector — but no source describes their parameters or effect on the robot. Treat the names above as placeholders until the team that owns each one documents it."
+        ],
+        "tone": "gap"
+      },
+      {
+        "t": "callout",
+        "title": "This is now the confirmed, complete current list",
+        "body": [
+          "Earlier documentation could only say the full list of zone types was unknown even inside Ati. The map editor's own selector settles that: there are 17 zone types today, all named above. What is still unknown is what most of them do — and an Ati support engineer's caution still stands, that new zone types get added whenever a feature needs one, so this list can grow."
+        ],
+        "tone": "note"
       }
     ]
   }

@@ -14,9 +14,15 @@ sources:
   - old/amr-software-ia-roles.html
   - old/amr-deployment-workflow.html
   - old/prototype/
+  - 'Ati team — internal "Zones" reference document (map zone types and parameters), supplied September 2026'
+revisions:
+  - date: '2026-09-23'
+    author: Annuai
+    note: Linked the behavioural-zone definition to the new [[zone-types]] entry, which documents the specific zone types the map editor supports.
 related:
   - processing-zone
   - map-annotation
+  - zone-types
   - traffic-control
   - users
 order: 3
@@ -35,7 +41,7 @@ items:
   - term: Zone (geographical)
     text: An operating area used to organise robot access and human responsibility. This is the meaning used by Fleet Monitor and the role model.
   - term: Behavioural zone
-    text: An area that changes how a robot behaves whenever it is inside — a speed-limited zone, a ramp zone, a docking zone. Always active based on location, like a school zone.
+    text: An area that changes how a robot behaves whenever it is inside — a speed-limited zone, a ramp zone, a docking zone. Always active based on location, like a school zone. See [[zone-types]] for the specific, named zone types the map editor supports.
   - term: Exclusion zone
     text: A traffic-control construct governing multi-robot access to a single-lane or alternating-direction section. Deliberately separate from behavioural zones.
   - term: Forbidden and preferred zone

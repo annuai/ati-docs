@@ -99,6 +99,16 @@ export const openQuestions = [
         "date": "2026-09-22",
         "author": "Annuai",
         "note": "Added that the full list of map zone types is undocumented even inside Ati (from an internal DM/FM walkthrough), and flagged the \"V5\" waypoint format against Deployment Manager's own version 5.4 as a naming clash worth avoiding, not a confirmed connection."
+      },
+      {
+        "date": "2026-09-23",
+        "author": "Annuai",
+        "note": "Narrowed the map zone types question — nine named types are now documented at [[zone-types]] — while keeping it open, since an Ati support engineer said even that list may not be complete."
+      },
+      {
+        "date": "2026-09-23",
+        "author": "Annuai",
+        "note": "Closed the \"is the full list known\" half of the zone-types question — the map editor's own selector confirms 17 zone types exist today. Replaced it with a narrower open question about what the 8 undocumented ones actually do. See [[zone-types]]."
       }
     ],
     "related": [
@@ -118,7 +128,8 @@ export const openQuestions = [
       "v-system-integrator",
       "v-mhe",
       "map-annotation",
-      "v-waypoint-version"
+      "v-waypoint-version",
+      "zone-types"
     ],
     "blocks": [
       {
@@ -211,7 +222,7 @@ export const openQuestions = [
           "What is the authoritative source for robot availability?",
           "What is the relationship between [[fleet|Fleet]], [[processing-zone|Processing Area]] and geographical [[zone|Zone]] in the actual data model?",
           "Which actions can an Operator and a Fleet Supervisor perform directly on a robot?",
-          "What is the full list of map zone types, and what rule does each one carry? An Ati support engineer, asked directly, said this is undocumented even inside the company. See [[map-annotation]]."
+          "What do the 8 zone types confirmed to exist in the map editor's own selector — special camera, no-go, table pickup, wheel pose, docking, zebra crossing, special LiDAR 2D and smart door zones — actually do? See [[zone-types]]."
         ]
       },
       {
@@ -293,7 +304,8 @@ export const openQuestions = [
           "**Trip and Task** — confirmed to name the same thing, with no conceptual difference. Ati currently uses Trip. See [[trip]].",
           "**Fleet Monitor and Live Fleet Status** — confirmed to be the same screen under two names. Fleet Monitor is the documented, standard name going forward; Live Fleet Status / Live Status is the current prototype label. See [[ui-fleet-monitor]].",
           "**Mission and Workflow** — confirmed to name the same thing. Mission is the wider industry term; Ati Flow currently calls it Workflow because it is an orchestration product, and because Workflow better fits a sequence that can involve several steps rather than just a point-to-point trip. See [[d-workflow-over-mission]]. This documentation now uses \"Workflow\" throughout rather than mentioning \"Mission\" more than once per page.",
-          "**System Integrator and Solutions Architect (Configurator)** — confirmed to be the same person and the same permission role. System Integrator names who they typically work for — a third-party company delivering deployment services to the client, rather than an Ati employee; Solutions Architect / Configurator names what they do in the product. Not a fifth user. See [[v-system-integrator]]."
+          "**System Integrator and Solutions Architect (Configurator)** — confirmed to be the same person and the same permission role. System Integrator names who they typically work for — a third-party company delivering deployment services to the client, rather than an Ati employee; Solutions Architect / Configurator names what they do in the product. Not a fifth user. See [[v-system-integrator]].",
+          "**The full list of map zone types** — confirmed as 17, straight from the map editor's own zone-type selector. Only 9 have a documented behaviour; the other 8 are named but undocumented — see the new question above. See [[zone-types]]."
         ]
       },
       {
